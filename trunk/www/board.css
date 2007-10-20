@@ -13,12 +13,17 @@ H1 {
 	border: 1px solid black;
 	background-color: #ffffee;
 	margin: 1em;
+	padding: 0.2em;
 }
 
 .post {
 	list-style-type: none;
 }
 
+.post:hover {
+	background-color: #eeeeff;
+}
+	
 .clock {
 	color: #009900;
 	background-color: transparent;

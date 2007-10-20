@@ -21,7 +21,7 @@ public class Post {
 
 	// CONSTANTS \\
 	/** The format of a time attribute. */
-	private static final String TIME_FORMAT = "yyyyMMddhhmmss";
+	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
 	private static final String POST_TAGNAME = "post";
 	
