@@ -48,6 +48,15 @@ public class PostServlet extends HttpServlet {
 	
 	
 	/**
+	 * Logs a message.
+	 */
+	@Override
+	public final void destroy() {
+		m_logger.info("Post servlet stopped.");
+	}
+
+	
+	/**
 	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
 	 * 
 	 * @param p_request
