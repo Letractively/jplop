@@ -1,0 +1,51 @@
+BODY {
+	margin: 0;
+}
+
+H1 {
+	text-align: center;
+	background-color: #ccccff;
+	border-bottom: 1px solid #000099;
+	margin: 0;
+}
+
+#board {
+	border: 1px solid black;
+	background-color: #ffffee;
+	margin: 1em;
+}
+
+.post {
+	list-style-type: none;
+}
+
+.clock {
+	color: #009900;
+	background-color: transparent;
+}
+
+.login {
+	color: #990000;
+	background-color: transparent;
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+}
+
+.message {
+	color: #333333;
+	background-color: transparent;
+}
+
+.postForm {
+	text-align: center;
+}
+
+HR {
+	clear: both;
+	width: 80%;
+}
+
+#fooder {
+	text-align: center;
+	width: 80%;
+}

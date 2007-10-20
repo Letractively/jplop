@@ -118,6 +118,7 @@ public class History {
 	@Override
 	public final synchronized String toString() {
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>");
 		buffer.append("<" + BOARD_TAGNAME + " " + BOARD_SITE_ATTRNAME + "=\"" + getURL() + "\">");
 		for (Post post : m_posts)
 			buffer.append(post.toString());
