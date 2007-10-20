@@ -6,6 +6,9 @@ package tifauv.jboard.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -37,6 +40,24 @@ public class Post {
 	private static final String CDATA_END = "]]>";
 	
 	private static final String ANONYMOUS_LOGIN = "Anonymous";
+	
+	private static final int MAX_MESSAGE_LENGTH = 512;
+	
+	private static final String[] TAGS = { "b", "i", "u", "s", "tt" };
+	
+	private static final String STARTTAG_PATTERN;
+	private static final String ENDTAG_PATTERN;
+	static {
+		String starttags = "";
+		for (String tag : TAGS) {
+			if (starttags.length() > 0)
+				starttags += "|";
+			starttags += tag;
+		}
+		STARTTAG_PATTERN = "<(" + starttags + ")>";
+		ENDTAG_PATTERN = "</(" + starttags + ")>";
+	}
+	private static final String PATTERN = STARTTAG_PATTERN + "|" + ENDTAG_PATTERN;
 
 	
 	// STATIC FIELDS \\
@@ -45,6 +66,8 @@ public class Post {
 	
 	/** The counter of post identificers. */
 	private static long s_idCounter = 0;
+	
+	private static Pattern s_pattern = Pattern.compile(PATTERN);
 	
 	
 	// FIELDS \\
@@ -115,15 +138,18 @@ public class Post {
 	}
 	
 	private final void setInfo(String p_info) {
-		m_info = p_info;
+		m_info = cleanText(p_info);
 	}
 	
 	private final void setLogin(String p_login) {
-		m_login = p_login;
+		m_login = cleanText(p_login);
 	}
 	
 	private final void setMessage(String p_message) {
-		m_message = cleanMessage(p_message);
+		String message = p_message;
+		if (message.length() > MAX_MESSAGE_LENGTH)
+			message = message.substring(0, MAX_MESSAGE_LENGTH);
+		m_message = cleanText(message);
 	}
 
 	// METHODS \\
@@ -131,8 +157,73 @@ public class Post {
 		return s_idCounter++;
 	}
 	
-	private final String cleanMessage(String p_message) {
-		return p_message.replaceAll("]]>", "]]&gt;");
+	
+	private final String xmlEntities(String p_str) {
+		return p_str.replace("&" , "&amp;")
+					.replace("\"", "&quot;")
+					.replace("<" , "&lt;")
+					.replace(">" , "&gt;");
+	}
+
+	private final String cleanText(String p_message) {
+		String message = p_message.trim();
+		StringBuffer buffer = new StringBuffer(message.length());
+		Stack<String> tags = new Stack<String>();
+		
+		boolean found;
+		int previousMatch = 0;
+		Matcher matcher = s_pattern.matcher(message);
+		while (!matcher.hitEnd()) {
+			found = matcher.find();
+
+			if (found) {
+				// Add the string before the match
+				if (matcher.start() > previousMatch) {
+					String prev = message.substring(previousMatch, matcher.start());
+					buffer.append(xmlEntities(prev));
+				}
+
+				String match = matcher.group();
+				// Push the opening tag to the queue 
+				if (match.matches(STARTTAG_PATTERN)) {
+					tags.push(matcher.group(1));
+					buffer.append(match);
+				}
+				
+				// End tag : try to find the start tag
+				else if (match.matches(ENDTAG_PATTERN)) {
+					String tag = matcher.group(2);
+					// If this is the last tag in the stack, it's ok
+					if (tag != null && !tags.empty() && tag.equals(tags.peek())) {
+						tags.pop();
+						buffer.append(match);
+					}
+					// Else, search the first matching tag in the stack
+					else {
+						int index = tags.search(tag);
+						if (index > 0) {
+							while (index > 0) {
+								buffer.append("</" + tags.pop() + ">");
+								--index;
+							}
+						}
+						else
+							buffer.append(xmlEntities(match));
+					}
+				}
+				
+				// Save the end of the current match
+				previousMatch = matcher.end();
+			}
+			else {
+				if (previousMatch < message.length())
+					buffer.append(xmlEntities(message.substring(previousMatch)));
+			}
+		}
+		while (!tags.empty())
+			buffer.append("</").append(tags.pop()).append(">");
+		
+		return buffer.toString();
 	}
 	
 	@Override

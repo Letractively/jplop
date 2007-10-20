@@ -50,6 +50,15 @@ public class BackendServlet extends HttpServlet {
 	
 	
 	/**
+	 * Logs a message.
+	 */
+	@Override
+	public final void destroy() {
+		m_logger.info("Backend servlet stopped.");
+	}
+	
+	
+	/**
 	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
 	 * 
 	 * @param p_request
