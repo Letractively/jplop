@@ -192,7 +192,7 @@ public class Post {
 	
 	
 	/**
-	 * Converts &, ", ', < and > into their XML entities.
+	 * Converts &, ", < and > into their XML entities.
 	 * 
 	 * @param p_str
 	 *            the string to convert
@@ -201,7 +201,6 @@ public class Post {
 	 */
 	private final String xmlEntities(String p_str) {
 		return p_str.replace("&" , "&amp;")
-					.replace("\'", "&aquot;")
 					.replace("\"", "&quot;")
 					.replace("<" , "&lt;")
 					.replace(">" , "&gt;");
