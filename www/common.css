@@ -2,11 +2,13 @@
 BODY {
 	margin: 0;
 	text-align: center;
+	font-family: sans-serif;
 }
 
 
 /***** The title *****/
 #header {
+	font-family: serif;
 	background-color: #ccccff;
 	border-bottom: 1px solid #000099;
 }
@@ -16,6 +18,11 @@ BODY {
 	margin: 0;
 }
 
+
+/***** Other titles *****/
+H2, H3, H4, H5, H6 {
+	text-align: left;
+}
 
 /***** The footer *****/
 HR {

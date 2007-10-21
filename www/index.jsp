@@ -2,17 +2,21 @@
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
 <%@ page import="tifauv.jboard.model.Backend" %>
+<%! String name = Backend.getInstance().getName(); %>
+<%! String fullname = Backend.getInstance().getFullName(); %>
+<%! String url = Backend.getInstance().getURL(); %>
+<%! int maxPostLength = Backend.getInstance().getMaxPostLength(); %>
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>JBoard</title>
+		<title><%= name %></title>
 		<link rel="stylesheet" type="text/css" href="index.css" />
 	</head>
 	<body>
 		<div id="header">
-			<h1>JBoard - Da J2EE Board</h1>
+			<h1><%= name %> - <%= fullname %></h1>
 		</div>
 		
 		<p>Ceci est une tribune 100% backend-oriented.
@@ -22,17 +26,39 @@
 			<a href="backend">Voir la tribune</a>
 		</div>
 
-<%! String url = Backend.getInstance().getURL(); %>
-		<fieldset id="config">
-			<legend>Configuration</legend>
-			<ul>
-				<li>URL du backend&nbsp;: <tt><%=  url %>/backend</tt></li>
-				<li>URL de post&nbsp;: <tt><%=  url %>/post</tt></li>
-				<li>Champ du message&nbsp;: <tt>message</tt></li>
-				<li>Taille max. de l'historique&nbsp;: <%= Backend.getInstance().getMaxSize() %> posts</li>
-				<li>Taille max. d'un post&nbsp;: <%= Backend.getInstance().getMaxPostLength() %> caractères</li>
-			</ul>
-		</fieldset>
+		<h2>Configuration</h2>
+		<div class="config">
+			<h3><a href="http://hules.free.fr/wmcoincoin" title="Le VRAI coincoin">wmcc</a></h3>
+			<p>Ajoutez les lignes suivantes dans le fichier .wmcoincoin/options de votre dossier personnel&nbsp;:</p>
+			<pre class="cc-config">
+board_site:                <%= name %>
+.backend_flavour:          2
+.palmipede.userlogin:      Anonymous
+.backend.url:              <%= url %>/backend
+.post.url:                 <%=  url %>/post
+.tribune.delay:            60
+.palmipede.msg_max_length: <%= maxPostLength %></pre>
+		</div>
+		
+		<div class="config">
+			<h3><a href="http://chrisix.free.fr/dotclear/" title="Le coincoin pythonneux">pycc</a></h3>
+			<p>Le fichier de configuration d'une tribune est trop gros, j'abondonne.</p>
+		</div>
+		
+		
+		<div class="config">
+			<h3>Les coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
+			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
+			<pre class="cc-config">
+&lt;site name="<%= name %>" title="<%= fullname %>" baseurl="<%= url %>" version="1.0"&gt;
+	&lt;board name="board" title="Tribune"&gt;
+		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
+		&lt;post method="post" path="/post" anonymous="true" max_length="<%= maxPostLength %>"&gt;
+			&lt;field name="message"&gt;$m&lt;/field&gt;
+		&lt;/post&gt;
+	&lt;/board&gt;
+&lt;/site&gt;</pre>
+		</div>
 		
 		<hr/>
 		

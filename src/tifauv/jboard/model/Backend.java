@@ -18,9 +18,17 @@ import org.apache.log4j.Logger;
 public class Backend {
 
 	// CONSTANTS \\
+	public static final String DEFAULT_NAME = "JBoard";
+	
+	public static final String DEFAULT_FULLNAME = "Da J2EE tribioune";
+	
 	public static final String DEFAULT_URL = "http://localhost:8080/jboard";
 	
 	private static final String CONFIG_PROPERTIES = "tifauv.jboard.config";
+	
+	private static final String NAME_KEY = "jboard.name";
+	
+	private static final String FULLNAME_KEY = "jboard.fullName";
 	
 	private static final String URL_KEY = "jboard.url";
 	
@@ -34,6 +42,12 @@ public class Backend {
 	
 	
 	// FIELDS \\
+	/** The board's name. */
+	private String m_name;
+	
+	/** The board's full name. */
+	private String m_fullName;
+	
 	/** The board's history. */
 	private History m_history;
 	
@@ -48,6 +62,14 @@ public class Backend {
 	
 
 	// GETTERS \\
+	public final String getName() {
+		return m_name;
+	}
+	
+	public final String getFullName() {
+		return m_fullName;
+	}
+	
 	public final String getURL() {
 		return m_history.getURL();
 	}
@@ -75,6 +97,16 @@ public class Backend {
 	}
 	
 
+	// SETTERS \\
+	private final void setName(String p_name) {
+		m_name = p_name;
+	}
+	
+	private final void setFullName(String p_fullName) {
+		m_fullName = p_fullName;
+	}
+	
+	
 	// METHODS \\
 	public static synchronized Backend getInstance() {
 		if (s_instance == null) {
@@ -84,12 +116,30 @@ public class Backend {
 	}
 	
 	protected final synchronized void init() {
+		String name = DEFAULT_NAME;
+		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		try {
 			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
+			
+			// Load the name property
+			try {
+				name = config.getString(NAME_KEY);
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
+			
+			// Load the fullname property
+			try {
+				fullName = config.getString(FULLNAME_KEY);
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
 			
 			// Load the URL property
 			try {
@@ -131,9 +181,12 @@ public class Backend {
 			m_history.setURL(url);
 			m_history.setMaxSize(size);
 		}
+		setName(name);
+		setFullName(fullName);
 		Post.setMaxLength(maxPostLength);
-		m_logger.info("Backend at '" + url + "' with " + size + "-posts history ready.");
-		m_logger.info("The posts may have a length of '" + maxPostLength + "' caracters.");
+		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
+		m_logger.info(" |- the backend at '" + url + "/backend' keeps " + size + " posts");
+		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
 	}
 	
 	public final synchronized void addMessage(String p_info, String p_message) {
