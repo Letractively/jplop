@@ -46,7 +46,7 @@
 	</ul>
 
 	<div id="postForm">
-		<form method="post" action="post">
+		<form method="post" action="post" onsubmit="javascript: return !sendMessage('{@site}/post');">
 			<input type="button" onclick="javascript: addTagToMessage('b');"  value="Gras"     accessKey="g" />
 			<input type="button" onclick="javascript: addTagToMessage('i');"  value="Italique" accessKey="i" />
 			<input type="button" onclick="javascript: addTagToMessage('u');"  value="Souligné" accessKey="s" />

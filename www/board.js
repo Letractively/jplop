@@ -56,3 +56,106 @@ function addTagToMessage(p_tagName) {
 		input.selectionEnd = pos;
 	}
 }
+
+
+/**
+ * Gets an XmlHttpRequest object. This method is not meant
+ * to be called directly. Use httpPost() instead.
+ *
+ * @param p_url
+ *            the remote URL to call
+ */
+function getRequest(p_url) {
+	var request;
+
+	// For Gecko, Opera and WebKit/KHTML
+	if (typeof(XMLHttpRequest) != 'undefined')
+		request = new XMLHttpRequest()
+	// For IE
+	else
+		request = new ActiveXObject('Microsoft.XMLHTTP');
+
+	request.open('POST', p_url, true);
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	request.setRequestHeader('Accept'      , 'text/xml');
+	return request;
+}
+
+
+/**
+ * Sends a POST request.
+ *
+ * @param p_url
+ *            the URL to send the request to
+ * @param p_message
+ *            the message
+ * @param p_callback
+ *            the function to call when to process the response
+ *
+ * @return true if the request has been sent,
+ *         false otherwise
+ */
+function httpPost(p_url, p_message, p_callback) {
+	var callback = p_callback;
+	var xmlhttp = getRequest(p_url);
+
+	function bindCallback() {
+		if (callback)
+			callback(xmlhttp);
+		else
+			alert('No callback defined');
+	}
+
+	if (xmlhttp) {
+		// bind the callback
+		xmlhttp.onreadystatechange = bindCallback;
+
+		// send the request
+		var request = 'message=' + p_message;
+		xmlhttp.send(request);
+		return true;
+	}
+	return false;
+}
+
+
+/**
+ * Sends the value of the #message input field to the given
+ * URL.
+ *
+ * @param p_url
+ *            the URL to send the message
+ *
+ * @return true if the request has been done,
+ *         false otherwise
+ */
+function sendMessage(p_url) {
+	var input = document.getElementById('message');
+	return httpPost(p_url, input.value, handlePostResponse);
+}
+
+
+/**
+ * Handles the response. In case of success (readyState == 4 and status == 202),
+ * selects the input's text and calls reloadBackend();
+ *
+ * @param p_request
+ *            the request to get its status
+ */
+function handlePostResponse(p_request) {
+	// If request is complete...
+	if (p_request.readyState == 4) {
+		// And the status is 202 (ACCEPTED)
+		if (p_request.status == 202) {
+			document.getElementById('message').select();
+			reloadBackend();
+		}
+	}
+}
+
+
+/**
+ * Reloads the backend.
+ */
+function reloadBackend() {
+}
