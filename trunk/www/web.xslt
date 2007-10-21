@@ -47,6 +47,12 @@
 
 	<div id="postForm">
 		<form method="post" action="post">
+			<input type="button" onclick="javascript: addTagToMessage('b');"  value="Gras"     accessKey="g" />
+			<input type="button" onclick="javascript: addTagToMessage('i');"  value="Italique" accessKey="i" />
+			<input type="button" onclick="javascript: addTagToMessage('u');"  value="Souligné" accessKey="s" />
+			<input type="button" onclick="javascript: addTagToMessage('s');"  value="Barré"    accessKey="b" />
+			<input type="button" onclick="javascript: addTagToMessage('tt');" value="TrueType" accessKey="t" />
+			<br/>
 			<input type="button" onclick="javascript: clearMessage();" />
 			<input id="message" name="message" type="text" maxlength="512" accesskey="m" />
 		</form>
