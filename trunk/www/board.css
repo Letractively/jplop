@@ -1,25 +1,12 @@
-/***** The whole page *****/
-BODY {
-	margin: 0;
-	text-align: center;
-}
+@import url('common.css');
 
-
-/***** The title *****/
-#header {
-	background-color: #ccccff;
-	border-bottom: 1px solid #000099;
-}
-
-#header H1 {
-	text-align: center;
-	margin: 0;}
-
+/***** The header *****/
 #header #site {
 	font-size: small;
 	font-style: italic;
 	text-align: right;
 }
+
 
 /***** The list of posts *****/
 #board {
@@ -65,18 +52,4 @@ BODY {
 
 #message {
 	width: 70%;
-}
-
-
-/***** The footer *****/
-HR {
-	width: 80%;
-}
-
-#footer {
-	font-size: small;
-	text-align: center;
-	width: 80%;
-	margin-left: 10%;
-	margin-right: 10%;
 }

@@ -59,7 +59,7 @@ public class History {
 	
 
 	// GETTERS \\
-	private final String getURL() {
+	protected final String getURL() {
 		return m_url;
 	}
 	

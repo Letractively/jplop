@@ -24,7 +24,9 @@ public class Backend {
 	
 	private static final String URL_KEY = "jboard.url";
 	
-	private static final String SIZE_KEY = "jboard.size";
+	private static final String SIZE_KEY = "jboard.history.size";
+	
+	private static final String POST_LENGTH_KEY = "jboard.post.maxLength";
 	
 	
 	// STATIC FIELDS \\
@@ -46,6 +48,18 @@ public class Backend {
 	
 
 	// GETTERS \\
+	public final String getURL() {
+		return m_history.getURL();
+	}
+	
+	public final int getMaxSize() {
+		return m_history.maxSize();
+	}
+	
+	public final int getMaxPostLength() {
+		return Post.getMaxLength();
+	}
+	
 	public final String getLastModified() {
 		return m_history.getLastModified();
 	}
@@ -72,8 +86,12 @@ public class Backend {
 	protected final synchronized void init() {
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
+		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		try {
+			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
+			
+			// Load the URL property
 			try {
 				url = config.getString(URL_KEY);
 			}
@@ -81,8 +99,20 @@ public class Backend {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
+			// Load the history size property
 			try {
 				size = Integer.parseInt(config.getString(SIZE_KEY));
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
+			catch (NumberFormatException e) {
+				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
+			}
+			
+			// Load the max post length property
+			try {
+				maxPostLength = Integer.parseInt(config.getString(POST_LENGTH_KEY));
 			}
 			catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
@@ -101,7 +131,9 @@ public class Backend {
 			m_history.setURL(url);
 			m_history.setMaxSize(size);
 		}
+		Post.setMaxLength(maxPostLength);
 		m_logger.info("Backend at '" + url + "' with " + size + "-posts history ready.");
+		m_logger.info("The posts may have a length of '" + maxPostLength + "' caracters.");
 	}
 	
 	public final synchronized void addMessage(String p_info, String p_message) {
