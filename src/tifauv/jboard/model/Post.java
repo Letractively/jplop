@@ -11,9 +11,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * A post has the following elements:
+ * <ul><li>a unique identifier&nbsp; (a sequential long integer)&nbsp;;</li>
+ * <li>the datetime&nbsp;;</li>
+ * <li>the login of the author or Anonyme&nbsp;</li>
+ * <li>the user-agent of the author&nbsp;;</li>
+ * <li>the message</li></ul>
+ * <p>The message accepts some HTML-like style tags (b, i, u, s, tt).
+ * The message is checked for well-formness. If some tags are not closed,
+ * the required close-tags are added.</p>
  * 
- *
- * @version 0.1
+ * @version 1.0
  *
  * @author Olivier Serve <olivier.serve@bull.net>
  */
@@ -23,6 +31,7 @@ public class Post {
 	/** The format of a time attribute. */
 	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
+	/** The */
 	private static final String POST_TAGNAME = "post";
 	
 	private static final String POST_ID_ATTRNAME = "id";
@@ -41,12 +50,18 @@ public class Post {
 	
 	private static final String ANONYMOUS_LOGIN = "Anonymous";
 	
-	private static final int MAX_MESSAGE_LENGTH = 512;
+	protected static final int DEFAULT_MAX_POST_LENGTH = 512;
 	
+	/** The list of allowed tags. */
 	private static final String[] TAGS = { "b", "i", "u", "s", "tt" };
 	
+	/** The generated pattern regex for start tags. */
 	private static final String STARTTAG_PATTERN;
+
+	/** The generated pattern regex for end tags. */
 	private static final String ENDTAG_PATTERN;
+	
+	/** Generates the start and end tags patterns. */
 	static {
 		String starttags = "";
 		for (String tag : TAGS) {
@@ -57,6 +72,8 @@ public class Post {
 		STARTTAG_PATTERN = "<(" + starttags + ")>";
 		ENDTAG_PATTERN = "</(" + starttags + ")>";
 	}
+	
+	/** The aggregation of start and end tags. */
 	private static final String PATTERN = STARTTAG_PATTERN + "|" + ENDTAG_PATTERN;
 
 	
@@ -67,7 +84,11 @@ public class Post {
 	/** The counter of post identificers. */
 	private static long s_idCounter = 0;
 	
-	private static Pattern s_pattern = Pattern.compile(PATTERN);
+	/** The maximum length of a post. */
+	private static int s_maxLength = DEFAULT_MAX_POST_LENGTH;
+	
+	/** The tags pattern. */
+	private static Pattern s_tagPattern = Pattern.compile(PATTERN);
 	
 	
 	// FIELDS \\
@@ -103,6 +124,10 @@ public class Post {
 	
 
 	// GETTERS \\
+	protected static int getMaxLength() {
+		return s_maxLength;
+	}
+	
 	public final long getId() {
 		return m_id;
 	}
@@ -129,6 +154,10 @@ public class Post {
 	
 	
 	// SETTERS \\
+	protected static void setMaxLength(int p_length) {
+		s_maxLength = p_length;
+	}
+	
 	private final void setId(long p_id) {
 		m_id = p_id;
 	}
@@ -146,25 +175,48 @@ public class Post {
 	}
 	
 	private final void setMessage(String p_message) {
-		String message = p_message;
-		if (message.length() > MAX_MESSAGE_LENGTH)
-			message = message.substring(0, MAX_MESSAGE_LENGTH);
+		String message = p_message.trim();
+		if (message.length() > getMaxLength())
+			message = message.substring(0, getMaxLength());
 		m_message = cleanText(message);
 	}
 
+	
 	// METHODS \\
+	/**
+	 * Gives the next post identifier.
+	 */
 	private static synchronized long nextId() {
 		return s_idCounter++;
 	}
 	
 	
+	/**
+	 * Converts &, ", ', < and > into their XML entities.
+	 * 
+	 * @param p_str
+	 *            the string to convert
+	 * 
+	 * @return the converted string
+	 */
 	private final String xmlEntities(String p_str) {
 		return p_str.replace("&" , "&amp;")
+					.replace("\'", "&aquot;")
 					.replace("\"", "&quot;")
 					.replace("<" , "&lt;")
 					.replace(">" , "&gt;");
 	}
 
+	
+	/**
+	 * Trims the input message then keeps the allowed tags (b, i, u, s and tt)
+	 * while removing others and closing them if needed.
+	 * 
+	 * @param p_message
+	 *            the message to clean
+	 * 
+	 * @return the cleaned message
+	 */
 	private final String cleanText(String p_message) {
 		String message = p_message.trim();
 		StringBuffer buffer = new StringBuffer(message.length());
@@ -172,7 +224,7 @@ public class Post {
 		
 		boolean found;
 		int previousMatch = 0;
-		Matcher matcher = s_pattern.matcher(message);
+		Matcher matcher = s_tagPattern.matcher(message);
 		while (!matcher.hitEnd()) {
 			found = matcher.find();
 
@@ -226,6 +278,10 @@ public class Post {
 		return buffer.toString();
 	}
 	
+	
+	/**
+	 * Converts a post to an XML-like string.
+	 */
 	@Override
 	public final String toString() {
 		return "<" + POST_TAGNAME + " " + POST_ID_ATTRNAME + "=\"" + getId() + "\" " + POST_TIME_ATTRNAME + "=\"" + getFormattedTime() + "\">"
