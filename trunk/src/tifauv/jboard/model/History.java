@@ -81,11 +81,11 @@ public class History {
 	
 	
 	// SETTERS \\
-	private final void setURL(String p_url) {
+	protected final void setURL(String p_url) {
 		m_url = p_url;
 	}
 	
-	private final synchronized void setMaxSize(int p_size) {
+	protected final synchronized void setMaxSize(int p_size) {
 		m_maxSize = p_size;
 		truncate();
 	}
