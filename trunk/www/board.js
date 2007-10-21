@@ -1,7 +1,7 @@
 /**
- *
+ * Clears the 'message' input of the post form.
  */
-function cleanMessage() {
+function clearMessage() {
 	var input = document.getElementById('message');
 	input.value = '';
 	input.focus();
@@ -9,7 +9,7 @@ function cleanMessage() {
 
 
 /**
- *
+ * Adds a string to the 'message' input of the post form.
  */
 function addStrToMessage(p_string) {
 	var input = document.getElementById('message');
@@ -31,7 +31,8 @@ function addStrToMessage(p_string) {
 
 
 /**
- *
+ * Adds a tag pair to the 'message' input of the post form.
+ * If some text is selected, it tags the selection.
  */
 function addTagToMessage(p_tagName) {
 	var input = document.getElementById('message');
