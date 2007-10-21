@@ -20,7 +20,7 @@
 		</div>
 		
 		<p>Ceci est une tribune 100% backend-oriented.
-		La présentation pour les navigateurs est réalisée par une feuille de style XSLT.</p>
+		La prÃ©sentation pour les navigateurs est rÃ©alisÃ©e par une feuille de style XSLT.</p>
 
 		<div id="board-access" >
 			<a href="backend">Voir la tribune</a>
@@ -48,7 +48,7 @@ board_site:                <%= name %>
 		
 		<div class="config">
 			<h3>Les coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
-			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
+			<p>Si votre coincoin n'a pas de systÃ¨me d'auto-configuration, dÃ©brouillez-vous pour lui faire manger Ã§a&nbsp;:</p>
 			<pre class="cc-config">
 &lt;site name="<%= name %>" title="<%= fullname %>" baseurl="<%= url %>" version="1.0"&gt;
 	&lt;board name="board" title="Tribune"&gt;
@@ -62,6 +62,6 @@ board_site:                <%= name %>
 		
 		<hr/>
 		
-		<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
+		<div id="footer">Cette tribune est dÃ©diÃ©e Ã  la mÃ©moire de Pierre Tramo.</div>
 	</body>
 </html>
