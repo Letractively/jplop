@@ -7,15 +7,7 @@
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
 <%! int maxPostLength = Backend.getInstance().getMaxPostLength(); %>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-    <jsp:directive.page language="java"
-        contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
-    <jsp:text>
-        <![CDATA[ <?xml version="1.0" encoding="UTF-8" ?> ]]>
-    </jsp:text>
-    <jsp:text>
-        <![CDATA[ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> ]]>
-    </jsp:text>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -70,7 +62,6 @@ board_site:                <%= name %>
 		
 		<hr/>
 		
-		<div id="footer">Cette tribune est dÃÂÃÂ©diÃÂÃÂ©e ÃÂÃÂ  la mÃÂÃÂ©moire de Pierre Tramo.</div>
+		<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
 	</body>
 </html>
-</jsp:root>
