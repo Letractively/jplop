@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@ page contentType="text/html" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
 <%@ page import="tifauv.jboard.model.Backend" %>
@@ -7,7 +7,7 @@
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
 <%! int maxPostLength = Backend.getInstance().getMaxPostLength(); %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

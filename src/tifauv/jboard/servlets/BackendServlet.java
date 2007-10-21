@@ -111,7 +111,7 @@ public class BackendServlet extends HttpServlet {
 		}
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
-			p_response.setContentType("text/xml");
+			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setHeader(LAST_MODIFIED, Backend.getInstance().getLastModified());
 			p_response.setContentLength(text.length());
 			try {
