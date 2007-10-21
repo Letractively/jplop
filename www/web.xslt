@@ -6,19 +6,24 @@
 	encoding="UTF-8"
 	doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd"
+	cdata-section-elements="qnames"
 	indent="yes" />
-  
+                
 <xsl:template match="board">
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 		<head>
-			<meta http-equiv="content-type"  content="text/html; charset=utf-8" />
-			<title>JBoard - La Tribune des décideurs pressés</title>
+			<title><xsl:text>JBoard - La Tribune des décideurs pressés</xsl:text></title>
 			<author>Olivier Serve</author>
 			<link rel="stylesheet" type="text/css" href="board.css" />
 			<script type="text/javascript" src="board.js"></script>
 		</head>
 		<body>
-			<h1>JBoard - <xsl:apply-templates select="@site" /></h1>
+			<div id="header">
+				<h1>JBoard</h1>
+				<div id="site">
+					<a href="{@site}" title="Accueil de la tribune"><xsl:apply-templates select="@site" /></a>
+				</div>
+			</div>
 			
 			<ul id="board">
 				<xsl:for-each select="post">
@@ -35,14 +40,14 @@
 			
 			<div id="postForm">
 				<form method="post" action="post">
-					<input type="button" onclick="javascript: cleanMessage();" />
-					<input id="message" name="message" type="text" />
+					<input type="button" onclick="javascript: clearMessage();" />
+					<input id="message" name="message" type="text" maxlength="512" accesskey="m" />
 				</form>
 			</div>
 			
 			<hr />
 		
-			<div id="footer">Cette page devrait être en XHTML 1 strict.</div>
+			<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
 		</body>
 	</html>
 </xsl:template>

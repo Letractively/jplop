@@ -22,7 +22,7 @@ public class Backend {
 
 	// CONSTRUCTORS \\
 	private Backend() {
-		m_history = new History("http://localhost/jboard");
+		m_history = new History("http://localhost:8080/jboard");
 	}
 	
 
