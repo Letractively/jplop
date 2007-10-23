@@ -4,6 +4,7 @@
 package tifauv.jboard.servlets;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -112,10 +113,14 @@ public class BackendServlet extends HttpServlet {
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
 			p_response.setContentType("text/xml;charset=UTF-8");
+			p_response.setCharacterEncoding("UTF-8");
 			p_response.setHeader(LAST_MODIFIED, Backend.getInstance().getLastModified());
-			p_response.setContentLength(text.length());
 			try {
+				p_response.setContentLength(text.getBytes("UTF-8").length);
 				p_response.getWriter().print(text);
+			}
+			catch (UnsupportedEncodingException e) {
+				// Cannot happen
 			}
 			catch (IOException e) {
 				p_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
