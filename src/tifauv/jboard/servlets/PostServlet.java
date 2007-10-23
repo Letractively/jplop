@@ -3,6 +3,8 @@
  */
 package tifauv.jboard.servlets;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,8 +104,13 @@ public class PostServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
+		try {
+			p_request.setCharacterEncoding("UTF-8");
+		}
+		catch (UnsupportedEncodingException e) {
+			// Cannot happen
+		}
 		String message = p_request.getParameter(MESSAGE_PARAM);
-		
 		if (message == null) {
 			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 		}
