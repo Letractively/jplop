@@ -159,3 +159,136 @@ function handlePostResponse(p_request) {
  */
 function reloadBackend() {
 }
+
+
+/**
+ * Executes an XPath search on the document.
+ */
+function searchItems(xpath) {
+	return document.evaluate(
+			xpath,
+			document,
+			null,
+			XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+			null);
+}
+
+
+/**
+ * .
+ */
+function load() {
+	var clockRegex = /(((?:[01]?[0-9])|(?:2[0-3]))(:[0-5][0-9])(:[0-5][0-9])(?:(?:[\\^:][0-9])|\\xB9|\\xB2|\\xB3)?(?:@[0-9A-Za-z]+)?)/g;
+
+	//add_highlight_div();
+
+	// Find the clock references in the messages
+	var items = searchItems("//*[@class='post']/*[@class='message']");
+	for (var i=0; i<items.snapshotLength; ++i) {
+		item = items.snapshotItem(i);
+		var message = item.innerHTML;
+		item.innerHTML = message.replace(clockRegex, '<span class="ref">$1</span>');
+	}
+	
+	// Add event listeners message -> responses
+	var items = searchItems("//*[contains(@class, 'clock')]");
+	for (var i=0; i<items.snapshotLength; ++i) {
+		var item = items.snapshotItem(i);
+		item.addEventListener('mouseover',
+			function(event) {
+				highlightPost(this, 'highlighted');
+				//GFloatPanel.style.display='none'; 
+			},
+			true);
+		item.addEventListener('mouseout',
+			function(event) {
+				highlightPost(this, '');
+				//GFloatPanel.style.display='none';
+			},
+			true);
+	}
+	
+	// Add event listeners references -> message
+	items = searchItems("//*[contains(@class, 'ref')]");
+	for (var i=0; i<items.snapshotLength; ++i) {
+		var item = items.snapshotItem(i);
+		item.addEventListener('mouseover',
+			function(event) { 
+				highlightRef(this, 'highlighted'); 
+				//if (GPageYOffset <= window.pageYOffset) 
+				//	GFloatPanel.style.display='block'; 
+			},
+			true); 
+		item.addEventListener('mouseout',
+			function(event) { 
+				highlightRef(this, '');
+				//GFloatPanel.style.display='none'; 
+			},
+			true);
+
+		// Special style for my messages
+		/*for (var j=0; j<GMyPosts.length; ++j) {
+			if (item.innerHTML == GMyPosts[j]) {
+				item.style.color = MyHorlogeColor;
+			}
+		}*/
+	}
+    
+	// Special highlight for 'my' messages
+	items = searchItems("//*[@class='login']");
+	for (var i=0; i<items.snapshotLength; ++i) {
+		var item = items.snapshotItem(i);
+		if (item.innerHTML == GLogin) {
+			item.className = 'login my';
+		}
+	}
+}
+
+
+/**
+ * Highlights a post and its clock-references.
+ */
+function highlightPost(p_clock, p_class) {
+	// Extract the clock from the given clock [hh:mm:ss]
+	var clockValue = p_clock.innerHTML.substring(1, 9);
+	
+	// Highlight the post
+	p_clock.parentNode.className = 'post ' + p_class;
+	
+	// Highlight the clock-references
+	var refs = searchItems("//*[contains(@class, 'ref')]");
+	for (var i=0; i<refs.snapshotLength; ++i) {
+		var ref = refs.snapshotItem(i);
+		if (ref.innerHTML.indexOf(clockValue) > -1)
+			ref.className = 'ref ' + p_class;
+	}
+}
+
+
+/**
+ * Highlights
+ */
+function highlightRef(p_ref, p_class) {
+	// Extract the clock from the given reference
+	var clockValue = p_ref.innerHTML;
+	
+	// Highlight the referenced post
+	var clocks = searchItems("//*[contains(@class, 'clock')]");
+	for (var i=0; i<clocks.snapshotLength; ++i) {
+		var clock = clocks.snapshotItem(i);
+		if (clock.innerHTML.indexOf('[' + clockValue + ']') > -1)
+			clock.parentNode.className = 'post ' + p_class;
+	}
+	
+	// Highlight the same references
+	var refs = searchItems("//*[contains(@class, 'ref')]");
+	for (var i=0; i<refs.snapshotLength; ++i) {
+		var ref = refs.snapshotItem(i);
+		if (ref.innerHTML.indexOf(clockValue) > -1)
+			ref.className = 'ref ' + p_class;
+	}
+}
+
+
+// Auto-load the load() function
+window.addEventListener('load', function() { load(); }, true);

@@ -28,7 +28,7 @@
 	<div id="header">
 		<h1>JBoard</h1>
 		<div id="site">
-			<a href="{@site}" title="Accueil de la tribune"><xsl:apply-templates select="@site" /></a>
+			<a href="{@site}" title="Accueil de la tribune">Accueil</a>
 		</div>
 	</div>
 
