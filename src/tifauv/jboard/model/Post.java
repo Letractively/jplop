@@ -4,11 +4,16 @@
 package tifauv.jboard.model;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * A post has the following elements:
@@ -32,7 +37,7 @@ public class Post {
 	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
 	/** The */
-	private static final String POST_TAGNAME = "post";
+	public static final String POST_TAGNAME = "post";
 	
 	private static final String POST_ID_ATTRNAME = "id";
 	
@@ -122,6 +127,56 @@ public class Post {
 		setLogin(p_login);
 	}
 	
+	
+	/**
+	 * Loads a post from a <Post> element.
+	 * 
+	 * @param p_post
+	 *            the DOM element from which to load a post
+	 * 
+	 * @throws ParseException
+	 *            if a post time attribute cannot be loaded
+	 * @throws NumberFormatException
+	 *            if a post id cannot be loaded
+	 */
+	public Post(Element p_post)
+	throws ParseException,
+	NumberFormatException {
+		if (p_post.getLocalName().equals(POST_TAGNAME)) {
+			// id attribute
+			if (p_post.hasAttribute(POST_ID_ATTRNAME))
+				setId(Long.parseLong(p_post.getAttribute(POST_ID_ATTRNAME)));
+			
+			// time attribute
+			if (p_post.hasAttribute(POST_TIME_ATTRNAME))
+				setTime(s_timeFormat.parse(p_post.getAttribute(POST_TIME_ATTRNAME)));
+			
+			// <info> element
+			NodeList elems = p_post.getElementsByTagName(INFO_TAGNAME);
+			if (elems.getLength() > 0) {
+				Element elem = (Element)elems.item(0);
+				CDATASection cdata = (CDATASection)elem.getFirstChild();
+				setInfo(cdata.getData());
+			}
+			
+			// <message> element
+			elems = p_post.getElementsByTagName(MESSAGE_TAGNAME);
+			if (elems.getLength() > 0) {
+				Element elem = (Element)elems.item(0);
+				CDATASection cdata = (CDATASection)elem.getFirstChild();
+				setMessage(cdata.getData());
+			}
+			
+			// <login> element
+			elems = p_post.getElementsByTagName(LOGIN_TAGNAME);
+			if (elems.getLength() > 0) {
+				Element elem = (Element)elems.item(0);
+				CDATASection cdata = (CDATASection)elem.getFirstChild();
+				setLogin(cdata.getData());
+			}
+		}
+	}
+	
 
 	// GETTERS \\
 	protected static int getMaxLength() {
@@ -154,26 +209,67 @@ public class Post {
 	
 	
 	// SETTERS \\
+	/**
+	 * Sets the maximum length of a post.
+	 * 
+	 * @param p_length
+	 *            the maximum length of a post
+	 */
 	protected static void setMaxLength(int p_length) {
 		s_maxLength = p_length;
 	}
 	
+	
+	/**
+	 * Sets the post id.
+	 * 
+	 * @param p_id
+	 *            the posts' identifier
+	 */
 	private final void setId(long p_id) {
 		m_id = p_id;
 	}
 	
+	
+	/**
+	 * Sets the datetime of this post.
+	 * 
+	 * @param p_time
+	 *            the time of the post
+	 */
 	private final void setTime(Date p_time) {
 		m_datetime = p_time;
 	}
 	
+	
+	/**
+	 * Sets the info (User-Agent) of this post.
+	 * 
+	 * @param p_info
+	 *            the info of the post
+	 */
 	private final void setInfo(String p_info) {
 		m_info = cleanText(p_info);
 	}
 	
+	
+	/**
+	 * Sets the login of this post.
+	 * 
+	 * @param p_login
+	 *            the login of the post
+	 */
 	private final void setLogin(String p_login) {
 		m_login = cleanText(p_login);
 	}
 	
+	
+	/**
+	 * Trims the message, truncates it to the maximum length
+	 * then cleans its tags.
+	 * 
+	 * @param p_message
+	 */
 	private final void setMessage(String p_message) {
 		String message = p_message.trim();
 		if (message.length() > getMaxLength())

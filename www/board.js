@@ -175,7 +175,8 @@ function searchItems(xpath) {
 
 
 /**
- * .
+ * Initialization function. Tags the clock references
+ * and sets the mouse event listeners over the clocks and clock references.
  */
 function load() {
 	var clockRegex = /(((?:[01]?[0-9])|(?:2[0-3]))(:[0-5][0-9])(:[0-5][0-9])(?:(?:[\\^:][0-9])|\\xB9|\\xB2|\\xB3)?(?:@[0-9A-Za-z]+)?)/g;
@@ -247,6 +248,11 @@ function load() {
 
 /**
  * Highlights a post and its clock-references.
+ *
+ * @param p_clock
+ *            the clock item
+ * @param p_class
+ *            the class to add to the elements
  */
 function highlightPost(p_clock, p_class) {
 	// Extract the clock from the given clock [hh:mm:ss]
@@ -266,7 +272,12 @@ function highlightPost(p_clock, p_class) {
 
 
 /**
- * Highlights
+ * Highlights the referenced post and the similar references.
+ *
+ * @param p_ref
+ *            the ref item
+ * @param p_class
+ *            the class to add to the elements
  */
 function highlightRef(p_ref, p_class) {
 	// Extract the clock from the given reference
