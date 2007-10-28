@@ -53,7 +53,7 @@ public class Post {
 	
 	private static final String CDATA_END = "]]>";
 	
-	private static final String ANONYMOUS_LOGIN = "Anonymous";
+	private static final String ANONYMOUS_LOGIN = "Anonyme";
 	
 	protected static final int DEFAULT_MAX_POST_LENGTH = 512;
 	
@@ -86,9 +86,6 @@ public class Post {
 	/** The time formatter. */
 	private static final DateFormat s_timeFormat = new SimpleDateFormat(TIME_FORMAT);
 	
-	/** The counter of post identificers. */
-	private static long s_idCounter = 0;
-	
 	/** The maximum length of a post. */
 	private static int s_maxLength = DEFAULT_MAX_POST_LENGTH;
 	
@@ -114,13 +111,11 @@ public class Post {
 	
 
 	// CONSTRUCTORS \\
-	public Post(String p_info, String p_message) {
-		this(p_info, p_message, ANONYMOUS_LOGIN);
-	}
-	
-
-	public Post(String p_info, String p_message, String p_login) {
-		setId(nextId());
+	/**
+	 * 
+	 */
+	public Post(long p_id, String p_info, String p_message, String p_login) {
+		setId(p_id);
 		setTime(new Date());
 		setInfo(p_info);
 		setMessage(p_message);
@@ -260,7 +255,10 @@ public class Post {
 	 *            the login of the post
 	 */
 	private final void setLogin(String p_login) {
-		m_login = cleanText(p_login);
+		if (p_login == null)
+			m_login = ANONYMOUS_LOGIN;
+		else
+			m_login = cleanText(p_login);
 	}
 	
 	
@@ -279,14 +277,6 @@ public class Post {
 
 	
 	// METHODS \\
-	/**
-	 * Gives the next post identifier.
-	 */
-	private static synchronized long nextId() {
-		return s_idCounter++;
-	}
-	
-	
 	/**
 	 * Converts &, ", < and > into their XML entities.
 	 * 

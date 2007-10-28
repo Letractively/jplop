@@ -239,6 +239,7 @@ public class Backend {
 	ParseException {
 		File cacheFile = getCacheFile();
 		if (cacheFile.exists()) {
+			m_logger.info("Loading the Backend from cache...");
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
 			factory.setNamespaceAware(true);
@@ -247,7 +248,7 @@ public class Backend {
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				m_history.load(builder.parse(getCacheFile()));
-				m_logger.info("Backend loaded from cache.");
+				m_logger.info(m_history.size() + " posts loaded from cache.");
 			}
 			catch (ParserConfigurationException e) {
 				// Cannot happen
@@ -283,11 +284,7 @@ public class Backend {
 		}
 	}
 	
-	public final synchronized void addMessage(String p_info, String p_message) {
-		m_history.addPost(new Post(p_info, p_message));
-	}
-	
 	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
-		m_history.addPost(new Post(p_info, p_message, p_login));
+		m_history.addMessage(p_info, p_message, p_login);
 	}
 }
