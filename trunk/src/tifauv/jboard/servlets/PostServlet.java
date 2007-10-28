@@ -115,7 +115,7 @@ public class PostServlet extends HttpServlet {
 		}
 		else {
 			String userAgent = p_request.getHeader(USER_AGENT);
-			Backend.getInstance().addMessage(userAgent, message);
+			Backend.getInstance().addMessage(userAgent, message, null);
 			p_response.setStatus(HttpServletResponse.SC_ACCEPTED);
 		}
 	}

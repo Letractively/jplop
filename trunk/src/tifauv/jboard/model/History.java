@@ -51,6 +51,9 @@ public class History {
 	/** The maximum size of the history. */
 	private int m_maxSize;	
 	
+	/** The counter of post identificers. */
+	private long m_idCounter;
+	
 	/** The URL of the backend file. */
 	private String m_url;
 	
@@ -91,6 +94,14 @@ public class History {
 	
 
 	// GETTERS \\
+	/**
+	 * Gives the next post identifier.
+	 */
+	private synchronized long getNextId() {
+		return m_idCounter++;
+	}
+	
+	
 	/**
 	 * Gives the history's URL.
 	 */
@@ -133,6 +144,14 @@ public class History {
 	
 	// SETTERS \\
 	/**
+	 * Sets the next post identifier.
+	 */
+	private synchronized void setNextId(long p_id) {
+		m_idCounter = p_id;
+	}
+	
+	
+	/**
 	 * Sets the history's URL.
 	 * 
 	 * @param p_url
@@ -171,6 +190,11 @@ public class History {
 	
 
 	// METHODS \\
+	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
+		addPost(new Post(getNextId(), p_info, p_message, p_login));
+	}
+	
+	
 	/**
 	 * Adds a post to the history.
 	 * 
@@ -180,7 +204,7 @@ public class History {
 	 * @see {@link #setModified()}
 	 * @see {@link #truncate()}
 	 */
-	public final synchronized void addPost(Post p_post) {
+	protected final synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
 		m_logger.info("New post added.");
 		setModified();
@@ -239,8 +263,15 @@ public class History {
 			
 			// <post> elements
 			NodeList posts = board.getElementsByTagName(Post.POST_TAGNAME);
-			for (int i=0; i<posts.getLength(); ++i)
-				addPost(new Post((Element)posts.item(i)));
+			Post post = null;
+			for (int i=posts.getLength()-1; i>=0; --i) {
+				post = new Post((Element)posts.item(i));
+				addPost(post);
+			}
+			
+			// We have the past post, update the id counter
+			if (post != null)
+				setNextId(post.getId() + 1);
 		}
 	}
 	
@@ -250,6 +281,7 @@ public class History {
 	 */
 	private final void updateCache() {
 		if (m_mustRewriteCache) {
+			m_logger.info("Rewriting the backend...");
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n");
 			buffer.append("<" + BOARD_TAGNAME + " " + BOARD_SITE_ATTRNAME + "=\"" + getURL() + "\">\n");
@@ -258,10 +290,10 @@ public class History {
 			buffer.append("</" + BOARD_TAGNAME + ">");
 			m_cache = buffer.toString();
 			m_mustRewriteCache = false;
-			m_logger.info("Cache rewritten.");
+			m_logger.info("  done.");
 		}
 		else
-			m_logger.debug("Cache doesn't need to be rewritten.");
+			m_logger.debug("The backend doesn't need to be rewritten.");
 	}
 	
 	
