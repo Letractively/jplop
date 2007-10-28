@@ -28,10 +28,16 @@ public class BackendServlet extends HttpServlet {
 	private static final long serialVersionUID = 8034380019578813009L;
 
 	/** The If-Modified-Since header name. */
-	private static final String IF_MODIFIED_SINCE = "If-Modified-Since";
+	private static final String HTTP_IF_MODIFIED_SINCE = "If-Modified-Since";
 	
 	/** The Last-Modified header name.*/
-	private static final String LAST_MODIFIED = "Last-Modified";
+	private static final String HTTP_LAST_MODIFIED = "Last-Modified";
+	
+	private static final String HTTP_PRAGMA = "Pragma";
+	
+	private static final String HTTP_CACHE_CONTROL = "Cache-Control";
+	
+	private static final String NO_CACHE = "no-cache";
 	
 	
 	// FIELDS \\
@@ -45,7 +51,14 @@ public class BackendServlet extends HttpServlet {
 	 */
 	@Override
 	public final void init() {
-		Backend.getInstance();
+		m_logger.info("====> \\_o< JBoard starting >o_/ <====");
+		try {
+			Backend.getInstance().init(getServletContext().getRealPath("/"));
+			Backend.getInstance().loadFromCache();
+		}
+		catch (Exception e) {
+			m_logger.error("Cannot initialize the backend.", e);
+		}
 		m_logger.info("Backend servlet ready.");
 	}
 	
@@ -55,7 +68,9 @@ public class BackendServlet extends HttpServlet {
 	 */
 	@Override
 	public final void destroy() {
+		Backend.getInstance().saveToCache();
 		m_logger.info("Backend servlet stopped.");
+		m_logger.info("====> \\_x<~ JBoard stopped ~>x_/ <====");
 	}
 	
 	
@@ -103,18 +118,21 @@ public class BackendServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
-		String text = Backend.getInstance().getText(p_request.getParameter(IF_MODIFIED_SINCE));
+		String text = Backend.getInstance().getText(p_request.getParameter(HTTP_IF_MODIFIED_SINCE));
 
+		p_response.setHeader(HTTP_PRAGMA, NO_CACHE);
+		p_response.setHeader(HTTP_CACHE_CONTROL, NO_CACHE);
+		
 		if (text == null) {
 			p_response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-			p_response.setHeader(LAST_MODIFIED, Backend.getInstance().getLastModified());
+			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
 			p_response.setContentLength(0);
 		}
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
 			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setCharacterEncoding("UTF-8");
-			p_response.setHeader(LAST_MODIFIED, Backend.getInstance().getLastModified());
+			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
 			try {
 				p_response.setContentLength(text.getBytes("UTF-8").length);
 				p_response.getWriter().print(text);

@@ -10,6 +10,7 @@
 		<servlet-name>BackendServlet</servlet-name>
 		<servlet-class>
 		tifauv.jboard.servlets.BackendServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
 		<description>
@@ -19,6 +20,7 @@
 		<servlet-name>PostServlet</servlet-name>
 		<servlet-class>
 		tifauv.jboard.servlets.PostServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>BackendServlet</servlet-name>

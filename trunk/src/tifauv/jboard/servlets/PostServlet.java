@@ -44,7 +44,6 @@ public class PostServlet extends HttpServlet {
 	 */
 	@Override
 	public final void init() {
-		Backend.getInstance();
 		m_logger.info("Post servlet ready.");
 	}
 	
