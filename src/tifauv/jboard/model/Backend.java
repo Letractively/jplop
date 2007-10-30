@@ -132,7 +132,8 @@ public class Backend {
 		File cacheFile = new File(p_cacheFile);
 		if (cacheFile.isAbsolute())
 			m_cacheFile = cacheFile;
-		m_cacheFile = new File(p_contextDir + File.separator + WEBINF, p_cacheFile);
+		else
+			m_cacheFile = new File(p_contextDir + File.separator + WEBINF, p_cacheFile);
 	}
 	
 	
