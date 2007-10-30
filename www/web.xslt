@@ -4,8 +4,8 @@
 <xsl:output 
 	method="html"
 	encoding="UTF-8"
-	doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
-	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd"
+	doctype-public="-//W3C//DTD XHTML 1.1//EN"
+	doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
 	indent="yes" />
 
 <!-- The HTML structure -->

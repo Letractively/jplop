@@ -9,19 +9,33 @@ BODY {
 /***** The title *****/
 #header {
 	font-family: serif;
-	background-color: #ccccff;
-	border-bottom: 1px solid #000099;
+	background-color: #326495;
+	background-image: url('images/coincoin.png');
+	border-bottom: 0.2em solid #0c3762;
 }
 
 #header H1 {
 	text-align: center;
 	margin: 0;
+	color: #ffffff;
 }
 
 
 /***** Other titles *****/
 H2, H3, H4, H5, H6 {
 	text-align: left;
+}
+
+
+/***** The links *****/
+:link, :visited {
+	color: #336698;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #43ae39;
+	text-decoration: underline;
 }
 
 /***** The footer *****/
