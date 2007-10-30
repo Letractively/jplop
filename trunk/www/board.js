@@ -195,37 +195,35 @@ function load() {
 	var items = searchItems("//*[contains(@class, 'clock')]");
 	for (var i=0; i<items.snapshotLength; ++i) {
 		var item = items.snapshotItem(i);
-		item.addEventListener('mouseover',
-			function(event) {
-				highlightPost(this, 'highlighted');
+		var highlightFn = function (event) {
+				highlightPost(event.target, 'highlighted');
 				//GFloatPanel.style.display='none'; 
-			},
-			true);
-		item.addEventListener('mouseout',
-			function(event) {
-				highlightPost(this, '');
+			};
+		addEvent(item, 'mouseover', highlightFn);
+
+		var unhighlightFn = function (event) {
+				highlightPost(event.target, '');
 				//GFloatPanel.style.display='none';
-			},
-			true);
+			};
+		addEvent(item, 'mouseout', unhighlightFn);
 	}
 	
 	// Add event listeners references -> message
 	items = searchItems("//*[contains(@class, 'ref')]");
 	for (var i=0; i<items.snapshotLength; ++i) {
 		var item = items.snapshotItem(i);
-		item.addEventListener('mouseover',
-			function(event) { 
-				highlightRef(this, 'highlighted'); 
+		var highlightFn = function (event) { 
+				highlightRef(event.target, 'highlighted'); 
 				//if (GPageYOffset <= window.pageYOffset) 
 				//	GFloatPanel.style.display='block'; 
-			},
-			true); 
-		item.addEventListener('mouseout',
-			function(event) { 
-				highlightRef(this, '');
+			};
+		addEvent(item, 'mouseover', highlightFn);
+
+		var unhighlightFn = function (event) { 
+				highlightRef(event.target, '');
 				//GFloatPanel.style.display='none'; 
-			},
-			true);
+			};
+		addEvent(item, 'mouseout', unhighlightFn);
 
 		// Special style for my messages
 		/*for (var j=0; j<GMyPosts.length; ++j) {
@@ -236,13 +234,89 @@ function load() {
 	}
     
 	// Special highlight for 'my' messages
-	items = searchItems("//*[@class='login']");
+	/*items = searchItems("//*[@class='login']");
 	for (var i=0; i<items.snapshotLength; ++i) {
 		var item = items.snapshotItem(i);
 		if (item.innerHTML == GLogin) {
 			item.className = 'login my';
 		}
-	}
+	}*/
+}
+
+
+/**
+ * Add an event listener for DOM2 browsers.
+ *
+ * @param p_element
+ *            the element on which to set the event
+ * @param p_eventType
+ *            the type of event 
+ * @param p_function
+ *            the function to call when the event is triggered
+ */
+function myAddEventListener(p_element, p_eventType, p_function) {
+	p_element.addEventListener(p_eventType, p_function, false);
+}
+
+
+/**
+ * Add an event listener for Internet Explorer <= 6.
+ *
+ * @param p_element
+ *            the element on which to set the event
+ * @param p_eventType
+ *            the type of event 
+ * @param p_function
+ *            the function to call when the event is triggered
+ */
+function myAddEventAttach(p_element, p_eventType, p_function) {
+	p_element.attachEvent('on' + p_eventType, p_function);
+}
+
+
+/**
+ * Add an event listener for old browsers.
+ *
+ * @param p_element
+ *            the element on which to set the event
+ * @param p_eventType
+ *            the type of event 
+ * @param p_function
+ *            the function to call when the event is triggered
+ */
+function myAddEventOld(p_element, p_eventType, p_function) {
+    var oldEventListener = p_element['on' + p_eventType];
+    if (typeof oldEventListener != 'function') {
+        p_element['on' + p_eventType] = p_function;
+    }
+    else {
+        p_element['on' + p_eventType] = function() {
+            oldEventListener();
+            p_function();
+        }
+    }
+}
+
+
+/**
+ * Add an event listener, whatever the browser.
+ *
+ * @param p_element
+ *            the element on which to set the event
+ * @param p_eventType
+ *            the type of event 
+ * @param p_function
+ *            the function to call when the event is triggered
+ */
+function addEvent(p_element, p_eventType, p_function) {
+	var addEvent;
+    if (p_element.addEventListener)
+        addEvent = myAddEventListener;
+    else if (obj.attachEvent)
+        addEvent = myAddEventAttach;
+    else
+        addEvent = myAddEventOld;
+    addEvent(p_element, p_eventType, p_function);
 }
 
 
@@ -302,4 +376,4 @@ function highlightRef(p_ref, p_class) {
 
 
 // Auto-load the load() function
-window.addEventListener('load', function() { load(); }, true);
+addEvent(window, 'load', load);

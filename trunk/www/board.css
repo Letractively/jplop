@@ -1,5 +1,11 @@
 @import url('common.css');
 
+/***** The whole page *****/
+BODY {
+	background-color: #336698;
+	background-image: url('images/fond.png');
+}
+
 /***** The header *****/
 #header #site {
 	font-size: small;
@@ -7,11 +13,16 @@
 	text-align: right;
 }
 
+#header #site :link, #header #site :visited {
+	color: #fb9200;
+}
+
 
 /***** The list of posts *****/
 #board {
-	border: 1px solid black;
-	background-color: #ffffee;
+	border: 0.1em solid #0c3762;
+	background-color: #336698;
+	color: #ffffff;
 	margin: 1em;
 	padding: 0.2em;
 }
@@ -25,36 +36,39 @@
 }
 
 .post.highlighted {
-	background-color: #ddddff;
-
+	background-color: #0c3762;
 }
 	
 .clock {
-	color: #009900;
+	color: #87dc1e;
 	background-color: transparent;
 	display: table-cell;
+	font-size: small;
+	font-weight: bold;
 }
 
 .ref {
-	color: #33cc33;
+	font-size: small;
+	font-weight: bold;
+	color: #87dc1e;
 	background-color: transparent;
 }
 
 .ref.highlighted {
-	background-color: #ddddff;
+	background-color: #0c3762;
 }
 
 .login {
-	color: #990000;
+	color: #fb9200;
 	background-color: transparent;
 	padding-left: 0.2em;
 	padding-right: 0.2em;
 	display: table-cell;
+	font-size: small;
+	font-weight: bold;
 }
 
 .message {
-	color: #333333;
-	background-color: transparent;
 	display: table-cell;
 }
 
