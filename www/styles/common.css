@@ -10,7 +10,7 @@ BODY {
 #header {
 	font-family: serif;
 	background-color: #326495;
-	background-image: url('images/coincoin.png');
+	background-image: url('../images/coincoin.png');
 	border-bottom: 0.2em solid #0c3762;
 }
 
