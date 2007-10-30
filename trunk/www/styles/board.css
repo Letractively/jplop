@@ -3,7 +3,7 @@
 /***** The whole page *****/
 BODY {
 	background-color: #336698;
-	background-image: url('images/fond.png');
+	background-image: url('../images/fond.png');
 }
 
 /***** The header *****/

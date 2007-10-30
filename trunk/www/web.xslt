@@ -14,8 +14,8 @@
 		<head>
 			<title><xsl:text>JBoard - La Tribune des décideurs pressés</xsl:text></title>
 			<author>Olivier Serve</author>
-			<link rel="stylesheet" type="text/css" href="board.css" />
-			<script type="text/javascript" src="board.js"></script>
+			<link rel="stylesheet" type="text/css" href="styles/board.css" />
+			<script type="text/javascript" src="scripts/board.js"></script>
 		</head>
 		<body>
 			<xsl:apply-templates select="board"/>
