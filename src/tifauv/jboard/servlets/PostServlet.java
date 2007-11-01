@@ -113,11 +113,13 @@ public class PostServlet extends HttpServlet {
 		catch (UnsupportedEncodingException e) {
 			// Cannot happen
 		}
-		String message = p_request.getParameter(MESSAGE_PARAM);
-		if (message == null) {
+		String message = p_request.getParameter(MESSAGE_PARAM).trim();
+		if (message == null || message.length() == 0) {
+			m_logger.info("Empty message, skipping...");
 			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 		}
 		else {
+			m_logger.info("Message is '" + message + "'");
 			String userAgent = p_request.getHeader(USER_AGENT);
 			Backend.getInstance().addMessage(userAgent, message, null);
 			p_response.setStatus(HttpServletResponse.SC_ACCEPTED);
