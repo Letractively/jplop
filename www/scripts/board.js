@@ -120,7 +120,7 @@ function httpPost(p_url, p_request, p_callback) {
  */
 function sendMessage(p_url) {
 	var input = document.getElementById('message');
-	var request = 'message=' + encodeURI(input.value);
+	var request = input.getAttribute('name') + '=' + encodeURI(input.value);
 	return httpPost(p_url, request, handlePostResponse);
 }
 
