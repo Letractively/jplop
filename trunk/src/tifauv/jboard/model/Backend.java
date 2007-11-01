@@ -262,8 +262,12 @@ public class Backend {
 	
 	/**
 	 * Saves the backend to a cache file.
+	 * Does nothing if the history is empty.
 	 */
 	public synchronized final void saveToCache() {
+		if (m_history.isEmpty())
+			return;
+		
 		File cacheFile = getCacheFile();
 		if (!cacheFile.canWrite())
 			m_logger.warn("Cannot write the cache file '" + getCacheFile() + "'");

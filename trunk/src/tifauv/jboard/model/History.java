@@ -242,6 +242,16 @@ public class History {
 	
 	
 	/**
+	 * Tells whether the history is empty.
+	 * 
+	 * @return <code>true</code> iif size == 0
+	 */
+	public final boolean isEmpty() {
+		return size() == 0;
+	}
+	
+	
+	/**
 	 * Loads a backend from a DOM Document.
 	 * 
 	 * @param p_backend
