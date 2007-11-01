@@ -77,15 +77,15 @@ function getRequest(p_url) {
  *
  * @param p_url
  *            the URL to send the request to
- * @param p_message
- *            the message
+ * @param p_request
+ *            the request data
  * @param p_callback
  *            the function to call when to process the response
  *
  * @return true if the request has been sent,
  *         false otherwise
  */
-function httpPost(p_url, p_message, p_callback) {
+function httpPost(p_url, p_request, p_callback) {
 	var callback = p_callback;
 	var xmlhttp = getRequest(p_url);
 
@@ -101,8 +101,7 @@ function httpPost(p_url, p_message, p_callback) {
 		xmlhttp.onreadystatechange = bindCallback;
 
 		// send the request
-		var request = 'message=' + p_message;
-		xmlhttp.send(request);
+		xmlhttp.send(p_request);
 		return true;
 	}
 	return false;
@@ -121,7 +120,8 @@ function httpPost(p_url, p_message, p_callback) {
  */
 function sendMessage(p_url) {
 	var input = document.getElementById('message');
-	return httpPost(p_url, input.value, handlePostResponse);
+	var request = 'message=' + encodeURI(input.value);
+	return httpPost(p_url, request, handlePostResponse);
 }
 
 
