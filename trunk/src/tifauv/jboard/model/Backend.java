@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
  *
  * @version 0.1
  *
- * @author Olivier Serve <olivier.serve@bull.net>
+ * @author Olivier Serve <tifauv@gmail.com>
  */
 public class Backend {
 

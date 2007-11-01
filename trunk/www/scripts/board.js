@@ -181,7 +181,7 @@ function load() {
 				.replace(/&lt;/g, '<')
 				.replace(/&gt;/g, '>')
 				.replace(/&amp;/g, '&')
-				.replace(/&amp;quot;/g, '"');
+				.replace(/&quot;/g, '"');
 		item.innerHTML = message.replace(clockRegex, '<span class="ref">$1</span>');
 	}
 	
