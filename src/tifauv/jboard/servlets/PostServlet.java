@@ -13,12 +13,16 @@ import org.apache.log4j.Logger;
 
 import tifauv.jboard.model.Backend;
 
+
 /**
- * 
+ * This servlet receives the post request (either GET or POST).
+ * The message is in the {@link #MESSAGE_PARAM} parameter.
+ * If there is a message, the HTTP code 402 Accepted is returned,
+ * otherwise it is 406 Not Acceptable. 
  *
  * @version 1.0
  *
- * @author Olivier Serve <olivier.serve@bull.net>
+ * @author Olivier Serve <tifauv@gmail.com>
  */
 public class PostServlet extends HttpServlet {
 

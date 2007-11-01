@@ -28,7 +28,7 @@ import org.w3c.dom.NodeList;
  * 
  * @version 1.0
  *
- * @author Olivier Serve <olivier.serve@bull.net>
+ * @author Olivier Serve <tifauv@gmail.com>
  */
 public class Post {
 
@@ -159,7 +159,7 @@ public class Post {
 			if (elems.getLength() > 0) {
 				Element elem = (Element)elems.item(0);
 				CDATASection cdata = (CDATASection)elem.getFirstChild();
-				setMessage(cdata.getData());
+				setRawMessage(cdata.getData());
 			}
 			
 			// <login> element
@@ -272,7 +272,18 @@ public class Post {
 		String message = p_message.trim();
 		if (message.length() > getMaxLength())
 			message = message.substring(0, getMaxLength());
-		m_message = cleanText(message);
+		setRawMessage(cleanText(message));
+	}
+	
+	
+	/**
+	 * Sets the given message without processing.
+	 * 
+	 * @param p_message
+	 *            the message
+	 */
+	private final void setRawMessage(String p_message) {
+		m_message = p_message;
 	}
 
 	
