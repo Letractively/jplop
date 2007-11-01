@@ -273,11 +273,8 @@ public class Backend {
 			m_logger.warn("Cannot write the cache file '" + getCacheFile() + "'");
 		
 		try {
-			String str = getText();
 			FileOutputStream output = new FileOutputStream(getCacheFile());
-			byte[] buffer = new byte[str.length()];
-			System.arraycopy(str.getBytes("UTF-8"), 0, buffer, 0, str.length());
-			output.write(buffer);
+			output.write(getText().getBytes("UTF-8"));
 			output.close();
 			m_logger.info("Backend saved to cache.");
 		}
