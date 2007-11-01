@@ -1,14 +1,4 @@
 /**
- * Clears the 'message' input of the post form.
- */
-function clearMessage() {
-	var input = document.getElementById('message');
-	input.value = '';
-	input.focus();
-}
-
-
-/**
  * Adds a string to the 'message' input of the post form.
  */
 function addStrToMessage(p_string) {
@@ -187,7 +177,11 @@ function load() {
 	var items = searchItems("//*[@class='post']/*[@class='message']");
 	for (var i=0; i<items.snapshotLength; ++i) {
 		item = items.snapshotItem(i);
-		var message = item.innerHTML;
+		var message = item.innerHTML
+				.replace(/&lt;/g, '<')
+				.replace(/&gt;/g, '>')
+				.replace(/&amp;/g, '&')
+				.replace(/&amp;quot;/g, '"');
 		item.innerHTML = message.replace(clockRegex, '<span class="ref">$1</span>');
 	}
 	
@@ -241,6 +235,9 @@ function load() {
 			item.className = 'login my';
 		}
 	}*/
+	
+	// Set the focus on the message input
+	document.getElementById('message').focus();
 }
 
 

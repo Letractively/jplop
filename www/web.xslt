@@ -53,8 +53,8 @@
 			<input type="button" onclick="javascript: addTagToMessage('s');"  value="Barré"    accessKey="b" />
 			<input type="button" onclick="javascript: addTagToMessage('tt');" value="TeleType" accessKey="t" />
 			<br/>
-			<input type="button" onclick="javascript: clearMessage();" />
-			<input id="message" name="message" type="text" maxlength="512" accesskey="m" />
+			<input type="reset" value="" />
+			<input type="text"  id="message" name="message" maxlength="512" accesskey="m" />
 			<input type="submit" />
 		</form>
 	</div>
