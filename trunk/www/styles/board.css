@@ -1,11 +1,5 @@
 @import url('common.css');
 
-/***** The whole page *****/
-BODY {
-	background-color: #336698;
-	background-image: url('../images/fond.png');
-}
-
 /***** The header *****/
 #header #site {
 	font-size: small;
