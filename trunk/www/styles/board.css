@@ -66,6 +66,12 @@
 	display: table-cell;
 }
 
+.message A {
+	font-weight: bold;
+	color: #ffffee;
+	font-size: small;
+}
+
 
 /***** The message form *****/
 #postForm {
