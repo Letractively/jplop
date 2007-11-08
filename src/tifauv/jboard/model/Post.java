@@ -79,8 +79,25 @@ public class Post {
 	}
 	
 	/** The aggregation of start and end tags. */
-	private static final String PATTERN = STARTTAG_PATTERN + "|" + ENDTAG_PATTERN;
+	private static final String TAGS_PATTERN = STARTTAG_PATTERN + "|" + ENDTAG_PATTERN;
 
+	/** The list of allowed tags. */
+	private static final String[] PROTOCOLS = { "http", "https", "ftp" };
+	
+	/** The URL recognition pattern. */
+	private static final String URLS_PATTERN;
+	
+	/** Generates the start and end tags patterns. */
+	static {
+		String protocols = "";
+		for (String protocol : PROTOCOLS) {
+			if (protocols.length() > 0)
+				protocols += "|";
+			protocols += protocol;
+		}
+		URLS_PATTERN = "(" + protocols + ")://([^ <]*)";
+	}
+	
 	
 	// STATIC FIELDS \\
 	/** The time formatter. */
@@ -90,7 +107,10 @@ public class Post {
 	private static int s_maxLength = DEFAULT_MAX_POST_LENGTH;
 	
 	/** The tags pattern. */
-	private static Pattern s_tagPattern = Pattern.compile(PATTERN);
+	private static Pattern s_tagPattern = Pattern.compile(TAGS_PATTERN);
+	
+	/** The URLs pattern. */
+	private static Pattern s_urlPattern = Pattern.compile(URLS_PATTERN);
 	
 	
 	// FIELDS \\
@@ -272,7 +292,7 @@ public class Post {
 		String message = p_message.trim();
 		if (message.length() > getMaxLength())
 			message = message.substring(0, getMaxLength());
-		setRawMessage(cleanText(message));
+		setRawMessage(replaceURLs(cleanText(message)));
 	}
 	
 	
@@ -372,6 +392,19 @@ public class Post {
 			buffer.append("</").append(tags.pop()).append(">");
 		
 		return buffer.toString();
+	}
+	
+	
+	/**
+	 * Replaces the URLs recognized by {@link #URLS_PATTERN} by an http link.
+	 * 
+	 * @param p_message
+	 *            the cleaned message
+	 * 
+	 * @return the message with replaced URLs
+	 */
+	private final String replaceURLs(String p_message) {
+		return s_urlPattern.matcher(p_message).replaceAll("<a href=\"$0\">[$1]</a>");
 	}
 	
 	
