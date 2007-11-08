@@ -148,6 +148,7 @@ function handlePostResponse(p_request) {
  * Reloads the backend.
  */
 function reloadBackend() {
+	window.location.reload();
 }
 
 
