@@ -27,7 +27,7 @@
 <xsl:template match="board">
 	<div id="header">
 		<h1>JBoard</h1>
-		<div id="site">
+		<div class="links">
 			<a href="{@site}" title="Accueil de la tribune">Accueil</a>
 		</div>
 	</div>

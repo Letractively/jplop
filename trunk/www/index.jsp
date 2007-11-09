@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><%= name %></title>
+		<title><%= name %>::Accueil</title>
 		<link rel="stylesheet" type="text/css" href="styles/index.css" />
 	</head>
 	<body>
@@ -22,43 +22,10 @@
 		<p>Ceci est une tribune 100% backend-oriented.
 		La présentation pour les navigateurs est réalisée par une feuille de style XSLT.</p>
 
-		<div id="board-access" >
-			<a href="backend">Voir la tribune</a>
-		</div>
-
-		<h2>Configuration</h2>
-		<div class="config">
-			<h3><a href="http://hules.free.fr/wmcoincoin" title="Le VRAI coincoin">wmcc</a></h3>
-			<p>Ajoutez les lignes suivantes dans le fichier .wmcoincoin/options de votre dossier personnel&nbsp;:</p>
-			<pre class="cc-config">
-board_site:                <%= name %>
-.backend_flavour:          2
-.palmipede.userlogin:      Anonymous
-.backend.url:              <%= url %>/backend
-.post.url:                 <%=  url %>/post
-.tribune.delay:            60
-.palmipede.msg_max_length: <%= maxPostLength %></pre>
-		</div>
-		
-		<div class="config">
-			<h3><a href="http://chrisix.free.fr/dotclear/" title="Le coincoin pythonneux">pycc</a></h3>
-			<p>Le fichier de configuration d'une tribune est trop gros, j'abondonne.</p>
-		</div>
-		
-		
-		<div class="config">
-			<h3>Les coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
-			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
-			<pre class="cc-config">
-&lt;site name="<%= name %>" title="<%= fullname %>" baseurl="<%= url %>" version="1.0"&gt;
-	&lt;board name="board" title="Tribune"&gt;
-		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
-		&lt;post method="post" path="/post" anonymous="true" max_length="<%= maxPostLength %>"&gt;
-			&lt;field name="message"&gt;$m&lt;/field&gt;
-		&lt;/post&gt;
-	&lt;/board&gt;
-&lt;/site&gt;</pre>
-		</div>
+		<ul id="board-access" >
+			<li><a href="backend">Voir la tribune</a></li>
+			<li><a href="config.jsp">Configuration</a></li>
+		</ul>
 		
 		<hr/>
 		
