@@ -21,6 +21,18 @@ BODY {
 }
 
 
+/***** The header *****/
+#header .links {
+	font-size: small;
+	font-style: italic;
+	text-align: right;
+}
+
+#header .links :link, #header .links :visited {
+	color: #fb9200;
+}
+
+
 /***** Other titles *****/
 H2, H3, H4, H5, H6 {
 	text-align: left;

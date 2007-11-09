@@ -1,17 +1,5 @@
 @import url('common.css');
 
-/***** The header *****/
-#header #site {
-	font-size: small;
-	font-style: italic;
-	text-align: right;
-}
-
-#header #site :link, #header #site :visited {
-	color: #fb9200;
-}
-
-
 /***** The list of posts *****/
 #board {
 	border: 0.1em solid #0c3762;
