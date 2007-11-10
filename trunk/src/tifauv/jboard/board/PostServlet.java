@@ -1,7 +1,7 @@
 /**
  * 19 oct. 07
  */
-package tifauv.jboard.servlets;
+package tifauv.jboard.board;
 
 import java.io.UnsupportedEncodingException;
 
@@ -113,16 +113,29 @@ public class PostServlet extends HttpServlet {
 		catch (UnsupportedEncodingException e) {
 			// Cannot happen
 		}
-		String message = p_request.getParameter(MESSAGE_PARAM).trim();
-		if (message == null || message.length() == 0) {
+		
+		// Get the message parameter and check it
+		String message = p_request.getParameter(MESSAGE_PARAM);
+		if (message == null) {
+			m_logger.info("No message parameter, skipping...");
+			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			return;
+		}
+		
+		// Remove the starting and trailing spaces
+		message = message.trim();
+		
+		// Check the message is not empty
+		if (message.length() == 0) {
 			m_logger.info("Empty message, skipping...");
 			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			return;
 		}
-		else {
-			m_logger.info("Message is '" + message + "'");
-			String userAgent = p_request.getHeader(USER_AGENT);
-			Backend.getInstance().addMessage(userAgent, message, null);
-			p_response.setStatus(HttpServletResponse.SC_ACCEPTED);
-		}
+		
+		// The message seems valid, add it
+		m_logger.info("Message is '" + message + "'");
+		String userAgent = p_request.getHeader(USER_AGENT);
+		Backend.getInstance().addMessage(userAgent, message, null);
+		p_response.setStatus(HttpServletResponse.SC_ACCEPTED);
 	}
 }

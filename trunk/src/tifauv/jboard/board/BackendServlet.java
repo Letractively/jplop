@@ -1,7 +1,7 @@
 /**
  * 19 oct. 07
  */
-package tifauv.jboard.servlets;
+package tifauv.jboard.board;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
