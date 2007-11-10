@@ -33,8 +33,6 @@ import org.w3c.dom.NodeList;
 public class Post {
 
 	// CONSTANTS \\
-	private static final int INFO_LOGIN_LENGTH = 12;
-	
 	/** The format of a time attribute. */
 	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
@@ -55,7 +53,7 @@ public class Post {
 	
 	private static final String CDATA_END = "]]>";
 	
-	private static final String ANONYMOUS_LOGIN = "Anonyme";
+	private static final String ANONYMOUS_LOGIN = "";
 	
 	protected static final int DEFAULT_MAX_POST_LENGTH = 512;
 	
@@ -277,16 +275,8 @@ public class Post {
 	 *            the login of the post
 	 */
 	private final void setLogin(String p_login) {
-		if (p_login == null) {
-			String info = getInfo();
-			if (info == null)
-				m_login = ANONYMOUS_LOGIN;
-			else {
-				if (info.length() > INFO_LOGIN_LENGTH)
-					info = info.substring(0, INFO_LOGIN_LENGTH-1);
-				m_login = info + "...";
-			}
-		}
+		if (p_login == null)
+			m_login = ANONYMOUS_LOGIN;
 		else
 			m_login = cleanText(p_login);
 	}
