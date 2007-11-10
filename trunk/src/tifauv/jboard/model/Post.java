@@ -275,8 +275,13 @@ public class Post {
 	 *            the login of the post
 	 */
 	private final void setLogin(String p_login) {
-		if (p_login == null)
-			m_login = ANONYMOUS_LOGIN;
+		if (p_login == null) {
+			String info = getInfo();
+			if (info == null)
+				m_login = ANONYMOUS_LOGIN;
+			else
+				m_login = info.substring(0, 11) + "..."; 
+		}
 		else
 			m_login = cleanText(p_login);
 	}
