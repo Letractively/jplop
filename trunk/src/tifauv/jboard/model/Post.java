@@ -33,6 +33,8 @@ import org.w3c.dom.NodeList;
 public class Post {
 
 	// CONSTANTS \\
+	private static final int INFO_LOGIN_LENGTH = 12;
+	
 	/** The format of a time attribute. */
 	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
@@ -279,8 +281,11 @@ public class Post {
 			String info = getInfo();
 			if (info == null)
 				m_login = ANONYMOUS_LOGIN;
-			else
-				m_login = info.substring(0, 11) + "..."; 
+			else {
+				if (info.length() > INFO_LOGIN_LENGTH)
+					info = info.substring(0, INFO_LOGIN_LENGTH-1);
+				m_login = info + "...";
+			}
 		}
 		else
 			m_login = cleanText(p_login);
