@@ -28,27 +28,27 @@ import org.xml.sax.SAXException;
 public class Backend {
 
 	// CONSTANTS \\
-	public static final String DEFAULT_NAME = "JBoard";
+	public static final String DEFAULT_NAME = "JPlop";
 	
 	public static final String DEFAULT_FULLNAME = "Da J2EE tribioune";
 	
-	public static final String DEFAULT_URL = "http://localhost:8080/jboard";
+	public static final String DEFAULT_URL = "http://localhost:8080/jplop";
 	
-	public static final String DEFAULT_CACHEFILE = "jboard.cache";
+	public static final String DEFAULT_CACHEFILE = "jplop.cache";
 	
 	private static final String CONFIG_PROPERTIES = "tifauv.jplop.config";
 	
-	private static final String NAME_KEY = "jboard.name";
+	private static final String NAME_KEY = "jplop.name";
 	
-	private static final String FULLNAME_KEY = "jboard.fullName";
+	private static final String FULLNAME_KEY = "jplop.fullName";
 	
-	private static final String URL_KEY = "jboard.url";
+	private static final String URL_KEY = "jplop.url";
 	
-	private static final String SIZE_KEY = "jboard.history.size";
+	private static final String SIZE_KEY = "jplop.history.size";
 	
-	private static final String POST_LENGTH_KEY = "jboard.post.maxLength";
+	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
 	
-	private static final String CACHE_FILE_KEY = "jboard.cache";
+	private static final String CACHE_FILE_KEY = "jplop.cache";
 	
 	private static final String WEBINF = "WEB-INF";
 	
