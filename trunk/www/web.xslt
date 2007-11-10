@@ -39,7 +39,14 @@
 			<xsl:variable name="login" select="login" />
 			<li class="post">
 				<span class="clock" onclick="javascript: addStrToMessage('{$clock} ');">[<xsl:value-of select="$clock" />]</span>
-				<span class="login" onclick="javascript: addStrToMessage('{$login}&lt; ');" title="{info}"><xsl:value-of select="$login" />&gt;</span>
+				<xsl:choose>
+					<xsl:when test="string-length($login) != 0">
+						<span class="login" onclick="javascript: addStrToMessage('{$login}&lt; ');" title="{info}"><xsl:value-of select="$login" />&gt;</span>
+					</xsl:when>
+					<xsl:otherwise>
+						<span class="anonymous login" title="{info}"><xsl:value-of select="concat(substring(info, 0, 12), '...')" /></span>
+					</xsl:otherwise>
+				</xsl:choose>
 				<span class="message"><xsl:value-of select="message" /></span>
 			</li>
 		</xsl:for-each>

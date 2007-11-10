@@ -50,6 +50,10 @@
 	font-weight: bold;
 }
 
+.anonymous.login {
+	font-style: oblique;
+}
+
 .message {
 	display: table-cell;
 }
