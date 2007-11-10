@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
-<%@ page import="tifauv.jboard.model.Backend" %>
+<%@ page import="tifauv.jplop.model.Backend" %>
 <%! String name = Backend.getInstance().getName(); %>
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
@@ -58,6 +58,6 @@ board_site:                <%= name %>
 		
 		<hr/>
 		
-		<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
+		<%@ include file="footer.html.inc" %>
 	</body>
 </html>

@@ -1,7 +1,7 @@
 /**
  * 19 oct. 07
  */
-package tifauv.jboard.model;
+package tifauv.jplop.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,7 +36,7 @@ public class Backend {
 	
 	public static final String DEFAULT_CACHEFILE = "jboard.cache";
 	
-	private static final String CONFIG_PROPERTIES = "tifauv.jboard.config";
+	private static final String CONFIG_PROPERTIES = "tifauv.jplop.config";
 	
 	private static final String NAME_KEY = "jboard.name";
 	

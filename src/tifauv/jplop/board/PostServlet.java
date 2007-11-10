@@ -1,7 +1,7 @@
 /**
  * 19 oct. 07
  */
-package tifauv.jboard.board;
+package tifauv.jplop.board;
 
 import java.io.UnsupportedEncodingException;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jboard.model.Backend;
+import tifauv.jplop.model.Backend;
 
 
 /**

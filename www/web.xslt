@@ -68,7 +68,10 @@
 
 	<hr />
 
-	<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
+	<div id="footer">
+		<p id="fortune">Cette tribune est dédiée à la mémoire de Pierre Tramo.</p>
+		<p id="copyright">Copyright © 2007 - <a href="http://tifauv.homeip.net">Tifauv</a>&lt; <a href="about.jsp">À propos de JPlop</a></p>
+	</div>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -11,25 +11,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><%= name %>::Accueil</title>
+		<title><%= name %>::APropos</title>
 		<link rel="stylesheet" type="text/css" href="styles/index.css" />
 	</head>
 	<body>
 		<div id="header">
 			<h1><%= name %> - <%= fullname %></h1>
+			<div class="links">
+				<a href="<%= url %>" title="Accueil de la tribune">Accueil</a>
+			</div>
 		</div>
 		
 		<p>Ceci est une tribune 100% backend-oriented.
-		La présentation pour les navigateurs est réalisée par une feuille de style XSLT.</p>
+		La présentation pour les navigateurs est réalisée par une feuille de style XSLT.
+		Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a>&lt;.
+		</p>
 
-		<ul id="board-access" >
-			<li><a href="backend">Voir la tribune</a></li>
-			<li><a href="config.jsp">Configuration</a></li>
-			<li><a href="about.jsp">À propos de JPlop</a></li>
-		</ul>
-		
 		<hr/>
-		
+
 		<%@ include file="footer.html.inc" %>
 	</body>
 </html>
