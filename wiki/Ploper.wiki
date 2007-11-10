@@ -1,5 +1,3 @@
-#Ploper.
-
 = Introduction =
 
 Ploper, c'est l'action de poster le message `plop`. C'est une manière de dire _je suis là_ ou _salut_ sur un forum/chat/tribune.
