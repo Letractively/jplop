@@ -20,7 +20,7 @@ Ces deux fichiers sont des fichiers `properties` classiques en Java. Chaque lign
 
 == Configuration de la tribune ==
 
-Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
+La configuration de la tribune se fait dans le fichier `WEB-INF/classes/tifauv/jplop/config.properties`. Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
 || `jplop.name`           || Le nom _court_ de la tribune, affiché en haut des pages ||
 || `jplop.fullName`       || Un nom plus descriptif                                  ||
 || `jplop.url`            || L'URL complète de l'installation                        ||
