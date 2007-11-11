@@ -1,0 +1,34 @@
+#labels Phase-Deploy
+#Configuration de JPlop.
+
+= Introduction =
+
+Cette page décrit comment configurer une installation de JPlop.
+
+
+= Pré-requis =
+
+Vous devez avoir déjà [Installation installé] JPlop sur un serveur Tomcat.
+
+
+= Détails =
+
+JPlop dispose de 2 fichiers de configuration situés dans le `CLASSPATH` :
+  # `tifauv.jplop.config` : configuration de la tribune ;
+  # `log4` : configuration des logs.
+Ces deux fichiers sont des fichiers `properties` classiques en Java. Chaque ligne peut être soit vide, soit un commentaire, soit une déclaration de type _clé = valeur_.
+
+== Configuration de la tribune ==
+
+Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
+|| `jplop.name`           || Le nom _court_ de la tribune, affiché en haut des pages ||
+|| `jplop.fullName`       || Un nom plus descriptif                                  ||
+|| `jplop.url`            || L'URL complète de l'installation                        ||
+|| `jplop.history.size`   || La taille maximale de l'historique. Une fois atteint, les posts les plus anciens seront effacés. ||
+|| `jplop.post.maxLength` || La longueur maximale d'un post. Tout message reçu sera tronqué à cette longueur. ||
+|| `jplop.cache`          || Le fichier de cache utilisé pour enregistrer et recharger l'historique. ||
+
+
+== Configuration des logs ==
+
+JPlop utilise [http://logging.apache.org/log4j/ Log4j] comme système de log. Cette section ne présente que quelques exemples de configuration. Elle n'a pas pour but d'être un guide de configuration exhaustif de Log4j.
