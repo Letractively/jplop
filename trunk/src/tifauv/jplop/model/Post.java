@@ -334,6 +334,9 @@ public class Post {
 	 * @return the cleaned message
 	 */
 	private final String cleanText(String p_message) {
+		if (p_message == null)
+			return "";
+		
 		String message = p_message.trim();
 		StringBuffer buffer = new StringBuffer(message.length());
 		Stack<String> tags = new Stack<String>();
