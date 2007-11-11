@@ -1,10 +1,5 @@
 #labels Phase-Deploy
-#Configuration de JPlop.
-
-= Introduction =
-
-Cette page décrit comment configurer une installation de JPlop.
-
+#Cette page décrit comment configurer une installation de JPlop.
 
 = Pré-requis =
 
