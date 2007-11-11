@@ -1,7 +1,7 @@
 /**
  * 19 oct. 07
  */
-package tifauv.jplop.model;
+package tifauv.jboard.model;
 
 import java.text.DateFormat;
 import java.text.ParseException;

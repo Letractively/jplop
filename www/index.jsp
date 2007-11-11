@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
-<%@ page import="tifauv.jplop.model.Backend" %>
+<%@ page import="tifauv.jboard.model.Backend" %>
 <%! String name = Backend.getInstance().getName(); %>
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
@@ -25,11 +25,10 @@
 		<ul id="board-access" >
 			<li><a href="backend">Voir la tribune</a></li>
 			<li><a href="config.jsp">Configuration</a></li>
-			<li><a href="about.jsp">À propos de JPlop</a></li>
 		</ul>
 		
 		<hr/>
 		
-		<%@ include file="footer.html.inc" %>
+		<div id="footer">Cette tribune est dédiée à la mémoire de Pierre Tramo.</div>
 	</body>
 </html>
