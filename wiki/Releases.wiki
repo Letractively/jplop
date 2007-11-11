@@ -1,0 +1,35 @@
+#summary Planning des releases.
+#labels Releases
+
+= Versions rilizées =
+
+== JBoard 0.5.1 ==
+Corrections :
+  * Gestion du champ `<login>` du backend
+
+== JBoard 0.5 ==
+Fritures :
+  * Backend basique
+  * Interface web avec traitement XSLT côté client
+    * Post Ajax
+    * Reconnaissance des norloges et surlignage
+    * Éditeur basique (gras, italique, souligné, barré, chasse fixe)
+
+
+= Versions futures =
+
+== JPlop 0.6 ==
+Fritures :
+  * Ajout d'une page À Propos
+Corrections :
+  * Renommage de JBoard en JPlop (un projet JBoard existe déjà sur SourceForge)
+  * Correction d'un bug en cas de post sans User-Agent
+
+== JPlop 1.0 ==
+Fritures :
+  * Authentication utilisant JAAS
+  * Reconnaissance des [:totoz]
+
+== JPlop 1.1 ==
+Fritures :
+  * Page(s) d'administration (autorisation _via_ JAAS)
