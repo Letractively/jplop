@@ -1,5 +1,5 @@
+#summary Cette page décrit comment installer JPlop.
 #labels Phase-Deploy
-#Cette page décrit comment installer JPlop.
 
 = Pré-requis =
 Vous devez avoir [http://code.google.com/p/jplop/downloads/list téléchargé] une archive web. Utilisez de préférence la dernière version.
