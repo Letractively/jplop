@@ -3,7 +3,8 @@
 
 = Pré-requis =
 
-Vous devez avoir déjà [Installation installé] JPlop sur un serveur Tomcat.
+Vous devez configurer l'archive WAR de JPlop _avant_ de le déployer _via_ le Tomcat Manager.
+Si vous préférez un déploiement direct, vous devez avoir déjà [Installation installé] JPlop sur un serveur Tomcat.
 
 
 = Détails =
