@@ -118,7 +118,10 @@ public class BackendServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
-		String text = Backend.getInstance().getText(p_request.getParameter(HTTP_IF_MODIFIED_SINCE));
+		String ifModifiedSince = p_request.getHeader(HTTP_IF_MODIFIED_SINCE);
+		m_logger.info("If-Modified-Since : " + ifModifiedSince);
+		m_logger.info("Last-Modified : " + Backend.getInstance().getLastModified());
+		String text = Backend.getInstance().getText(ifModifiedSince);
 
 		p_response.setHeader(HTTP_PRAGMA, NO_CACHE);
 		p_response.setHeader(HTTP_CACHE_CONTROL, NO_CACHE);

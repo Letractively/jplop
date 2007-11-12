@@ -6,7 +6,9 @@ package tifauv.jplop.model;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TimeZone;
 
@@ -184,7 +186,9 @@ public class History {
 	 * and toggles the rewrite cache flag.
 	 */
 	private final void setModified() {
-		m_lastModified = new Date();
+		Calendar now = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+		now.set(Calendar.MILLISECOND, 0);
+		m_lastModified = now.getTime();
 		m_mustRewriteCache = true;
 	}
 	
