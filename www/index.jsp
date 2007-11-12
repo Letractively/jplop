@@ -25,7 +25,6 @@
 		<ul id="board-access" >
 			<li><a href="backend">Voir la tribune</a></li>
 			<li><a href="config.jsp">Configuration</a></li>
-			<li><a href="about.jsp">À propos de JPlop</a></li>
 		</ul>
 		
 		<hr/>

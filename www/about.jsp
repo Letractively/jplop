@@ -7,12 +7,12 @@
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
 <%! int maxPostLength = Backend.getInstance().getMaxPostLength(); %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><%= name %>::APropos</title>
-		<link rel="stylesheet" type="text/css" href="styles/index.css" />
+		<link rel="stylesheet" type="text/css" href="styles/about.css" />
 	</head>
 	<body>
 		<div id="header">
@@ -22,10 +22,19 @@
 			</div>
 		</div>
 		
-		<p>Ceci est une tribune 100% backend-oriented.
-		La présentation pour les navigateurs est réalisée par une feuille de style XSLT.
-		Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a>&lt;.
-		</p>
+		<h2>Version</h2>
+		<div id="version">This is JPlop version 0.6-beta1.</div>
+		
+		<h2>Crédits</h2>
+		<div id="credits">
+		Copyright &copy; 2007 - <a href="http://tifauv.homeip.net">Tifauv'</a>.
+		Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a> au terme d'une longue consultation des moules.
+		</div>
+
+		<h2>Licence</h2>		
+		<div id="license">
+		JPlop est distribué sous la licence <a href="COPYING">GPL version 2</a> ou ultérieure. 
+		</div>
 
 		<hr/>
 
