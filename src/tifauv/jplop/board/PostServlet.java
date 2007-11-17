@@ -128,7 +128,7 @@ public class PostServlet extends HttpServlet {
 		// Check the message is not empty
 		if (message.length() == 0) {
 			m_logger.info("Empty message, skipping...");
-			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		
@@ -136,6 +136,6 @@ public class PostServlet extends HttpServlet {
 		m_logger.info("Message is '" + message + "'");
 		String userAgent = p_request.getHeader(USER_AGENT);
 		Backend.getInstance().addMessage(userAgent, message, null);
-		p_response.setStatus(HttpServletResponse.SC_ACCEPTED);
+		p_response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 	}
 }

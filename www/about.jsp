@@ -6,12 +6,12 @@
 <%! String name = Backend.getInstance().getName(); %>
 <%! String fullname = Backend.getInstance().getFullName(); %>
 <%! String url = Backend.getInstance().getURL(); %>
-<%! int maxPostLength = Backend.getInstance().getMaxPostLength(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><%= name %>::APropos</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Author"       content="Tifauv'" />
 		<link rel="stylesheet" type="text/css" href="styles/about.css" />
 	</head>
 	<body>
@@ -27,7 +27,7 @@
 		
 		<h2>Crédits</h2>
 		<div id="credits">
-		Copyright &copy; 2007 - <a href="http://tifauv.homeip.net">Tifauv'</a>.
+		Copyright &copy; 2007 - Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
 		Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a> au terme d'une longue consultation des moules.
 		</div>
 
