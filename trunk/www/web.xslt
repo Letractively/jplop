@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
 <xsl:output 
 	method="html"
 	encoding="UTF-8"
@@ -12,10 +11,8 @@
 <xsl:template match="/">
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 		<head>
-			<title><xsl:text>JBoard - La Tribune des décideurs pressés</xsl:text></title>
-			<author>Olivier Serve</author>
 			<link rel="stylesheet" type="text/css" href="styles/board.css" />
-			<script type="text/javascript" src="scripts/board.js"></script>
+			<script type="text/javascript" src="scripts/backend.js"></script>
 		</head>
 		<body>
 			<xsl:apply-templates select="board"/>
@@ -23,16 +20,9 @@
 	</html>
 </xsl:template>
 
-<!-- The Board display -->
+<!-- board -->
 <xsl:template match="board">
-	<div id="header">
-		<h1>JBoard</h1>
-		<div class="links">
-			<a href="{@site}" title="Accueil de la tribune">Accueil</a>
-		</div>
-	</div>
-
-	<ul id="board">
+	<ul>
 		<xsl:for-each select="post">
 			<xsl:sort select="@id" data-type="number" />
 			<xsl:variable name="clock" select="concat(substring(@time, 9, 2), ':', substring(@time, 11, 2), ':', substring(@time, 13, 2))" />
@@ -51,27 +41,7 @@
 			</li>
 		</xsl:for-each>
 	</ul>
-
-	<div id="postForm">
-		<form method="post" action="post" onsubmit="javascript: return !sendMessage('{@site}/post');">
-			<input type="button" onclick="javascript: addTagToMessage('b');"  value="Gras"     accessKey="g" />
-			<input type="button" onclick="javascript: addTagToMessage('i');"  value="Italique" accessKey="i" />
-			<input type="button" onclick="javascript: addTagToMessage('u');"  value="Souligné" accessKey="s" />
-			<input type="button" onclick="javascript: addTagToMessage('s');"  value="Barré"    accessKey="b" />
-			<input type="button" onclick="javascript: addTagToMessage('tt');" value="TeleType" accessKey="t" />
-			<br/>
-			<input type="reset" value="" />
-			<input type="text"  id="message" name="message" maxlength="512" accesskey="m" />
-			<input type="submit" />
-		</form>
-	</div>
-
-	<hr />
-
-	<div id="footer">
-		<p id="fortune">Cette tribune est dédiée à la mémoire de Pierre Tramo.</p>
-		<p id="copyright">Copyright © 2007 - <a href="http://tifauv.homeip.net">Tifauv</a>&lt; <a href="about.jsp">À propos de JPlop</a></p>
-	</div>
 </xsl:template>
+<!-- /board -->
 
 </xsl:stylesheet>
