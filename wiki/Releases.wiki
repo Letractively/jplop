@@ -20,16 +20,18 @@ Fritures :
 
 == JPlop 0.6 ==
 Fritures :
-  * Ajout d'une page À Propos
+  * `[Done]` Ajout d'une page À Propos
 Corrections :
-  * Renommage de JBoard en JPlop (un projet JBoard existe déjà sur SourceForge)
-  * Correction d'un bug en cas de post sans User-Agent
+  * `[Done]` Renommage de JBoard en JPlop (un projet JBoard existe déjà sur SourceForge)
+  * `[Done]` Correction d'un bug en cas de post sans User-Agent
+  * `[Working]` Afficher le backend dans un `<object>`
+  * `[ToBeDone]` Véritable reload.
 
 == JPlop 1.0 ==
 Fritures :
-  * Authentication utilisant JAAS
-  * Reconnaissance des [:totoz]
+  * `[ToBeDone]` Authentication utilisant JAAS
+  * `[ToBeDone]` Reconnaissance des [:totoz]
 
 == JPlop 1.1 ==
 Fritures :
-  * Page(s) d'administration (autorisation _via_ JAAS)
+  * `[ToBeDone]` Page(s) d'administration (autorisation _via_ JAAS)
