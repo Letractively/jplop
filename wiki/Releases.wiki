@@ -1,5 +1,5 @@
 #summary Planning des releases.
-#labels Releases
+#labels Releases,Featured
 
 = Versions rilizées =
 
