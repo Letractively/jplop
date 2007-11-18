@@ -24,8 +24,8 @@
 			</div>
 		</div>
 		
-		<div id="board">
-			<object id="backend" data="backend" type="text/html"></object>
+		<div id="board-container">
+			<object id="board" data="backend" type="text/html"></object>
 		</div>
 		
 		<form method="post" action="post" onsubmit="javascript: return !sendMessage('post');">
