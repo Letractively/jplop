@@ -23,12 +23,16 @@
 		</div>
 		
 		<h2>Version</h2>
-		<div id="version">This is JPlop version 0.6-beta1.</div>
+		<div id="version">JPlop version 0.6-beta1.</div>
 		
 		<h2>Crédits</h2>
 		<div id="credits">
-		Copyright &copy; 2007 - Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
-		Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a> au terme d'une longue consultation des moules.
+			<p>
+				Copyright &copy; 2007 - Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
+				Pour essayer la bête ou insulter l'auteur, c'est <a href="http://code.google.com/p/jplop/">par là</a>.
+			</p>
+		
+			<p>Le nom a été trouvé par <a href="http://leguyader.eu">LLG</a> au terme d'une longue consultation des moules.</p>
 		</div>
 
 		<h2>Licence</h2>		

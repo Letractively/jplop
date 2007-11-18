@@ -11,7 +11,7 @@
 <xsl:template match="/">
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 		<head>
-			<link rel="stylesheet" type="text/css" href="styles/board.css" />
+			<link rel="stylesheet" type="text/css" href="styles/backend.css" />
 			<script type="text/javascript" src="scripts/backend.js"></script>
 		</head>
 		<body>
@@ -22,7 +22,7 @@
 
 <!-- board -->
 <xsl:template match="board">
-	<ul>
+	<ul id="backend">
 		<xsl:for-each select="post">
 			<xsl:sort select="@id" data-type="number" />
 			<xsl:variable name="clock" select="concat(substring(@time, 9, 2), ':', substring(@time, 11, 2), ':', substring(@time, 13, 2))" />

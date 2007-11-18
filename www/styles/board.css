@@ -1,73 +1,21 @@
 @import url('common.css');
+@import url('post.css');
 
 /***** The list of posts *****/
-#board {
+#board-container {
 	border: 0.1em solid #0c3762;
 	background-color: #336698;
 	color: #ffffff;
 	margin: 1em;
-	padding: 0.2em;
+	padding: 0;
+	height: 30em;
 }
 
-#backend {
+#board {
 	width: 100%;
 	height: 100%;
-}
-
-
-/***** A post *****/
-.post {
-	list-style-type: none;
-	display: table-row;
-	text-align: left;
-}
-
-.post.highlighted {
-	background-color: #0c3762;
-}
-	
-.clock {
-	color: #87dc1e;
-	background-color: transparent;
-	display: table-cell;
-	font-size: small;
-	font-weight: bold;
-}
-
-.ref {
-	font-size: small;
-	font-weight: bold;
-	color: #87dc1e;
-	background-color: transparent;
-}
-
-.ref.highlighted {
-	background-color: #0c3762;
-}
-
-.login {
-	color: #fb9200;
-	background-color: transparent;
-	padding-left: 0.2em;
-	padding-right: 0.2em;
-	display: table-cell;
-	font-size: small;
-	font-weight: bold;
-}
-
-.anonymous.login {
-	font-style: oblique;
-}
-
-.message {
-	display: table-cell;
-	color: #ffffff;
-}
-
-.message A {
-	font-weight: bold;
-	color: #ffffee;
-	font-size: small;
+	margin: 0;
+	padding: 0;
 }
 
 
