@@ -1,5 +1,5 @@
 #summary Cette page décrit comment configurer une installation de JPlop.
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 = Pré-requis =
 
