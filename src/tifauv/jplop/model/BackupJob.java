@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.model;
 
+import org.apache.log4j.Logger;
+
 import tifauv.jplop.util.AbstractJob;
 
 /**
@@ -17,6 +19,11 @@ public class BackupJob extends AbstractJob {
 	// CONSTANTS \\
 	/** The job's name. */
 	public static final String JOB_NAME = "Backup";
+	
+	
+	// FIELDS \\
+	/** The logger. */
+	public Logger m_logger = Logger.getLogger(BackupJob.class);
 
 	
 	// CONSTRUCTORS \\
@@ -38,6 +45,7 @@ public class BackupJob extends AbstractJob {
 	 */
 	@Override
 	protected void doWork() {
+		m_logger.info("Auto-saving the backend...");
 		Backend.getInstance().saveToCache();
 	}
 }

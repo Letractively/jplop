@@ -76,7 +76,7 @@ function handlePostResponse(p_request) {
  * Reloads the backend.
  */
 function reloadBackend() {
-	var object = document.getElementById('backend');
+	var object = document.getElementById('board');
 	if (object && object.contentDocument
 				&& object.contentDocument.defaultView
 				&& object.contentDocument.defaultView.location)
