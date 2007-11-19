@@ -51,7 +51,7 @@ public class BackendServlet extends HttpServlet {
 	 */
 	@Override
 	public final void init() {
-		m_logger.info("====> \\_o< JBoard starting >o_/ <====");
+		m_logger.info("====> \\_o< JPlop starting >o_/ <====");
 		try {
 			Backend.getInstance().init(getServletContext().getRealPath("/"));
 			Backend.getInstance().loadFromCache();
@@ -68,9 +68,9 @@ public class BackendServlet extends HttpServlet {
 	 */
 	@Override
 	public final void destroy() {
-		Backend.getInstance().saveToCache();
+		Backend.destroy();
 		m_logger.info("Backend servlet stopped.");
-		m_logger.info("====> \\_x<~ JBoard stopped ~>x_/ <====");
+		m_logger.info("====> \\_x<~ JPlop stopped ~>x_/ <====");
 	}
 	
 	

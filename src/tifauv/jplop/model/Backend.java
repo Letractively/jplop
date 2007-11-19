@@ -19,9 +19,9 @@ import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * This is the entry point of the model.
  *
- * @version 0.1
+ * @version 1.0
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
@@ -46,14 +46,19 @@ public class Backend {
 	
 	private static final String SIZE_KEY = "jplop.history.size";
 	
-	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
+	private static final String CACHE_FILE_KEY = "jplop.history.cache";
+
+	private static final String WRITE_CACHE_KEY = "jplop.history.saveEvery";
 	
-	private static final String CACHE_FILE_KEY = "jplop.cache";
+	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
 	
 	private static final String WEBINF = "WEB-INF";
 	
 	
 	// STATIC FIELDS \\
+	/**
+	 * The backend's instance.
+	 */
 	private static Backend s_instance;
 	
 	
@@ -70,12 +75,16 @@ public class Backend {
 	/** The cache file on disk. */
 	private File m_cacheFile;
 	
+	/** The backup job. */
+	private BackupJob m_backupJob;
+	
 	/** The logger. */
 	private Logger m_logger = Logger.getLogger(Backend.class);
 	
 
 	// CONSTRUCTORS \\
 	private Backend() {
+		m_backupJob = new BackupJob();
 	}
 	
 
@@ -145,13 +154,23 @@ public class Backend {
 		return s_instance;
 	}
 	
+	
+	public static synchronized void destroy() {
+		if (s_instance.m_backupJob != null)
+			s_instance.m_backupJob.stop();
+		s_instance.saveToCache();
+		s_instance = null;
+	}
+	
+	
 	public final synchronized void init(String p_contextDir) {
 		String name = DEFAULT_NAME;
 		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
-		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		String cacheFile = DEFAULT_CACHEFILE;
+		int backupTimeout = BackupJob.DEFAULT_TIMEOUT;
+		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		try {
 			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
@@ -191,6 +210,26 @@ public class Backend {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
 			
+			// Load the cache file
+			try {
+				cacheFile = config.getString(CACHE_FILE_KEY);
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
+			
+			// Load the backup job's timeout
+			try {
+				backupTimeout = Integer.parseInt(config.getString(WRITE_CACHE_KEY));
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
+			catch (NumberFormatException e) {
+				m_logger.warn("The configuration key '" + WRITE_CACHE_KEY + "' doesn't have an integer value.");
+			}
+			
+			
 			// Load the max post length property
 			try {
 				maxPostLength = Integer.parseInt(config.getString(POST_LENGTH_KEY));
@@ -201,33 +240,36 @@ public class Backend {
 			catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
-			
-			// Load the cache file
-			try {
-				cacheFile = config.getString(CACHE_FILE_KEY);
-			}
-			catch (MissingResourceException e) {
-				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
-			}
 		}
 		catch (MissingResourceException e) {
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
 		}
 		
+		/* Update the history */
 		if (m_history == null)
 			m_history = new History(url, size);
 		else {
 			m_history.setURL(url);
 			m_history.setMaxSize(size);
 		}
+		
+		/* Update the backup job. */
+		m_backupJob.setTimeout(backupTimeout * 60000);
+		
 		setName(name);
 		setFullName(fullName);
 		setCacheFile(p_contextDir, cacheFile);
 		Post.setMaxLength(maxPostLength);
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
-		m_logger.info(" |- the backend at '" + url + "/backend' keeps " + size + " posts");
+		m_logger.info(" |- the board is hosted at '" + url + "'");
+		m_logger.info(" |- the backend keeps " + size + " posts");
 		m_logger.info(" |- the backend is cached to file '" + getCacheFile() + "'");
+		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minutes");
 		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
+
+		/* start the backup job if needed. */
+		if (m_backupJob.isStopped())
+			m_backupJob.start();
 	}
 
 	
@@ -286,6 +328,13 @@ public class Backend {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param p_info
+	 * @param p_message
+	 * @param p_login
+	 */
 	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
 		m_history.addMessage(p_info, p_message, p_login);
 	}
