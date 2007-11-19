@@ -311,8 +311,23 @@ public class Backend {
 			return;
 		
 		File cacheFile = getCacheFile();
-		if (!cacheFile.canWrite())
-			m_logger.warn("Cannot write the cache file '" + getCacheFile() + "'");
+		
+		// Create the file if needed
+		if (!cacheFile.exists()) {
+			try {
+				cacheFile.createNewFile();
+				m_logger.info("The cache file '" + getCacheFile() + "' has been created (empty).");
+			}
+			catch (IOException e) {
+				m_logger.error("The cache file '" + getCacheFile() + "' could not be created.");
+			}
+		}
+
+		// Check whether the file is writable
+		if (!cacheFile.canWrite()) {
+			m_logger.error("The cache file '" + getCacheFile() + "' is not writable.");
+			return;
+		}
 		
 		try {
 			FileOutputStream output = new FileOutputStream(getCacheFile());
