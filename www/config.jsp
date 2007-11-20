@@ -13,7 +13,7 @@
 		<title><%= name %>::Configuration</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Author"       content="Tifauv'" />
-		<link rel="stylesheet" type="text/css" href="styles/index.css" />
+		<link rel="stylesheet" type="text/css" href="styles/config.css" />
 	</head>
 	<body>
 		<div id="header">

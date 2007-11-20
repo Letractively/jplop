@@ -67,8 +67,14 @@ function handlePostResponse(p_request) {
 		if (p_request.status == 204) {
 			reloadBackend();
 			document.getElementById('message').select();
+			scrollToBottom(document.getElementById('board'));
 		}
 	}
+}
+
+
+function scrollToBottom(p_obj) {
+	p_obj.contentDocument.defaultView.scrollTo(0, p_obj.scrollHeight);
 }
 
 
@@ -103,8 +109,5 @@ function searchItems(xpath) {
 function initBoard() {
 	// Set the focus on the message input
 	document.getElementById('message').focus();
+	scrollToBottom(document.getElementById('board'));
 }
-
-
-// Auto-load the initBoard() function
-//addEvent(window, 'load', initBoard);
