@@ -47,7 +47,7 @@ function searchItems(xpath) {
  * and sets the mouse event listeners over the clocks and clock references.
  */
 function initBackend() {
-	var clockRegex = /(((?:[01]?[0-9])|(?:2[0-3]))(:[0-5][0-9])(:[0-5][0-9])(?:(?:[\\^:][0-9])|\\xB9|\\xB2|\\xB3)?(?:@[0-9A-Za-z]+)?)/g;
+	var clockRegex = /(^| )(((?:[01]?[0-9])|(?:2[0-3]))(:[0-5][0-9])(:[0-5][0-9])(?:(?:[\\^:][0-9])|\\xB9|\\xB2|\\xB3)?(?:@[0-9A-Za-z]+)?)/g;
 
 	//add_highlight_div();
 
@@ -60,7 +60,7 @@ function initBackend() {
 				.replace(/&gt;/g, '>')
 				.replace(/&amp;/g, '&')
 				.replace(/&quot;/g, '"');
-		item.innerHTML = message.replace(clockRegex, '<span class="ref">$1</span>');
+		item.innerHTML = message.replace(clockRegex, '$1<span class="ref">$2</span>');
 	}
 	
 	// Add event listeners message -> responses
