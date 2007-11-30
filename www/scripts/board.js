@@ -67,7 +67,6 @@ function handlePostResponse(p_request) {
 		if (p_request.status == 204) {
 			reloadBackend();
 			document.getElementById('message').select();
-			scrollToBottom(document.getElementById('board'));
 		}
 	}
 }
@@ -77,7 +76,8 @@ function handlePostResponse(p_request) {
  * Scrolls the given object to the bottom.
  */
 function scrollToBottom(p_obj) {
-	p_obj.contentDocument.defaultView.scrollTo(0, p_obj.contentDocument.defaultView.innerHeight);
+	var height = p_obj.contentDocument.getElementsByTagName('body').item(0).scrollHeight;
+	p_obj.contentDocument.defaultView.scrollTo(0, height);
 }
 
 
@@ -123,7 +123,7 @@ function initBoard() {
 	document.getElementById('message').focus();
 	scrollToBottom(document.getElementById('board'));
 	// Auto reload the backend every 10s
- 	setInterval('reloadBackend();', 10000);
+ 	setInterval('reloadBackend();', 30000);
 }
 
 
