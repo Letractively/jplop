@@ -23,7 +23,7 @@
 		</div>
 		
 		<h2>Version</h2>
-		<div id="version">JPlop version 0.6-beta1.</div>
+		<div id="version">JPlop version 0.6.</div>
 		
 		<h2>Crédits</h2>
 		<div id="credits">
