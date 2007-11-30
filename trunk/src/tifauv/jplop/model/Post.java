@@ -36,25 +36,34 @@ public class Post {
 	/** The format of a time attribute. */
 	private static final String TIME_FORMAT = "yyyyMMddHHmmss";
 	
-	/** The */
+	/** The post tag name. */
 	public static final String POST_TAGNAME = "post";
 	
+	/** The post id attribute name. */
 	private static final String POST_ID_ATTRNAME = "id";
 	
+	/** The post time attribute name. */
 	private static final String POST_TIME_ATTRNAME = "time";
 	
+	/** The info tag name. */
 	private static final String INFO_TAGNAME = "info";
 	
+	/** The message tag name. */
 	private static final String MESSAGE_TAGNAME = "message";
 	
+	/** The login tag name. */
 	private static final String LOGIN_TAGNAME = "login";
 	
+	/** The CDATA start tag. */
 	private static final String CDATA_START = "<![CDATA[";
 	
+	/** The CDATA end tag. */
 	private static final String CDATA_END = "]]>";
 	
+	/** The anonymous login value. */
 	private static final String ANONYMOUS_LOGIN = "";
 	
+	/** The default length of a message. */
 	protected static final int DEFAULT_MAX_POST_LENGTH = 512;
 	
 	/** The list of allowed tags. */
@@ -132,7 +141,7 @@ public class Post {
 
 	// CONSTRUCTORS \\
 	/**
-	 * 
+	 * Full constructor.
 	 */
 	public Post(long p_id, String p_info, String p_message, String p_login) {
 		setId(p_id);
@@ -144,7 +153,7 @@ public class Post {
 	
 	
 	/**
-	 * Loads a post from a <Post> element.
+	 * Loads a post from a &lt;Post&gt; element.
 	 * 
 	 * @param p_post
 	 *            the DOM element from which to load a post
@@ -194,30 +203,57 @@ public class Post {
 	
 
 	// GETTERS \\
+	/**
+	 * Gives the maximum length of a post.
+	 */
 	protected static int getMaxLength() {
 		return s_maxLength;
 	}
 	
+	
+	/**
+	 * Gives the post identifier.
+	 */
 	public final long getId() {
 		return m_id;
 	}
 
+	
+	/**
+	 * Gives the date of the post.
+	 */
 	private final Date getTime() {
 		return m_datetime;
 	}
 	
+	
+	/**
+	 * Gives the formatted time.
+	 */
 	public final String getFormattedTime() {
 		return s_timeFormat.format(getTime());
 	}
 
+	
+	/**
+	 * Gives the info (user-agent) of the post.
+	 */
 	public final String getInfo() {
 		return m_info;
 	}
+
 	
+	/**
+	 * Gives the login of the user that sent the post.
+	 */
 	public final String getLogin() {
 		return m_login;
 	}
 	
+	
+	/**
+	 * Gives the post's message.
+	 */
 	public final String getMessage() {
 		return m_message;
 	}
