@@ -33,10 +33,13 @@ public class BackendServlet extends HttpServlet {
 	/** The Last-Modified header name.*/
 	private static final String HTTP_LAST_MODIFIED = "Last-Modified";
 	
+	/** The Pragma header name. */
 	private static final String HTTP_PRAGMA = "Pragma";
 	
+	/** The Cache-Control name. */
 	private static final String HTTP_CACHE_CONTROL = "Cache-Control";
 	
+	/** The no-cache header value. */
 	private static final String NO_CACHE = "no-cache";
 	
 	

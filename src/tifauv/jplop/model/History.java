@@ -18,9 +18,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
- * 
+ * The history.
  *
- * @version 0.1
+ * @version 1.0
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
