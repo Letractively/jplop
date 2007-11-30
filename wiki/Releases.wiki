@@ -3,6 +3,15 @@
 
 = Versions rilizées =
 
+== JPlop 0.6 ==
+Fritures :
+  * Ajout d'une page À Propos
+Corrections :
+  * Renommage de JBoard en JPlop (un projet JBoard existe déjà sur SourceForge)
+  * Correction d'un bug en cas de post sans User-Agent
+  * Afficher le backend dans un `<object>`
+  * Véritable reload.
+
 == JBoard 0.5.1 ==
 Corrections :
   * Gestion du champ `<login>` du backend
@@ -17,15 +26,6 @@ Fritures :
 
 
 = Versions futures =
-
-== JPlop 0.6 ==
-Fritures :
-  * `[Done]` Ajout d'une page À Propos
-Corrections :
-  * `[Done]` Renommage de JBoard en JPlop (un projet JBoard existe déjà sur SourceForge)
-  * `[Done]` Correction d'un bug en cas de post sans User-Agent
-  * `[Working]` Afficher le backend dans un `<object>`
-  * `[ToBeDone]` Véritable reload.
 
 == JPlop 1.0 ==
 Fritures :
