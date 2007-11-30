@@ -17,12 +17,13 @@ Ces deux fichiers sont des fichiers `properties` classiques en Java. Chaque lign
 == Configuration de la tribune ==
 
 La configuration de la tribune se fait dans le fichier `WEB-INF/classes/tifauv/jplop/config.properties`. Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
-|| `jplop.name`           || Le nom _court_ de la tribune        ||
-|| `jplop.fullName`       || Un nom plus descriptif              ||
-|| `jplop.url`            || L'URL complète de l'installation    ||
-|| `jplop.history.size`   || La taille maximale de l'historique  ||
-|| `jplop.post.maxLength` || La longueur maximale d'un post      ||
-|| `jplop.cache`          || Le fichier de cache de l'historique ||
+|| `jplop.name`              || Le nom _court_ de la tribune           ||
+|| `jplop.fullName`          || Un nom plus descriptif                 ||
+|| `jplop.url`               || L'URL complète de l'installation       ||
+|| `jplop.history.size`      || La taille maximale de l'historique     ||
+|| `jplop.history.cache`     || Le fichier de cache de l'historique    ||
+|| `jplop.history.saveEvery` || Le temps de sauvegarde de l'historique ||
+|| `jplop.post.maxLength`    || La longueur maximale d'un post         ||
 
 
 === `jplop.name` ===
@@ -49,16 +50,22 @@ La taille maximale de l'historique. Une fois cette taille atteinte, les posts le
 _Valeur par défaut_ : 100
 
 
+=== `jplop.history.cache` ===
+Le fichier de cache de l'historique. Si vous utilisez le Tomcat Manager pour mettre à jour vos webapps, il faut que le cache soit en-dehors du contexte de la webapp. Sinon, il sera effacé à chaque mise à jour.
+
+_Valeur par défaut_ : jplop.cache
+
+
+=== `jplop.history.saveEvery` ===
+La fréquence de sauvegarde du cache du backend.
+
+_Valeur par défaut_ : 5
+
+
 === `jplop.post.maxLength` ===
 La longueur maximale d'un post. Tout message reçu sera tronqué à cette longueur. Les espaces en début et fin de post sont automatiquement effacés et ne comptent donc pas.
 
 _Valeur par défaut_ : 512
-
-
-=== `jplop.cache` ===
-Le fichier de cache de l'historique. Si vous utilisez le Tomcat Manager pour mettre à jour vos webapps, il faut que le cache soit en-dehors du contexte de la webapp. Sinon, il sera effacé à chaque mise à jour.
-
-_Valeur par défaut_ : jplop.cache
 
 
 == Configuration des logs ==
