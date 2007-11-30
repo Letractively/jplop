@@ -6,6 +6,7 @@
 /**  License: see the COPYING file                                             **/
 /** ************************************************************************** **/
 
+
 /**
  * Gets an XmlHttpRequest object. You'll rather want to use
  * httpGet() or httpPost().

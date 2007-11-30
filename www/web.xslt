@@ -12,6 +12,7 @@
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 		<head>
 			<link rel="stylesheet" type="text/css" href="styles/backend.css" />
+			<script type="text/javascript" src="scripts/utils.js"></script>
 			<script type="text/javascript" src="scripts/backend.js"></script>
 		</head>
 		<body>

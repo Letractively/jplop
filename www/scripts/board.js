@@ -4,7 +4,7 @@
 /**  Version: 1.0                                                              **/
 /**  Author : Olivier Serve <tifauv@gmail.com>                                 **/
 /**  License: see the COPYING file                                             **/
-/**  Depends: ajax.js                                                          **/
+/**  Depends: ajax.js, utils.js                                                **/
 /** ************************************************************************** **/
 
 
@@ -73,8 +73,11 @@ function handlePostResponse(p_request) {
 }
 
 
+/**
+ * Scrolls the given object to the bottom.
+ */
 function scrollToBottom(p_obj) {
-	p_obj.contentDocument.defaultView.scrollTo(0, p_obj.scrollHeight);
+	p_obj.contentDocument.defaultView.scrollTo(0, p_obj.contentDocument.defaultView.innerHeight);
 }
 
 
@@ -82,11 +85,20 @@ function scrollToBottom(p_obj) {
  * Reloads the backend.
  */
 function reloadBackend() {
+	var button = document.getElementById('reloadBtn');
+	var indicator = document.getElementById('reloadIndicator');
 	var object = document.getElementById('board');
+
 	if (object && object.contentDocument
 				&& object.contentDocument.defaultView
-				&& object.contentDocument.defaultView.location)
+				&& object.contentDocument.defaultView.location) {
+		button.style.visibility = 'hidden';
+		indicator.style.visibility = 'visible';
 		object.contentDocument.defaultView.location.reload();
+		scrollToBottom(object);
+		indicator.style.visibility = 'hidden';
+		button.style.visibility = 'visible';
+	}
 }
 
 
@@ -110,4 +122,10 @@ function initBoard() {
 	// Set the focus on the message input
 	document.getElementById('message').focus();
 	scrollToBottom(document.getElementById('board'));
+	// Auto reload the backend every 10s
+ 	setInterval('reloadBackend();', 10000);
 }
+
+
+// Auto-load the initBackend() function
+addEvent(window, 'load', initBoard);
