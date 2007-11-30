@@ -17,13 +17,13 @@ Ces deux fichiers sont des fichiers `properties` classiques en Java. Chaque lign
 == Configuration de la tribune ==
 
 La configuration de la tribune se fait dans le fichier `WEB-INF/classes/tifauv/jplop/config.properties`. Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
-|| `jplop.name`              || Le nom _court_ de la tribune           ||
-|| `jplop.fullName`          || Un nom plus descriptif                 ||
-|| `jplop.url`               || L'URL complète de l'installation       ||
-|| `jplop.history.size`      || La taille maximale de l'historique     ||
-|| `jplop.history.cache`     || Le fichier de cache de l'historique    ||
-|| `jplop.history.saveEvery` || Le temps de sauvegarde de l'historique ||
-|| `jplop.post.maxLength`    || La longueur maximale d'un post         ||
+|| `jplop.name`              || Le nom _court_ de la tribune               ||
+|| `jplop.fullName`          || Un nom plus descriptif                     ||
+|| `jplop.url`               || L'URL complète de l'installation           ||
+|| `jplop.history.size`      || La taille maximale de l'historique         ||
+|| `jplop.history.cache`     || Le fichier de cache de l'historique        ||
+|| `jplop.history.saveEvery` || La fréquence de sauvegarde de l'historique ||
+|| `jplop.post.maxLength`    || La longueur maximale d'un post             ||
 
 
 === `jplop.name` ===
