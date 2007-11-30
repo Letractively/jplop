@@ -13,6 +13,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Author"       content="Tifauv'" />
 		<link rel="stylesheet" type="text/css" href="styles/board.css" />
+		<script type="text/javascript" src="scripts/utils.js"></script>
 		<script type="text/javascript" src="scripts/ajax.js"></script>
 		<script type="text/javascript" src="scripts/board.js"></script>
 	</head>
@@ -41,7 +42,8 @@
 					<input type="reset" value="" />
 					<input type="text"  id="message" name="message" maxlength="512" accesskey="m" />
 					<input type="submit" />
-					<input type="button" onclick="javascript: reloadBackend();" value="Reload" accesskey="r" />
+					<input type="button" id="reloadBtn" onclick="javascript: reloadBackend();" value="Reload" accesskey="r" />
+					<img id="reloadIndicator" src="images/reloading.gif" alt="Reloading..."/>
 				</div>
 			</div>
 		</form>

@@ -27,3 +27,7 @@
 #message {
 	width: 70%;
 }
+
+#reloadIndicator {
+	visibility: hidden;
+}
