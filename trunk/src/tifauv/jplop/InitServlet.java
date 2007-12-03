@@ -22,6 +22,9 @@ public class InitServlet extends HttpServlet {
 	// CONSTANTS \\
 	/** The serialization UID. */
 	private static final long serialVersionUID = 8108637762046470098L;
+	
+	/** The name of the servlet attribute that contains the backend. */
+	private static final String BACKEND_ATTRIBUTE = "backend";
 
 	
 	// FIELDS \\
@@ -40,6 +43,7 @@ public class InitServlet extends HttpServlet {
 			super.init();
 			Backend.getInstance().init(getServletContext().getRealPath("/"));
 			Backend.getInstance().loadFromCache();
+			getServletContext().setAttribute(BACKEND_ATTRIBUTE, Backend.getInstance());
 		}
 		catch (Exception e) {
 			m_logger.error("Cannot initialize the backend.", e);
@@ -52,6 +56,7 @@ public class InitServlet extends HttpServlet {
 	 */
 	@Override
 	public final void destroy() {
+		getServletContext().removeAttribute(BACKEND_ATTRIBUTE);
 		Backend.destroy();
 		m_logger.info("====> \\_x<~ JPlop stopped ~>x_/ <====");
 	}
