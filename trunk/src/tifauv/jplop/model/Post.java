@@ -1,5 +1,5 @@
 /**
- * 19 oct. 07
+ * 19 oct. 2007
  */
 package tifauv.jplop.model;
 

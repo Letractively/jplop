@@ -1,5 +1,5 @@
 /**
- * 19 oct. 07
+ * 19 oct. 2007
  */
 package tifauv.jplop.model;
 
@@ -70,7 +70,7 @@ public class Backend {
 	
 	// STATIC FIELDS \\
 	/** The backend's instance. */
-	private static Backend s_instance;
+	private static Backend s_instance = new Backend();
 	
 	
 	// FIELDS \\
@@ -230,10 +230,7 @@ public class Backend {
 	/**
 	 * Gives the backend's instance.
 	 */
-	public static synchronized Backend getInstance() {
-		if (s_instance == null) {
-			s_instance = new Backend();
-		}
+	public static Backend getInstance() {
 		return s_instance;
 	}
 	

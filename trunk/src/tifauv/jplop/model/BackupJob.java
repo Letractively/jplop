@@ -1,5 +1,5 @@
 /**
- * 
+ * 20 nov. 2007
  */
 package tifauv.jplop.model;
 

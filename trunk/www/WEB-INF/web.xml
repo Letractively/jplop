@@ -4,17 +4,27 @@
 	JPlop</display-name>
 	<servlet>
 		<description>
-		</description>
+		The initialization servlet</description>
+		<display-name>
+		InitServlet</display-name>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The servlet that gives the backend</description>
 		<display-name>
 		BackendServlet</display-name>
 		<servlet-name>BackendServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.board.BackendServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet>
 		<description>
-		</description>
+		The servlet that receives the messages</description>
 		<display-name>
 		PostServlet</display-name>
 		<servlet-name>PostServlet</servlet-name>
