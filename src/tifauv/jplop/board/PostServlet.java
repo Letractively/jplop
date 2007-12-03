@@ -1,5 +1,5 @@
 /**
- * 19 oct. 07
+ * 19 oct. 2007
  */
 package tifauv.jplop.board;
 
@@ -43,24 +43,6 @@ public class PostServlet extends HttpServlet {
 
 	
 	// METHODS \\
-	/**
-	 * Ensures the Backend is created.
-	 */
-	@Override
-	public final void init() {
-		m_logger.info("Post servlet ready.");
-	}
-	
-	
-	/**
-	 * Logs a message.
-	 */
-	@Override
-	public final void destroy() {
-		m_logger.info("Post servlet stopped.");
-	}
-
-	
 	/**
 	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
 	 * 

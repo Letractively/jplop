@@ -1,3 +1,6 @@
+/**
+ * 19 nov. 2007
+ */
 package tifauv.jplop.util;
 
 import org.apache.log4j.Logger;
@@ -135,7 +138,7 @@ public abstract class AbstractJob implements Runnable {
 				m_stop = true;
 				m_runner.interrupt();
 				try {
-					m_runner.wait();
+					m_runner.join();
 				}
 				catch (InterruptedException e) {
 					// Don't mind
@@ -181,7 +184,7 @@ public abstract class AbstractJob implements Runnable {
 	/**
 	 * This methods resets the stop flag and the Thread reference.
 	 */
-	private final synchronized void forcedCleanup() {
+	private final void forcedCleanup() {
 		m_stop = true;
 		m_runner = null;
 	}

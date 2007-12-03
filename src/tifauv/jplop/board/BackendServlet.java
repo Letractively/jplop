@@ -1,5 +1,5 @@
 /**
- * 19 oct. 07
+ * 19 oct. 2007
  */
 package tifauv.jplop.board;
 
@@ -49,34 +49,6 @@ public class BackendServlet extends HttpServlet {
 	
 
 	// METHODS \\
-	/**
-	 * Ensures the Backend is created.
-	 */
-	@Override
-	public final void init() {
-		m_logger.info("====> \\_o< JPlop starting >o_/ <====");
-		try {
-			Backend.getInstance().init(getServletContext().getRealPath("/"));
-			Backend.getInstance().loadFromCache();
-		}
-		catch (Exception e) {
-			m_logger.error("Cannot initialize the backend.", e);
-		}
-		m_logger.info("Backend servlet ready.");
-	}
-	
-	
-	/**
-	 * Logs a message.
-	 */
-	@Override
-	public final void destroy() {
-		Backend.destroy();
-		m_logger.info("Backend servlet stopped.");
-		m_logger.info("====> \\_x<~ JPlop stopped ~>x_/ <====");
-	}
-	
-	
 	/**
 	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
 	 * 
