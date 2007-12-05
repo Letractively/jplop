@@ -1,0 +1,16 @@
+#summary JPlop live in action !
+#labels Featured
+
+= JPlop 0.6 =
+
+La page d'accueil :
+http://jplop.googlecode.com/svn/images/jplop-index.png
+
+La tribune :
+http://jplop.googlecode.com/svn/images/jplop-board.png
+
+Les exemples de configuration pour les coincoins :
+http://jplop.googlecode.com/svn/images/jplop-config.png
+
+À propos :
+http://jplop.googlecode.com/svn/images/jplop-about.png
