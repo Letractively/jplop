@@ -1,7 +1,7 @@
 /**
  * 19 oct. 2007
  */
-package tifauv.jplop.model;
+package tifauv.jplop.board;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -64,7 +64,7 @@ public class Post {
 	private static final String ANONYMOUS_LOGIN = "";
 	
 	/** The default length of a message. */
-	protected static final int DEFAULT_MAX_POST_LENGTH = 512;
+	public static final int DEFAULT_MAX_POST_LENGTH = 512;
 	
 	/** The list of allowed tags. */
 	private static final String[] TAGS = { "b", "i", "u", "s", "tt" };
@@ -206,7 +206,7 @@ public class Post {
 	/**
 	 * Gives the maximum length of a post.
 	 */
-	protected static int getMaxLength() {
+	public static int getMaxLength() {
 		return s_maxLength;
 	}
 	
@@ -266,7 +266,7 @@ public class Post {
 	 * @param p_length
 	 *            the maximum length of a post
 	 */
-	protected static void setMaxLength(int p_length) {
+	public static void setMaxLength(int p_length) {
 		s_maxLength = p_length;
 	}
 	

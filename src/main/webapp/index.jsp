@@ -4,7 +4,7 @@
 <%@ page isThreadSafe="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<jsp:useBean id="backend" type="tifauv.jplop.model.Backend" scope="application" />
+	<jsp:useBean id="backend" type="tifauv.jplop.Backend" scope="application" />
 	<head>
 		<title><jsp:getProperty name="backend" property="name"/>::Accueil</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

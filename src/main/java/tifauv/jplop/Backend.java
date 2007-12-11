@@ -1,22 +1,19 @@
 /**
  * 19 oct. 2007
  */
-package tifauv.jplop.model;
+package tifauv.jplop;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
-import org.xml.sax.SAXException;
+
+import tifauv.jplop.auth.UserBase;
+import tifauv.jplop.board.History;
+import tifauv.jplop.board.Post;
+import tifauv.jplop.util.DeserializeException;
+import tifauv.jplop.util.SerializeException;
+
 
 /**
  * This is the entry point of the model.
@@ -40,9 +37,6 @@ public class Backend {
 	/** The default URL. */
 	public static final String DEFAULT_URL = "http://localhost:8080/jplop";
 	
-	/** The default cache file. */
-	public static final String DEFAULT_CACHEFILE = "jplop.cache";
-
 	/** The configuration key of the name. */
 	private static final String NAME_KEY = "jplop.name";
 	
@@ -55,8 +49,8 @@ public class Backend {
 	/** The configuration key of the size of the history. */
 	private static final String SIZE_KEY = "jplop.history.size";
 	
-	/** The configuration key of the cache file of the history. */
-	private static final String CACHE_FILE_KEY = "jplop.history.cache";
+	/** The configuration key of the file of the history. */
+	private static final String HISTORY_FILE_KEY = "jplop.history.file";
 
 	/** The configuration key of the save rate of the history. */
 	private static final String WRITE_CACHE_KEY = "jplop.history.saveEvery";
@@ -64,8 +58,8 @@ public class Backend {
 	/** The configuration key of the maximum length of an incoming message. */
 	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
 	
-	/** The name of the WEB-INF directory. */
-	private static final String WEBINF = "WEB-INF";
+	/** The configuration key of the file of the user base. */
+	private static final String USERS_FILE_KEY = "jplop.users.file";
 	
 	
 	// STATIC FIELDS \\
@@ -83,8 +77,8 @@ public class Backend {
 	/** The board's history. */
 	private History m_history;
 	
-	/** The cache file on disk. */
-	private File m_cacheFile;
+	/** The user base.*/
+	private UserBase m_users;
 	
 	/** The backup job. */
 	private BackupJob m_backupJob;
@@ -120,10 +114,18 @@ public class Backend {
 	
 	
 	/**
+	 * Gives the history.
+	 */
+	protected final History getHistory() {
+		return m_history;
+	}
+	
+	
+	/**
 	 * Gives the board's URL.
 	 */
 	public final String getURL() {
-		return m_history.getURL();
+		return getHistory().getURL();
 	}
 	
 	
@@ -131,7 +133,15 @@ public class Backend {
 	 * Gives the maximum number of messages of the history.
 	 */
 	public final int getMaxSize() {
-		return m_history.maxSize();
+		return getHistory().maxSize();
+	}
+	
+	
+	/**
+	 * Gives the user base.
+	 */
+	public final UserBase getUserBase() {
+		return m_users;
 	}
 	
 	
@@ -150,7 +160,7 @@ public class Backend {
 	 * Gives the Last-Modified header value to send.
 	 */
 	public final String getLastModified() {
-		return m_history.getLastModified();
+		return getHistory().getLastModified();
 	}
 	
 	
@@ -158,7 +168,7 @@ public class Backend {
 	 * Gives the backend text.
 	 */
 	public final String getText() {
-		return m_history.toString();
+		return getHistory().toString();
 	}
 
 	
@@ -172,20 +182,12 @@ public class Backend {
 	 * @return the backend text or <code>null</code>
 	 */
 	public final synchronized String getText(String p_modifiedSince) {
-		if (m_history.isModifiedSince(p_modifiedSince))
-			return m_history.toString();
+		if (getHistory().isModifiedSince(p_modifiedSince))
+			return getHistory().toString();
 		return null;
 	}
 	
 	
-	/**
-	 * Gives the cache file.
-	 */
-	public final File getCacheFile() {
-		return m_cacheFile;
-	}
-	
-
 	// SETTERS \\
 	/**
 	 * Sets the board's name.
@@ -210,19 +212,24 @@ public class Backend {
 	
 	
 	/**
-	 * Sets the cache file.
+	 * Sets the backend's history.
 	 * 
-	 * @param p_contextDir
-	 *            the context's directory path
-	 * @param p_cacheFile
-	 *            the name of the cache file
+	 * @param p_history
+	 *            the history
 	 */
-	private final void setCacheFile(String p_contextDir, String p_cacheFile) {
-		File cacheFile = new File(p_cacheFile);
-		if (cacheFile.isAbsolute())
-			m_cacheFile = cacheFile;
-		else
-			m_cacheFile = new File(p_contextDir + File.separator + WEBINF, p_cacheFile);
+	private final void setHistory(History p_history) {
+		m_history = p_history;
+	}
+	
+	
+	/**
+	 * Sets the user base.
+	 * 
+	 * @param p_userBase
+	 *            the user base
+	 */
+	private final void setUserBase(UserBase p_userBase) {
+		m_users = p_userBase;
 	}
 	
 	
@@ -242,7 +249,12 @@ public class Backend {
 		if (s_instance != null) {
 			if (s_instance.m_backupJob != null)
 				s_instance.m_backupJob.stop();
-			s_instance.saveToCache();
+			try {
+				s_instance.saveToDisk();
+			}
+			catch (SerializeException e) {
+				s_instance.m_logger.error(e);
+			}
 			s_instance = null;
 		}
 	}
@@ -259,9 +271,10 @@ public class Backend {
 		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
-		String cacheFile = DEFAULT_CACHEFILE;
+		String historyFile = History.DEFAULT_FILE;
 		int backupTimeout = BackupJob.DEFAULT_TIMEOUT;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
+		String usersFile = UserBase.DEFAULT_FILE;
 		try {
 			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
@@ -301,9 +314,9 @@ public class Backend {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
 			
-			// Load the cache file
+			// Load the history file
 			try {
-				cacheFile = config.getString(CACHE_FILE_KEY);
+				historyFile = config.getString(HISTORY_FILE_KEY);
 			}
 			catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
@@ -331,30 +344,45 @@ public class Backend {
 			catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
+			
+			
+			// Load the users file
+			try {
+				usersFile = config.getString(USERS_FILE_KEY);
+			}
+			catch (MissingResourceException e) {
+				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
+			}
 		}
 		catch (MissingResourceException e) {
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
 		}
 		
 		/* Update the history */
-		if (m_history == null)
-			m_history = new History(url, size);
+		if (getHistory() == null)
+			setHistory(new History(url, size));
 		else {
-			m_history.setURL(url);
-			m_history.setMaxSize(size);
+			getHistory().setURL(url);
+			getHistory().setMaxSize(size);
 		}
+		getHistory().setFile(p_contextDir, historyFile);
+		
+		/* Update the user base */
+		if (getUserBase() == null)
+			setUserBase(new UserBase());
+		getUserBase().setFile(p_contextDir, usersFile);
 		
 		/* Update the backup job. */
 		m_backupJob.setTimeout(backupTimeout * 60000);
 		
 		setName(name);
 		setFullName(fullName);
-		setCacheFile(p_contextDir, cacheFile);
 		Post.setMaxLength(maxPostLength);
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
 		m_logger.info(" |- the board is hosted at '" + url + "'");
 		m_logger.info(" |- the backend keeps " + size + " posts");
-		m_logger.info(" |- the backend is cached to file '" + getCacheFile() + "'");
+		m_logger.info(" |- the history is saved to '" + getHistory().getFile() + "'");
+		m_logger.info(" |- the user list is saved to '" + getUserBase().getFile() + "'");
 		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minutes");
 		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
 
@@ -365,73 +393,24 @@ public class Backend {
 
 	
 	/**
-	 * Loads the backend from the cache file. 
+	 * Loads the backend from the disk.
+	 * This currently loads the history and user base.
 	 */
-	public synchronized final void loadFromCache()
-	throws IOException,
-	SAXException,
-	ParseException {
-		File cacheFile = getCacheFile();
-		if (cacheFile.exists()) {
-			m_logger.info("Loading the Backend from cache...");
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setIgnoringComments(true);
-			factory.setNamespaceAware(true);
-			factory.setValidating(false);
-			
-			try {
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				m_history.load(builder.parse(getCacheFile()));
-				m_logger.info(m_history.size() + " posts loaded from cache.");
-			}
-			catch (ParserConfigurationException e) {
-				// Cannot happen
-			}
-		}
-		else
-			m_logger.debug("The cache file does not exist.");
+	public synchronized final void loadFromDisk()
+	throws DeserializeException {
+		getHistory().loadFromFile();
+		getUserBase().loadFromFile();
 	}
 	
 	
 	/**
-	 * Saves the backend to a cache file.
-	 * Does nothing if the history is empty.
+	 * Saves the backend to disk.
+	 * This currently saves the user base and history.
 	 */
-	public synchronized final void saveToCache() {
-		if (m_history.isEmpty())
-			return;
-		
-		File cacheFile = getCacheFile();
-		
-		// Create the file if needed
-		if (!cacheFile.exists()) {
-			try {
-				cacheFile.createNewFile();
-				m_logger.info("The cache file '" + getCacheFile() + "' has been created (empty).");
-			}
-			catch (IOException e) {
-				m_logger.error("The cache file '" + getCacheFile() + "' could not be created.");
-			}
-		}
-
-		// Check whether the file is writable
-		if (!cacheFile.canWrite()) {
-			m_logger.error("The cache file '" + getCacheFile() + "' is not writable.");
-			return;
-		}
-		
-		try {
-			FileOutputStream output = new FileOutputStream(getCacheFile());
-			output.write(getText().getBytes("UTF-8"));
-			output.close();
-			m_logger.info("Backend saved to cache.");
-		}
-		catch (FileNotFoundException e) {
-			m_logger.error("The cache file does not exist.");
-		}
-		catch (IOException e) {
-			m_logger.error("Cannot write the cache file", e);
-		}
+	public synchronized final void saveToDisk()
+	throws SerializeException {
+		getUserBase().saveToFile();
+		getHistory().saveToFile();
 	}
 	
 	
