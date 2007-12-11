@@ -1,13 +1,13 @@
 /**
  * 03 dec. 2007
  */
-package tifauv.jplop;
+package tifauv.jplop.servlets;
 
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.model.Backend;
+import tifauv.jplop.Backend;
 
 /**
  * This servlet initializes and cleans JPlop.
@@ -24,7 +24,7 @@ public class InitServlet extends HttpServlet {
 	private static final long serialVersionUID = 8108637762046470098L;
 	
 	/** The name of the servlet attribute that contains the backend. */
-	private static final String BACKEND_ATTRIBUTE = "backend";
+	public static final String BACKEND_ATTRIBUTE = "backend";
 
 	
 	// FIELDS \\
@@ -42,7 +42,7 @@ public class InitServlet extends HttpServlet {
 		try {
 			super.init();
 			Backend.getInstance().init(getServletContext().getRealPath("/"));
-			Backend.getInstance().loadFromCache();
+			Backend.getInstance().loadFromDisk();
 			getServletContext().setAttribute(BACKEND_ATTRIBUTE, Backend.getInstance());
 		}
 		catch (Exception e) {

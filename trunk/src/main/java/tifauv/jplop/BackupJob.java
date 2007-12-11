@@ -1,11 +1,12 @@
 /**
  * 20 nov. 2007
  */
-package tifauv.jplop.model;
+package tifauv.jplop;
 
 import org.apache.log4j.Logger;
 
 import tifauv.jplop.util.AbstractJob;
+import tifauv.jplop.util.SerializeException;
 
 /**
  * This job asks regularly the {@link #Backend} to save itself.
@@ -39,13 +40,17 @@ public class BackupJob extends AbstractJob {
 	
 	// METHODS \\
 	/**
-	 * Calls {@link Backend#saveToCache()}.
+	 * Calls {@link Backend#saveToDisk()}.
 	 * 
 	 * @see tifauv.jplop.util.AbstractJob#doWork()
 	 */
 	@Override
 	protected void doWork() {
 		m_logger.info("Auto-saving the backend...");
-		Backend.getInstance().saveToCache();
+		try {
+			Backend.getInstance().saveToDisk();
+		} catch (SerializeException e) {
+			m_logger.error("The backend auto-saving failed", e);
+		}
 	}
 }

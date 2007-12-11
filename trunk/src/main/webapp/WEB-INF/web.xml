@@ -9,7 +9,7 @@
 		InitServlet</display-name>
 		<servlet-name>InitServlet</servlet-name>
 		<servlet-class>
-		tifauv.jplop.InitServlet</servlet-class>
+		tifauv.jplop.servlets.InitServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
@@ -19,7 +19,7 @@
 		BackendServlet</display-name>
 		<servlet-name>BackendServlet</servlet-name>
 		<servlet-class>
-		tifauv.jplop.board.BackendServlet</servlet-class>
+		tifauv.jplop.servlets.BackendServlet</servlet-class>
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet>
@@ -29,7 +29,17 @@
 		PostServlet</display-name>
 		<servlet-name>PostServlet</servlet-name>
 		<servlet-class>
-		tifauv.jplop.board.PostServlet</servlet-class>
+		tifauv.jplop.servlets.PostServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The logon servlet</description>
+		<display-name>
+		LogonServlet</display-name>
+		<servlet-name>LogonServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.LogonServlet</servlet-class>
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -39,6 +49,10 @@
 	<servlet-mapping>
 		<servlet-name>PostServlet</servlet-name>
 		<url-pattern>/post</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogonServlet</servlet-name>
+		<url-pattern>/logon</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

@@ -1,8 +1,12 @@
 /**
  * 19 oct. 2007
  */
-package tifauv.jplop.model;
+package tifauv.jplop.board;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,10 +16,18 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TimeZone;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import tifauv.jplop.util.DeserializeException;
+import tifauv.jplop.util.Serializable;
+
 
 /**
  * The history.
@@ -24,12 +36,15 @@ import org.w3c.dom.NodeList;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class History {
+public class History implements Serializable {
 
 	// CONSTANTS \\
 	/** The default size of the history. */
 	public static final int DEFAULT_SIZE = 50;
-	
+
+	/** The default cache file. */
+	public static final String DEFAULT_FILE = "jplop.cache";
+
 	/** The root element of the backend. */
 	private static final String BOARD_TAGNAME = "board";
 	
@@ -67,6 +82,9 @@ public class History {
 	
 	/** Flag to tell whether the cache must be rewritten. */
 	private boolean m_mustRewriteCache;
+	
+	/** The file where the history is saved. */
+	private File m_file;
 	
 	/** The logger. */
 	private Logger m_logger = Logger.getLogger(History.class);
@@ -107,10 +125,18 @@ public class History {
 	/**
 	 * Gives the history's URL.
 	 */
-	protected final String getURL() {
+	public final String getURL() {
 		return m_url;
 	}
 
+	
+	/**
+	 * Gives the file where the history is saved.
+	 */
+	public final File getFile() {
+		return m_file;
+	}
+	
 	
 	/**
 	 * Gives the date of the last modification.
@@ -159,7 +185,7 @@ public class History {
 	 * @param p_url
 	 *            the history's URL
 	 */
-	protected final void setURL(String p_url) {
+	public final void setURL(String p_url) {
 		m_url = p_url;
 		setModified();
 	}
@@ -175,9 +201,26 @@ public class History {
 	 * 
 	 * @see {@link #truncate()}
 	 */
-	protected final synchronized void setMaxSize(int p_size) {
+	public final synchronized void setMaxSize(int p_size) {
 		m_maxSize = p_size;
 		truncate();
+	}
+	
+	
+	/**
+	 * Sets the file where the history is saved.
+	 * 
+	 * @param p_contextDir
+	 *            the current context directory
+	 * @param p_file
+	 *            the path to the file from the configuration
+	 */
+	public final void setFile(String p_contextDir, String p_file) {
+		File file = new File(p_file);
+		if (file.isAbsolute())
+			m_file = file;
+		else
+			m_file = new File(p_contextDir + File.separator + "WEB-INF", p_file);
 	}
 	
 	
@@ -194,6 +237,16 @@ public class History {
 	
 
 	// METHODS \\
+	/**
+	 * Builds a Post and adds it to the history.
+	 * 
+	 * @param p_info
+	 *            the user-agent
+	 * @param p_message
+	 *            the message
+	 * @param p_login
+	 *            the poster's login
+	 */
 	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
 		addPost(new Post(getNextId(), p_info, p_message, p_login));
 	}
@@ -318,5 +371,77 @@ public class History {
 	public final synchronized String toString() {
 		updateCache();
 		return m_cache;
+	}
+
+	
+	/**
+	 * Loads the backend from the cache file.
+	 */
+	public synchronized final void loadFromFile()
+	throws DeserializeException {
+		File cacheFile = getFile();
+		if (cacheFile.exists()) {
+			m_logger.info("Loading the Backend from cache...");
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			factory.setIgnoringComments(true);
+			factory.setNamespaceAware(true);
+			factory.setValidating(false);
+			
+			try {
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				load(builder.parse(getFile()));
+				m_logger.info(size() + " posts loaded from cache.");
+			}
+			catch (ParserConfigurationException e) {
+				// Cannot happen
+			}
+			catch (Exception e) {
+				throw new DeserializeException("Could not load the history file", e);
+			}
+		}
+		else
+			m_logger.debug("The cache file does not exist.");
+	}
+	
+	
+	/**
+	 * Saves the history to a file.
+	 * Does nothing if the history is empty.
+	 */
+	public synchronized final void saveToFile() {
+		if (isEmpty())
+			return;
+		
+		File cacheFile = getFile();
+		
+		// Create the file if needed
+		if (!cacheFile.exists()) {
+			try {
+				cacheFile.createNewFile();
+				m_logger.info("The file '" + getFile() + "' has been created (empty).");
+			}
+			catch (IOException e) {
+				m_logger.error("The file '" + getFile() + "' could not be created.");
+			}
+		}
+
+		// Check whether the file is writable
+		if (!cacheFile.canWrite()) {
+			m_logger.error("The cache file '" + getFile() + "' is not writable.");
+			return;
+		}
+		
+		try {
+			FileOutputStream output = new FileOutputStream(getFile());
+			output.write(toString().getBytes("UTF-8"));
+			output.close();
+			m_logger.info("Backend saved to cache.");
+		}
+		catch (FileNotFoundException e) {
+			m_logger.error("The cache file does not exist.");
+		}
+		catch (IOException e) {
+			m_logger.error("Cannot write the cache file", e);
+		}
 	}
 }
