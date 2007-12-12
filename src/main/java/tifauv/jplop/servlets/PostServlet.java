@@ -15,9 +15,9 @@ import tifauv.jplop.Backend;
 
 
 /**
- * This servlet receives the post request (either GET or POST).
+ * This servlet receives the post request.
  * The message is in the {@link #MESSAGE_PARAM} parameter.
- * If there is a message, the HTTP code 402 Accepted is returned,
+ * If there is a message, the HTTP code 201 Created is returned,
  * otherwise it is 406 Not Acceptable. 
  *
  * @version 1.0
@@ -44,42 +44,8 @@ public class PostServlet extends HttpServlet {
 	
 	// METHODS \\
 	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
-	 */
-	@Override
-	public final void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
-		m_logger.info("New GET message request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-
-
-	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
-	 */
-	@Override
-	public final void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
-		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-
-
-	/**
 	 * Adds the {@link #MESSAGE_PARAM} request parameter to the history.
-	 * Responds with a 202 ACCEPTED status if the message is added.
+	 * Responds with a 201 CREATED status if the message is added.
 	 * If no {@link #MESSAGE_PARAM} parameter exist in the request,
 	 * responds with a 406 NOT_ACCEPTABLE.
 	 * 
@@ -88,7 +54,9 @@ public class PostServlet extends HttpServlet {
 	 * @param p_response
 	 *            the HTTP response
 	 */
-	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
+	@Override
+	protected final void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
+		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
 		try {
 			p_request.setCharacterEncoding("UTF-8");
 		}
@@ -104,20 +72,11 @@ public class PostServlet extends HttpServlet {
 			return;
 		}
 		
-		// Remove the starting and trailing spaces
+		// Remove the starting and trailing spaces then add it
 		message = message.trim();
-		
-		// Check the message is not empty
-		if (message.length() == 0) {
-			m_logger.info("Empty message, skipping...");
-			p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-		
-		// The message seems valid, add it
 		m_logger.info("Message is '" + message + "'");
 		String userAgent = p_request.getHeader(USER_AGENT);
 		Backend.getInstance().addMessage(userAgent, message, null);
-		p_response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+		p_response.setStatus(HttpServletResponse.SC_CREATED);
 	}
 }

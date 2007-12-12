@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="JBoard" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>
-	JPlop</display-name>
+	<display-name>JPlop</display-name>
+	
 	<servlet>
 		<description>
 		The initialization servlet</description>
 		<display-name>
-		InitServlet</display-name>
+		Init servlet</display-name>
 		<servlet-name>InitServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.servlets.InitServlet</servlet-class>
@@ -16,7 +16,7 @@
 		<description>
 		The servlet that gives the backend</description>
 		<display-name>
-		BackendServlet</display-name>
+		Backend servlet</display-name>
 		<servlet-name>BackendServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.servlets.BackendServlet</servlet-class>
@@ -26,7 +26,7 @@
 		<description>
 		The servlet that receives the messages</description>
 		<display-name>
-		PostServlet</display-name>
+		Post servlet</display-name>
 		<servlet-name>PostServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.servlets.PostServlet</servlet-class>
@@ -36,12 +36,22 @@
 		<description>
 		The logon servlet</description>
 		<display-name>
-		LogonServlet</display-name>
+		Logon servlet</display-name>
 		<servlet-name>LogonServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.servlets.LogonServlet</servlet-class>
 		<load-on-startup>10</load-on-startup>
 	</servlet>
+	<servlet>
+		<description>
+		This servlet gives the board's configuration</description>
+		<display-name>
+		Discovery servlet</display-name>
+		<servlet-name>DiscoveryServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.DiscoveryServlet</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>BackendServlet</servlet-name>
 		<url-pattern>/backend</url-pattern>
@@ -54,6 +64,11 @@
 		<servlet-name>LogonServlet</servlet-name>
 		<url-pattern>/logon</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DiscoveryServlet</servlet-name>
+		<url-pattern>/discover</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>

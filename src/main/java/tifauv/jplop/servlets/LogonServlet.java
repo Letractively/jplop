@@ -60,40 +60,11 @@ import tifauv.jplop.auth.UserBaseAuthn;
 	 *            the HTTP response
 	 * 
 	 * @see #doWork(HttpServletRequest, HttpServletResponse)
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
-		m_logger.info("New GET logon request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-
-	
-	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
 		m_logger.info("New POST logon request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-	
-	
-	/**
-	 * .
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 */
-	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
 		UserBase users = Backend.getInstance().getUserBase();
 		if (users != null) {
 			String username = p_request.getParameter(LOGIN_PARAM);
