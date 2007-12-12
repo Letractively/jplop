@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import tifauv.jplop.auth.UserBase;
 import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
+import tifauv.jplop.util.AbstractJob;
 import tifauv.jplop.util.DeserializeException;
 import tifauv.jplop.util.SerializeException;
 
@@ -188,6 +189,28 @@ public class Backend {
 	}
 	
 	
+	/**
+	 * Gives the board's configuration for compliant coincoins.
+	 */
+	public final String getBoardConfig() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<?xml version=\"1.0\"?>");
+		buffer.append("<site name=\"").append(getName())
+			.append("\" title=\"").append(getFullName())
+			.append("\" baseurl=\"").append(getURL())
+			.append("\" version=\"1.0\">");
+		buffer.append("<board name=\"board\" title=\"Tribune\">");
+		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
+		buffer.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")
+			.append(getMaxPostLength()).append("\">");
+		buffer.append("<field name=\"message\">$m</field>");
+		buffer.append("</post>");
+		buffer.append("</board>");
+		buffer.append("</site>");
+		return buffer.toString();
+	}
+	
+	
 	// SETTERS \\
 	/**
 	 * Sets the board's name.
@@ -272,7 +295,7 @@ public class Backend {
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
 		String historyFile = History.DEFAULT_FILE;
-		int backupTimeout = BackupJob.DEFAULT_TIMEOUT;
+		int backupTimeout = AbstractJob.DEFAULT_TIMEOUT;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		String usersFile = UserBase.DEFAULT_FILE;
 		try {

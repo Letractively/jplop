@@ -50,40 +50,6 @@ public class BackendServlet extends HttpServlet {
 
 	// METHODS \\
 	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
-	 */
-	@Override
-	public final void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
-		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-
-
-	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
-	 * 
-	 * @param p_request
-	 *            the HTTP request
-	 * @param p_response
-	 *            the HTTP response
-	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
-	 */
-	@Override
-	public final void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
-		m_logger.info("New POST backend request from [" + p_request.getRemoteAddr() + "].");
-		doWork(p_request, p_response);
-	}
-	
-	
-	/**
 	 * Sends the backend if the If-Modified-Since request header is older than the
 	 * Last-Modified date of the history.
 	 * 
@@ -92,7 +58,9 @@ public class BackendServlet extends HttpServlet {
 	 * @param p_response
 	 *            the HTTP response
 	 */
-	private final void doWork(HttpServletRequest p_request, HttpServletResponse p_response) {
+	@Override
+	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
+		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(HTTP_IF_MODIFIED_SINCE);
 		m_logger.info("If-Modified-Since : " + ifModifiedSince);
 		m_logger.info("Last-Modified : " + Backend.getInstance().getLastModified());
@@ -113,7 +81,7 @@ public class BackendServlet extends HttpServlet {
 			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
 			try {
 				p_response.setContentLength(text.getBytes("UTF-8").length);
-				p_response.getWriter().print(text);
+				p_response.getWriter().write(text);
 			}
 			catch (UnsupportedEncodingException e) {
 				// Cannot happen

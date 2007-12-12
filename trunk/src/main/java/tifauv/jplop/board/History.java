@@ -351,10 +351,11 @@ public class History implements Serializable {
 			m_logger.info("Updating the history cache...");
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n");
-			buffer.append("<" + BOARD_TAGNAME + " " + BOARD_SITE_ATTRNAME + "=\"" + getURL() + "\">\n");
+			buffer.append("<").append(BOARD_TAGNAME).append(" ")
+				.append(BOARD_SITE_ATTRNAME).append("=\"").append(getURL()).append("\">\n");
 			for (Post post : m_posts)
 				buffer.append(post.toString());
-			buffer.append("</" + BOARD_TAGNAME + ">");
+			buffer.append("</").append(BOARD_TAGNAME).append(">");
 			m_cache = buffer.toString();
 			m_mustRewriteCache = false;
 			m_logger.info("  done.");

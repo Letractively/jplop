@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.auth;
 
+import java.util.Collection;
+
 /**
  * The description of a user.
  *
@@ -21,6 +23,8 @@ public class User {
 	
 	/** The user's password. */
 	private byte[] m_password;
+	
+	private Collection<String> m_roles;
 
 	
 	// GETTERS \\
@@ -82,6 +86,21 @@ public class User {
 	
 	
 	public void setRoles(String p_roles) {
-		
+		clearRoles();
+		addRoles(p_roles);
+	}
+	
+	public void addRoles(String p_roles) {
+		String[] roles = p_roles.split(",");
+		for (String role : roles)
+			addRole(role.trim());
+	}
+	
+	public void clearRoles() {
+		m_roles.clear();
+	}
+	
+	public void addRole(String p_role) {
+		m_roles.add(p_role);
 	}
 }
