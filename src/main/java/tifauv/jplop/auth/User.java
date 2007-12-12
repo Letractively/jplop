@@ -67,11 +67,21 @@ public class User {
 	}
 
 	
+	public void setPassword(String p_b64Password) {
+		
+	}
+	
+	
 	/**
 	 * @param m_password
 	 *            the user's password
 	 */
 	public void setPassword(byte[] p_password) {
 		m_password = p_password;
+	}
+	
+	
+	public void setRoles(String p_roles) {
+		
 	}
 }

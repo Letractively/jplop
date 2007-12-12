@@ -309,9 +309,9 @@ public class History implements Serializable {
 	
 	
 	/**
-	 * Loads a backend from a DOM Document.
+	 * Loads a history from a DOM Document.
 	 * 
-	 * @param p_backend
+	 * @param p_history
 	 *            the DOM document
 	 * 
 	 * @throws ParseException
@@ -319,10 +319,10 @@ public class History implements Serializable {
 	 * @throws NumberFormatException
 	 *            if a post id cannot be loaded
 	 */
-	public final void load(Document p_backend)
+	public final void load(Document p_history)
 	throws ParseException,
 	NumberFormatException {
-		Element board = p_backend.getDocumentElement();
+		Element board = p_history.getDocumentElement();
 		if (board != null) {
 			// site attribute
 			if (board.hasAttribute(BOARD_SITE_ATTRNAME))
@@ -348,7 +348,7 @@ public class History implements Serializable {
 	 */
 	private final void updateCache() {
 		if (m_mustRewriteCache) {
-			m_logger.info("Rewriting the backend...");
+			m_logger.info("Updating the history cache...");
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n");
 			buffer.append("<" + BOARD_TAGNAME + " " + BOARD_SITE_ATTRNAME + "=\"" + getURL() + "\">\n");
@@ -360,7 +360,7 @@ public class History implements Serializable {
 			m_logger.info("  done.");
 		}
 		else
-			m_logger.debug("The backend doesn't need to be rewritten.");
+			m_logger.debug("The history cache is up-to-date.");
 	}
 	
 	
@@ -379,9 +379,8 @@ public class History implements Serializable {
 	 */
 	public synchronized final void loadFromFile()
 	throws DeserializeException {
-		File cacheFile = getFile();
-		if (cacheFile.exists()) {
-			m_logger.info("Loading the Backend from cache...");
+		if (getFile().exists()) {
+			m_logger.info("Loading the history from '" + getFile() + "'...");
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
 			factory.setNamespaceAware(true);
@@ -390,7 +389,7 @@ public class History implements Serializable {
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
-				m_logger.info(size() + " posts loaded from cache.");
+				m_logger.info(size() + " posts loaded from file.");
 			}
 			catch (ParserConfigurationException e) {
 				// Cannot happen
@@ -400,7 +399,7 @@ public class History implements Serializable {
 			}
 		}
 		else
-			m_logger.debug("The cache file does not exist.");
+			m_logger.debug("The history file does not exist.");
 	}
 	
 	
@@ -412,12 +411,10 @@ public class History implements Serializable {
 		if (isEmpty())
 			return;
 		
-		File cacheFile = getFile();
-		
 		// Create the file if needed
-		if (!cacheFile.exists()) {
+		if (!getFile().exists()) {
 			try {
-				cacheFile.createNewFile();
+				getFile().createNewFile();
 				m_logger.info("The file '" + getFile() + "' has been created (empty).");
 			}
 			catch (IOException e) {
@@ -426,8 +423,8 @@ public class History implements Serializable {
 		}
 
 		// Check whether the file is writable
-		if (!cacheFile.canWrite()) {
-			m_logger.error("The cache file '" + getFile() + "' is not writable.");
+		if (!getFile().canWrite()) {
+			m_logger.error("The history file '" + getFile() + "' is not writable.");
 			return;
 		}
 		
@@ -435,13 +432,13 @@ public class History implements Serializable {
 			FileOutputStream output = new FileOutputStream(getFile());
 			output.write(toString().getBytes("UTF-8"));
 			output.close();
-			m_logger.info("Backend saved to cache.");
+			m_logger.info("Backend saved to '" + getFile() + "'.");
 		}
 		catch (FileNotFoundException e) {
-			m_logger.error("The cache file does not exist.");
+			m_logger.error("The history file does not exist.");
 		}
 		catch (IOException e) {
-			m_logger.error("Cannot write the cache file", e);
+			m_logger.error("Cannot write the history file", e);
 		}
 	}
 }
