@@ -18,7 +18,6 @@ import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -199,7 +198,7 @@ public class History implements Serializable {
 	 * @param p_size
 	 *            the new size of the history
 	 * 
-	 * @see {@link #truncate()}
+	 * @see #truncate()
 	 */
 	public final synchronized void setMaxSize(int p_size) {
 		m_maxSize = p_size;
@@ -258,8 +257,8 @@ public class History implements Serializable {
 	 * @param p_post
 	 *            the post to add
 	 * 
-	 * @see {@link #setModified()}
-	 * @see {@link #truncate()}
+	 * @see #setModified()
+	 * @see #truncate()
 	 */
 	protected final synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
@@ -391,9 +390,6 @@ public class History implements Serializable {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
 				m_logger.info(size() + " posts loaded from file.");
-			}
-			catch (ParserConfigurationException e) {
-				// Cannot happen
 			}
 			catch (Exception e) {
 				throw new DeserializeException("Could not load the history file", e);

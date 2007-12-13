@@ -17,14 +17,6 @@ import tifauv.jplop.auth.UserBaseAuthn;
 /**
  * Servlet implementation class for Servlet: LogonServlet
  *
- * @web.servlet
- *   name="LogonServlet"
- *   display-name="LogonServlet" 
- *   description="The servlet used to log on the board" 
- *
- * @web.servlet-mapping
- *   url-pattern="/logon"
- *
  * @version 1.0
  *
  * @author Olivier Serve <tifauv@gmail.com>
@@ -52,14 +44,14 @@ import tifauv.jplop.auth.UserBaseAuthn;
 
 	// METHODS \\
 	/**
-	 * Calls {@link #doWork(HttpServletRequest, HttpServletResponse)}.
+	 * Searches the {@link #LOGIN_PARAM} and {@link #PASSWORD_PARAM} request parameters
+	 * then tries to identify and authenticate the user.
 	 * 
 	 * @param p_request
 	 *            the HTTP request
 	 * @param p_response
 	 *            the HTTP response
 	 * 
-	 * @see #doWork(HttpServletRequest, HttpServletResponse)
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override

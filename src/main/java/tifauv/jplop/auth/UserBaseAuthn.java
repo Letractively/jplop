@@ -16,7 +16,7 @@ public class UserBaseAuthn implements Authenticator {
 	}
 
 	/**
-	 * @see tifauv.jplop.authn.Authenticator#authenticate()
+	 * @see tifauv.jplop.auth.Authenticator#authenticate()
 	 */
 	public boolean authenticate() {
 		// TODO Auto-generated method stub
@@ -24,7 +24,7 @@ public class UserBaseAuthn implements Authenticator {
 	}
 
 	/**
-	 * @see tifauv.jplop.authn.Authenticator#getSubject()
+	 * @see tifauv.jplop.auth.Authenticator#getSubject()
 	 */
 	public Subject getSubject() {
 		// TODO Auto-generated method stub

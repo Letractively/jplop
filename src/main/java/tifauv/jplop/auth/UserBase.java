@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -202,9 +201,6 @@ public class UserBase implements Serializable {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
 				m_logger.info(size() + " users loaded from cache.");
-			}
-			catch (ParserConfigurationException e) {
-				// Cannot happen
 			}
 			catch (Exception e) {
 				throw new DeserializeException("Could not load the user base file", e);

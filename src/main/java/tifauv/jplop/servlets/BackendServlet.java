@@ -3,9 +3,6 @@
  */
 package tifauv.jplop.servlets;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,10 +80,7 @@ public class BackendServlet extends HttpServlet {
 				p_response.setContentLength(text.getBytes("UTF-8").length);
 				p_response.getWriter().write(text);
 			}
-			catch (UnsupportedEncodingException e) {
-				// Cannot happen
-			}
-			catch (IOException e) {
+			catch (Exception e) {
 				p_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				p_response.setContentLength(0);
 			}
