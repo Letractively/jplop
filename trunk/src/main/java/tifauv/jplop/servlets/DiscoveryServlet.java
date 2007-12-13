@@ -1,8 +1,5 @@
 package tifauv.jplop.servlets;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,14 +9,6 @@ import tifauv.jplop.Backend;
 /**
  * This servlet returns the board's configuration.
  *
- * @web.servlet
- *   name="DiscoveryServlet"
- *   display-name="Discovery Servlet" 
- *   description="This servlet gives the board's configuration" 
- *
- * @web.servlet-mapping
- *   url-pattern="/discover"
- * 
  * @version 1.0
  * 
  * @author Olivier Serve <tifauv@gmail.com>
@@ -54,10 +43,7 @@ import tifauv.jplop.Backend;
 			p_response.setContentLength(config.getBytes("UTF-8").length);
 			p_response.getWriter().write(config);
 		}
-		catch (UnsupportedEncodingException e) {
-			// Cannot happen
-		}
-		catch (IOException e) {
+		catch (Exception e) {
 			p_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			p_response.setContentLength(0);
 		}

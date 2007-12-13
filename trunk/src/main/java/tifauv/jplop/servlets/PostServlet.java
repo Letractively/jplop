@@ -62,6 +62,7 @@ public class PostServlet extends HttpServlet {
 		}
 		catch (UnsupportedEncodingException e) {
 			// Cannot happen
+			m_logger.warn("Cannot decode the request as UTF-8 !");
 		}
 		
 		// Get the message parameter and check it

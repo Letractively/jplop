@@ -54,7 +54,7 @@ public class User {
 	
 	// SETTERS \\
 	/**
-	 * @param m_login
+	 * @param p_login
 	 *            the user's login
 	 */
 	public void setLogin(String p_login) {
@@ -63,7 +63,7 @@ public class User {
 
 	
 	/**
-	 * @param m_email
+	 * @param p_email
 	 *            the user's email address
 	 */
 	public void setEmail(String p_email) {
@@ -77,7 +77,7 @@ public class User {
 	
 	
 	/**
-	 * @param m_password
+	 * @param p_password
 	 *            the user's password
 	 */
 	public void setPassword(byte[] p_password) {

@@ -112,7 +112,7 @@ public abstract class AbstractJob implements Runnable {
 	/**
 	 * Starts the job.
 	 * 
-	 * @see #start(String)
+	 * @see #start()
 	 * @see #stop()
 	 */
 	public final synchronized void start() {
@@ -129,7 +129,6 @@ public abstract class AbstractJob implements Runnable {
 	 * Stops the job.
 	 * 
 	 * @see #start()
-	 * @see #start(String)
 	 */
 	public final synchronized void stop() {
 		if (m_runner != null) {

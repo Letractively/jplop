@@ -9,7 +9,7 @@ import tifauv.jplop.util.AbstractJob;
 import tifauv.jplop.util.SerializeException;
 
 /**
- * This job asks regularly the {@link #Backend} to save itself.
+ * This job asks regularly the {@link Backend} to save itself.
  * 
  * @version 1.0
  * 
