@@ -1,6 +1,9 @@
 package tifauv.jplop.auth;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -144,7 +147,7 @@ public class UserBase implements Serializable {
 	 * @return a {@link User} or <code>null</code> 
 	 */
 	public User get(String p_username) {
-		return null;
+		return m_users.get(p_username);
 	}
 	
 	
@@ -172,12 +175,17 @@ public class UserBase implements Serializable {
 		for (int i=0; i<users.getLength(); ++i) {
 			Element userEl = (Element)users.item(i);
 			if (userEl.hasAttribute(USER_NAME_ATTR)) {
-				User user = new User();
-				user.setLogin(userEl.getAttribute(ROLE_NAME_ATTR));
-				user.setPassword(userEl.getAttribute(USER_PSW_ATTR));
-				user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
-				user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
-				addUser(user);
+				try {
+					User user = new User();
+					user.setLogin(userEl.getAttribute(ROLE_NAME_ATTR));
+					user.setPassword(userEl.getAttribute(USER_PSW_ATTR));
+					user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
+					user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
+					addUser(user);
+				}
+				catch (Exception e) {
+					m_logger.error("Could not load a user", e);
+				}
 			}
 			else
 				m_logger.warn("A <" + USER_TAG + "> element exists but has no '" + USER_NAME_ATTR + "' attribute.");
@@ -217,6 +225,48 @@ public class UserBase implements Serializable {
 	 */
 	public void saveToFile()
 	throws SerializeException {
+		// Create the file if needed
+		if (!getFile().exists()) {
+			try {
+				getFile().createNewFile();
+				m_logger.info("The file '" + getFile() + "' has been created (empty).");
+			}
+			catch (IOException e) {
+				m_logger.error("The file '" + getFile() + "' could not be created.");
+			}
+		}
+
+		// Check whether the file is writable
+		if (!getFile().canWrite()) {
+			m_logger.error("The history file '" + getFile() + "' is not writable.");
+			return;
+		}
 		
+		// Prepare the text to be written
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<").append(USERS_TAG).append(">");
+		for (String role : m_roles)
+			buffer.append("<").append(ROLE_TAG).append(" ")
+				.append(ROLE_NAME_ATTR).append("=\"").append(role).append("\"/>");
+		for (User user : m_users.values())
+			buffer.append("<").append(USER_TAG).append(" ")
+				.append(USER_NAME_ATTR).append("=\"").append(user.getLogin()).append("\" ")
+				.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\"")
+				.append(USER_PSW_ATTR).append("=\"").append(user.getSSHAPassword()).append("\"")
+				.append(USER_ROLES_ATTR).append("=\"").append(user.getRoles()).append("\"/>");
+		buffer.append("</").append(USERS_TAG).append(">");
+		
+		try {
+			FileOutputStream output = new FileOutputStream(getFile());
+			output.write(toString().getBytes("UTF-8"));
+			output.close();
+			m_logger.info("Backend saved to '" + getFile() + "'.");
+		}
+		catch (FileNotFoundException e) {
+			m_logger.error("The history file does not exist.");
+		}
+		catch (IOException e) {
+			m_logger.error("Cannot write the history file", e);
+		}
 	}
 }
