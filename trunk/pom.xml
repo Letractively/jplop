@@ -1,15 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?><project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>tifauv</groupId>
   <artifactId>jplop</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>JPlop</name>
+  <version>1.0-SNAPSHOT</version>
   <description>JPlop is a web-based chat board with an XML backend written in Java.</description>
   <url>http://jplop.googlecode.com</url>
+  <issueManagement>
+    <system>GoogleCode</system>
+    <url>http://code.google.com/p/jplop/issues/list</url>
+  </issueManagement>
   <inceptionYear>2007</inceptionYear>
-
+  <developers>
+    <developer>
+      <id>tifauv</id>
+      <name>Olivier SERVE</name>
+      <email>tifauv@gmail.com</email>
+      <url>http://tifauv.homeip.net</url>
+      <roles>
+        <role>owner</role>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Paris</timezone>
+    </developer>
+  </developers>
   <licenses>
     <license>
       <name>GNU General Public License version 2 or later</name>
@@ -17,18 +32,23 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
   <scm>
-    <url>http://jplop.googlecode.com/svn/</url>
     <connection>scm:svn:http://jplop.googlecode.com/svn/</connection>
     <developerConnection>scm:svn:https://jplop.googlecode.com/svn/</developerConnection>
+    <url>http://jplop.googlecode.com/svn/</url>
   </scm>
-
-  <issueManagement>
-    <system>GoogleCode</system>
-    <url>http://code.google.com/p/jplop/issues/list</url>
-  </issueManagement>
-
+  <build>
+    <finalName>jplop</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -47,59 +67,32 @@
       <artifactId>log4j</artifactId>
       <version>1.2.14</version>
     </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.3</version>
+    </dependency>
   </dependencies>
-
-  <build>
-    <finalName>jplop</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
   <reporting>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changelog-plugin</artifactId>
         <configuration>
           <type>range</type>
           <range>7</range>
-	  <headingDateFormat>dd MMM yyyy</headingDateFormat>
+          <headingDateFormat>dd MMM yyyy</headingDateFormat>
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-jxr-plugin</artifactId>
+        <artifactId>maven-jxr-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-pmd-plugin</artifactId>
-	<configuration>
-	  <linkXref>true</linkXref>
-	  <targetJdk>1.5</targetJdk>
-	</configuration>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <configuration>
+          <linkXref>true</linkXref>
+          <targetJdk>1.5</targetJdk>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
-
-  <developers>
-    <developer>
-      <id>tifauv</id>
-      <name>Olivier SERVE</name>
-      <email>tifauv@gmail.com</email>
-      <url>http://tifauv.homeip.net</url>
-      <roles>
-        <role>owner</role>
-        <role>developer</role>
-      </roles>
-      <timezone>Europe/Paris</timezone>
-    </developer>
-  </developers>
 </project>
