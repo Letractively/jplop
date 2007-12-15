@@ -38,7 +38,6 @@
     <url>http://jplop.googlecode.com/svn/</url>
   </scm>
   <build>
-    <finalName>jplop</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -92,6 +91,10 @@
           <linkXref>true</linkXref>
           <targetJdk>1.5</targetJdk>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>

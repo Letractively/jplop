@@ -61,7 +61,7 @@ public class Post {
 	private static final String CDATA_END = "]]>";
 	
 	/** The anonymous login value. */
-	private static final String ANONYMOUS_LOGIN = "";
+	public static final String ANONYMOUS_LOGIN = "";
 	
 	/** The default length of a message. */
 	public static final int DEFAULT_MAX_POST_LENGTH = 512;
@@ -96,7 +96,7 @@ public class Post {
 	/** The URL recognition pattern. */
 	private static final String URLS_PATTERN;
 	
-	/** Generates the start and end tags patterns. */
+	/** Generates the URL pattern. */
 	static {
 		String protocols = "";
 		for (String protocol : PROTOCOLS) {
@@ -166,7 +166,7 @@ public class Post {
 	public Post(Element p_post)
 	throws ParseException,
 	NumberFormatException {
-		if (p_post.getLocalName().equals(POST_TAGNAME)) {
+		if (p_post.getTagName().equals(POST_TAGNAME)) {
 			// id attribute
 			if (p_post.hasAttribute(POST_ID_ATTRNAME))
 				setId(Long.parseLong(p_post.getAttribute(POST_ID_ATTRNAME)));
@@ -267,7 +267,8 @@ public class Post {
 	 *            the maximum length of a post
 	 */
 	public static void setMaxLength(int p_length) {
-		s_maxLength = p_length;
+		if (p_length > 0)
+			s_maxLength = p_length;
 	}
 	
 	
