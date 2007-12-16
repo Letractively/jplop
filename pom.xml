@@ -33,10 +33,26 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:http://jplop.googlecode.com/svn/</connection>
-    <developerConnection>scm:svn:https://jplop.googlecode.com/svn/</developerConnection>
-    <url>http://jplop.googlecode.com/svn/</url>
+    <connection>scm:svn:http://jplop.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://jplop.googlecode.com/svn/trunk</developerConnection>
+    <url>http://jplop.googlecode.com/svn/trunk</url>
   </scm>
+  <ciManagement>
+    <system>continuum</system>
+    <url>http://tifauv.homeip.net:8080/continuum</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+	<sendOnError>true</sendOnError>
+	<sendOnFailure>true</sendOnFailure>
+	<sendOnWarning>true</sendOnWarning>
+	<sendOnSuccess>false</sendOnSuccess>
+        <configuration>
+	  <address>tifauv@gmail.com</address>
+	</configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
   <build>
     <plugins>
       <plugin>
@@ -98,4 +114,25 @@
       </plugin>
     </plugins>
   </reporting>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>jplop</id>
+      <name>JPlop repository</name>
+      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repo</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>jplop-snapshots</id>
+      <name>JPlop snapshots</name>
+      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repo/snapshots</url>
+      <layout>default</layout>
+    </snapshotRepository>
+    <site>
+      <id>jplop.website</id>
+      <name>JPlop website</name>
+      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html</url>
+    </site>
+  </distributionManagement>
 </project>
