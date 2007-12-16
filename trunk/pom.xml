@@ -117,20 +117,20 @@
   <distributionManagement>
     <repository>
       <uniqueVersion>false</uniqueVersion>
-      <id>jplop</id>
-      <name>JPlop repository</name>
-      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repo</url>
+      <id>jplop-releases</id>
+      <name>JPlop releases</name>
+      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repos/releases</url>
       <layout>default</layout>
     </repository>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>jplop-snapshots</id>
       <name>JPlop snapshots</name>
-      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repo/snapshots</url>
+      <url>scp://tifauv.homeip.net/home/projects/jplop/public_html/repos/snapshots</url>
       <layout>default</layout>
     </snapshotRepository>
     <site>
-      <id>jplop.website</id>
+      <id>jplop-website</id>
       <name>JPlop website</name>
       <url>scp://tifauv.homeip.net/home/projects/jplop/public_html</url>
     </site>
