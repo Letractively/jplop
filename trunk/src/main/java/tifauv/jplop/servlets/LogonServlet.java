@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import tifauv.jplop.Backend;
 import tifauv.jplop.auth.Authenticator;
 import tifauv.jplop.auth.UserBase;
-import tifauv.jplop.auth.UserBaseAuthn;
 
 /**
  * Servlet implementation class for Servlet: LogonServlet
@@ -34,7 +33,7 @@ import tifauv.jplop.auth.UserBaseAuthn;
 	private static final String PASSWORD_PARAM = "password";
 	
 	/** The name of the session attribute that contains the authenticated subject. */
-	public static final String SUBJECT_ATTRIBUTE = "subject";
+	public static final String USER_ATTRIBUTE = "subject";
 	
 	
 	// FIELDS \\
@@ -63,9 +62,9 @@ import tifauv.jplop.auth.UserBaseAuthn;
 			String password = p_request.getParameter(PASSWORD_PARAM);
 			m_logger.info("Logon request for user '" + username + "'.");
 		
-			Authenticator authn = new UserBaseAuthn(username, password);
+			Authenticator authn = new Authenticator(username, password);
 			if (authn.authenticate())
-				p_request.getSession().setAttribute(SUBJECT_ATTRIBUTE, authn.getSubject());
+				p_request.getSession().setAttribute(USER_ATTRIBUTE, authn.getUser());
 		}
 	}
 }

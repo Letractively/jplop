@@ -23,6 +23,18 @@
 			<li><a href="config.jsp">Configuration</a></li>
 		</ul>
 		
+		<h2>Authentification</h2>
+		
+		<form method="post" action="/logon">
+			<div>
+				<label for="username">Login&nbsp;:</label>
+				<input type="text" id="username" name="login" />
+				<label for="password">Mot de passe&nbsp;:</label>
+				<input type="password" id="password" name="password" />
+				<input type="submit" />
+			</div>
+		</form>
+		
 		<hr/>
 		
 		<%@ include file="footer.html.inc" %>
