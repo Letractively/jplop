@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
+import tifauv.jplop.auth.User;
 
 
 /**
@@ -73,11 +74,19 @@ public class PostServlet extends HttpServlet {
 			return;
 		}
 		
+		// Get the login of the logged user if any
+		String login = null;
+		User currentUser = (User)p_request.getAttribute(LogonServlet.USER_ATTRIBUTE);
+		if (currentUser != null) {
+			login = currentUser.getLogin();
+			currentUser = null;
+		}
+		
 		// Remove the starting and trailing spaces then add it
 		message = message.trim();
 		m_logger.info("Message is '" + message + "'");
 		String userAgent = p_request.getHeader(USER_AGENT);
-		Backend.getInstance().addMessage(userAgent, message, null);
+		Backend.getInstance().addMessage(userAgent, message, login);
 		p_response.setStatus(HttpServletResponse.SC_CREATED);
 	}
 }
