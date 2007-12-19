@@ -72,11 +72,18 @@ public class User {
 		return m_password;
 	}
 	
-	
+
+	/**
+	 * Gives the Seeded SHA version of the password.
+	 */
 	public String getSSHAPassword() {
 		return SSHA_PREFIX + new String(Base64.encodeBase64(getPassword()));
 	}
 
+
+	/**
+	 * Gives the user's roles (comma-separated list).
+	 */
 	public String getRoles() {
 		StringBuffer buffer = new StringBuffer();
 		for (String role : m_roles)
@@ -84,6 +91,7 @@ public class User {
 		return buffer.toString();
 	}
 	
+
 	// SETTERS \\
 	/**
 	 * @param p_login
@@ -104,6 +112,8 @@ public class User {
 	
 	
 	/**
+	 * Sets the raw password.
+	 *
 	 * @param p_password
 	 *            the user's password
 	 */
@@ -112,17 +122,23 @@ public class User {
 	}
 	
 	
+	/**
+	 * Decodes the password from a Base64 form (with or without SSHA prefix)
+	 * and sets it.
+	 */
 	public void setPassword(String p_password)
 	throws UnsupportedEncodingException {
-		if (p_password.startsWith(SSHA_PREFIX)) {
+		if (p_password.startsWith(SSHA_PREFIX))
 			setPassword(Base64.decodeBase64(p_password.substring(SSHA_SEED_LENGTH).getBytes("UTF-8")));
-		}
 		else
 			setPassword(Base64.decodeBase64(p_password.getBytes("UTF-8")));
 	}
 
 	
 	// METHODS
+	/**
+	 * Generates a hashed password from the given value.
+	 */
 	public void generatePassword(String p_password)
 	throws UnsupportedEncodingException {
 		setPassword(hashPassword(p_password));
@@ -143,6 +159,10 @@ public class User {
 	}
 	
 	
+	/**
+	 * Hashes a password with the given seed.
+	 * The hash algorithm is a Seeded SHA1.
+	 */
 	protected byte[] hashPassword(byte[] p_seed, String p_password)
 	throws UnsupportedEncodingException {
 		byte[] binPassword = p_password.getBytes("UTF-8");
@@ -154,6 +174,11 @@ public class User {
 		return seededPasswordDigest;
 	}	
 
+
+	/**
+	 * Gives the generator of SSHA seeds.
+	 * Builds it if needed.
+	 */
 	private static SecureRandom getSeedGenerator() {
 		if (s_seedGen == null) {
 			try {
@@ -167,6 +192,9 @@ public class User {
 	}
 	
 	
+	/**
+	 * Generates a SSHA seed.
+	 */
 	public static byte[] generateSeed() {
 		byte[] seed = new byte[SSHA_SEED_LENGTH];
 		getSeedGenerator().nextBytes(seed);
@@ -174,6 +202,9 @@ public class User {
 	}
 	
 	
+	/**
+	 * Checks the given password matches this user's one.
+	 */
 	public boolean checkPassword(String p_password) {
 		try {
 			byte[] seed = Arrays.copyOf(getPassword(), SSHA_SEED_LENGTH);
@@ -187,21 +218,45 @@ public class User {
 	}
 	
 	
+	/**
+	 * Sets the roles.
+	 *
+	 * @param p_roles
+	 *            a comma-separated list of roles
+	 */
 	public void setRoles(String p_roles) {
 		clearRoles();
 		addRoles(p_roles);
 	}
 	
+
+	/**
+	 * Add the roles defined in the given comma-separated list.
+	 *
+	 * @param p_roles
+	 *            a comma-separated list of roles
+	 */
 	public void addRoles(String p_roles) {
 		String[] roles = p_roles.split(",");
 		for (String role : roles)
 			addRole(role.trim());
 	}
 	
+
+	/**
+	 * Removes all the roles of this user.
+	 */
 	public void clearRoles() {
 		m_roles.clear();
 	}
 	
+
+	/**
+	 * Adds a role to this user.
+	 *
+	 * @param p_role
+	 *            the role to add
+	 */
 	public void addRole(String p_role) {
 		m_roles.add(p_role);
 	}
