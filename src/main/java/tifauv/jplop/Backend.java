@@ -13,6 +13,7 @@ import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
 import tifauv.jplop.util.AbstractJob;
 import tifauv.jplop.util.DeserializeException;
+import tifauv.jplop.util.Serializable;
 import tifauv.jplop.util.SerializeException;
 
 
@@ -38,6 +39,9 @@ public class Backend {
 	/** The default URL. */
 	public static final String DEFAULT_URL = "http://localhost:8080/jplop";
 	
+	/** The default data directory. */
+	public static final String DEFAULT_DATADIR = "${catalina.base}/jplop-data";
+	
 	/** The configuration key of the name. */
 	private static final String NAME_KEY = "jplop.name";
 	
@@ -50,17 +54,14 @@ public class Backend {
 	/** The configuration key of the size of the history. */
 	private static final String SIZE_KEY = "jplop.history.size";
 	
-	/** The configuration key of the file of the history. */
-	private static final String HISTORY_FILE_KEY = "jplop.history.file";
-
 	/** The configuration key of the save rate of the history. */
 	private static final String WRITE_CACHE_KEY = "jplop.history.saveEvery";
 	
 	/** The configuration key of the maximum length of an incoming message. */
 	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
-	
-	/** The configuration key of the file of the user base. */
-	private static final String USERS_FILE_KEY = "jplop.users.file";
+
+	/** The configuration key of the data directory. */
+	private static final String DATADIR_KEY = "jplop.datadir";
 	
 	
 	// STATIC FIELDS \\
@@ -294,10 +295,9 @@ public class Backend {
 		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
-		String historyFile = History.DEFAULT_FILE;
+		String dataDir = DEFAULT_DATADIR;
 		int backupTimeout = AbstractJob.DEFAULT_TIMEOUT;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
-		String usersFile = UserBase.DEFAULT_FILE;
 		try {
 			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
@@ -337,14 +337,6 @@ public class Backend {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
 			
-			// Load the history file
-			try {
-				historyFile = config.getString(HISTORY_FILE_KEY);
-			}
-			catch (MissingResourceException e) {
-				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
-			}
-			
 			// Load the backup job's timeout
 			try {
 				backupTimeout = Integer.parseInt(config.getString(WRITE_CACHE_KEY));
@@ -367,11 +359,11 @@ public class Backend {
 			catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
+
 			
-			
-			// Load the users file
+			// Load the data directory name
 			try {
-				usersFile = config.getString(USERS_FILE_KEY);
+				dataDir = config.getString(DATADIR_KEY);
 			}
 			catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
@@ -380,6 +372,9 @@ public class Backend {
 		catch (MissingResourceException e) {
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
 		}
+
+		/* Update the data directory */
+		Serializable.setDataDir(p_contextDir, dataDir);
 		
 		/* Update the history */
 		if (getHistory() == null)
@@ -388,12 +383,10 @@ public class Backend {
 			getHistory().setURL(url);
 			getHistory().setMaxSize(size);
 		}
-		getHistory().setFile(p_contextDir, historyFile);
 		
 		/* Update the user base */
 		if (getUserBase() == null)
 			setUserBase(new UserBase());
-		getUserBase().setFile(p_contextDir, usersFile);
 		
 		/* Update the backup job. */
 		m_backupJob.setTimeout(backupTimeout * 60000);
@@ -404,8 +397,7 @@ public class Backend {
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
 		m_logger.info(" |- the board is hosted at '" + url + "'");
 		m_logger.info(" |- the backend keeps " + size + " posts");
-		m_logger.info(" |- the history is saved to '" + getHistory().getFile() + "'");
-		m_logger.info(" |- the user list is saved to '" + getUserBase().getFile() + "'");
+		m_logger.info(" |- the data are stored in '" + Serializable.getDataDir() + "'");
 		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minutes");
 		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
 

@@ -12,12 +12,12 @@ BODY {
 	background-color: #326495;
 	background-image: url('../images/coincoin.png');
 	border-bottom: 0.2em solid #0c3762;
+	color: #ffffff;
 }
 
 #header H1 {
 	text-align: center;
 	margin: 0;
-	color: #ffffff;
 }
 
 

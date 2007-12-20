@@ -28,11 +28,11 @@ import tifauv.jplop.util.SerializeException;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class UserBase implements Serializable {
+public class UserBase extends Serializable {
 	
 	// CONSTANTS \\
 	/** The name of the default list file on disk. */
-	public static final String DEFAULT_FILE = "users.list";
+	public static final String FILE_NAME = "users.xml";
 	
 	/** The root tag name. */
 	public static final String USERS_TAG = "jplop-users";
@@ -60,9 +60,6 @@ public class UserBase implements Serializable {
 	
 	
 	// FIELDS \\
-	/** The file where the users list is saved. */
-	private File m_file;
-	
 	/** The roles that are defined. */
 	private Collection<String> m_roles;
 	
@@ -87,8 +84,9 @@ public class UserBase implements Serializable {
 	/**
 	 * Gives the file where the users list is saved.
 	 */
+	@Override
 	public File getFile() {
-		return m_file;
+		return new File(getDataDir(), FILE_NAME);
 	}
 	
 	
@@ -97,24 +95,6 @@ public class UserBase implements Serializable {
 	 */
 	public int size() {
 		return m_users.size();
-	}
-	
-	
-	// SETTERS
-	/**
-	 * Sets the file where the history is saved.
-	 * 
-	 * @param p_contextDir
-	 *            the current context directory
-	 * @param p_file
-	 *            the path to the file from the configuration
-	 */
-	public void setFile(String p_contextDir, String p_file) {
-		File file = new File(p_file);
-		if (file.isAbsolute())
-			m_file = file;
-		else
-			m_file = new File(p_contextDir + File.separator + "WEB-INF", p_file);
 	}
 	
 	
@@ -177,7 +157,7 @@ public class UserBase implements Serializable {
 			if (userEl.hasAttribute(USER_NAME_ATTR)) {
 				try {
 					User user = new User();
-					user.setLogin(userEl.getAttribute(ROLE_NAME_ATTR));
+					user.setLogin(userEl.getAttribute(USER_NAME_ATTR));
 					user.setPassword(userEl.getAttribute(USER_PSW_ATTR));
 					user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
 					user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
@@ -196,6 +176,7 @@ public class UserBase implements Serializable {
 	/**
 	 * Loads the backend from the cache file. 
 	 */
+	@Override
 	public void loadFromFile()
 	throws DeserializeException {
 		if (getFile().exists()) {
@@ -223,6 +204,7 @@ public class UserBase implements Serializable {
 	 * Saves the history to a file.
 	 * Does nothing if the history is empty.
 	 */
+	@Override
 	public void saveToFile()
 	throws SerializeException {
 		// Create the file if needed
@@ -238,7 +220,7 @@ public class UserBase implements Serializable {
 
 		// Check whether the file is writable
 		if (!getFile().canWrite()) {
-			m_logger.error("The history file '" + getFile() + "' is not writable.");
+			m_logger.error("The users file '" + getFile() + "' is not writable.");
 			return;
 		}
 		
@@ -251,22 +233,22 @@ public class UserBase implements Serializable {
 		for (User user : m_users.values())
 			buffer.append("<").append(USER_TAG).append(" ")
 				.append(USER_NAME_ATTR).append("=\"").append(user.getLogin()).append("\" ")
-				.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\"")
-				.append(USER_PSW_ATTR).append("=\"").append(user.getSSHAPassword()).append("\"")
+				.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\" ")
+				.append(USER_PSW_ATTR).append("=\"").append(user.getPassword()).append("\" ")
 				.append(USER_ROLES_ATTR).append("=\"").append(user.getRoles()).append("\"/>");
 		buffer.append("</").append(USERS_TAG).append(">");
 		
 		try {
 			FileOutputStream output = new FileOutputStream(getFile());
-			output.write(toString().getBytes("UTF-8"));
+			output.write(buffer.toString().getBytes("UTF-8"));
 			output.close();
-			m_logger.info("Backend saved to '" + getFile() + "'.");
+			m_logger.info("User base saved to '" + getFile() + "'.");
 		}
 		catch (FileNotFoundException e) {
-			m_logger.error("The history file does not exist.");
+			m_logger.error("The users file does not exist.");
 		}
 		catch (IOException e) {
-			m_logger.error("Cannot write the history file", e);
+			m_logger.error("Cannot write the users file", e);
 		}
 	}
 }
