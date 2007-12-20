@@ -54,7 +54,7 @@ function sendMessage(p_url) {
 
 
 /**
- * Handles the response. In case of success (readyState == 4 and status == 202),
+ * Handles the response. In case of success (readyState == 4 and status == 201),
  * selects the input's text and calls reloadBackend();
  *
  * @param p_request
@@ -63,8 +63,8 @@ function sendMessage(p_url) {
 function handlePostResponse(p_request) {
 	// If request is complete...
 	if (p_request.readyState == 4) {
-		// And the status is 204 (NO_CONTENT)
-		if (p_request.status == 204) {
+		// And the status is 201 (CREATED)
+		if (p_request.status == 201) {
 			reloadBackend();
 			document.getElementById('message').select();
 		}

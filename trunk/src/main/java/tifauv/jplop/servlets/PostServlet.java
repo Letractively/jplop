@@ -74,17 +74,21 @@ public class PostServlet extends HttpServlet {
 			return;
 		}
 		
+		// Remove the starting and trailing spaces
+		message = message.trim();
+
 		// Get the login of the logged user if any
 		String login = null;
-		User currentUser = (User)p_request.getAttribute(LogonServlet.USER_ATTRIBUTE);
+		User currentUser = (User)p_request.getSession().getAttribute(LogonServlet.USER_ATTRIBUTE);
 		if (currentUser != null) {
 			login = currentUser.getLogin();
 			currentUser = null;
+			m_logger.info("Message is '" + message + "' from '" + login + "'.");
 		}
+		else
+			m_logger.info("Message is '" + message + "' from an anonymous coward.");
 		
-		// Remove the starting and trailing spaces then add it
-		message = message.trim();
-		m_logger.info("Message is '" + message + "'");
+		// Add the message
 		String userAgent = p_request.getHeader(USER_AGENT);
 		Backend.getInstance().addMessage(userAgent, message, login);
 		p_response.setStatus(HttpServletResponse.SC_CREATED);

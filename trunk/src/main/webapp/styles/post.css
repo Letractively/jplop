@@ -40,6 +40,8 @@
 
 .anonymous.login {
 	font-style: oblique;
+	font-weight: semi-bold;
+	color: #b96e3c;
 }
 
 .message {

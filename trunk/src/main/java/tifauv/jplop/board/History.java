@@ -35,14 +35,14 @@ import tifauv.jplop.util.Serializable;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class History implements Serializable {
+public class History extends Serializable {
 
 	// CONSTANTS \\
 	/** The default size of the history. */
 	public static final int DEFAULT_SIZE = 50;
 
 	/** The default cache file. */
-	public static final String DEFAULT_FILE = "jplop.cache";
+	public static final String FILE_NAME = "history.xml";
 
 	/** The root element of the backend. */
 	private static final String BOARD_TAGNAME = "board";
@@ -81,9 +81,6 @@ public class History implements Serializable {
 	
 	/** Flag to tell whether the cache must be rewritten. */
 	private boolean m_mustRewriteCache;
-	
-	/** The file where the history is saved. */
-	private File m_file;
 	
 	/** The logger. */
 	private Logger m_logger = Logger.getLogger(History.class);
@@ -132,8 +129,9 @@ public class History implements Serializable {
 	/**
 	 * Gives the file where the history is saved.
 	 */
+	@Override
 	public final File getFile() {
-		return m_file;
+		return new File(getDataDir(), FILE_NAME);
 	}
 	
 	
@@ -203,23 +201,6 @@ public class History implements Serializable {
 	public final synchronized void setMaxSize(int p_size) {
 		m_maxSize = p_size;
 		truncate();
-	}
-	
-	
-	/**
-	 * Sets the file where the history is saved.
-	 * 
-	 * @param p_contextDir
-	 *            the current context directory
-	 * @param p_file
-	 *            the path to the file from the configuration
-	 */
-	public final void setFile(String p_contextDir, String p_file) {
-		File file = new File(p_file);
-		if (file.isAbsolute())
-			m_file = file;
-		else
-			m_file = new File(p_contextDir + File.separator + "WEB-INF", p_file);
 	}
 	
 	
@@ -377,6 +358,7 @@ public class History implements Serializable {
 	/**
 	 * Loads the backend from the cache file.
 	 */
+	@Override
 	public synchronized final void loadFromFile()
 	throws DeserializeException {
 		if (getFile().exists()) {
@@ -404,6 +386,7 @@ public class History implements Serializable {
 	 * Saves the history to a file.
 	 * Does nothing if the history is empty.
 	 */
+	@Override
 	public synchronized final void saveToFile() {
 		if (isEmpty())
 			return;
@@ -429,7 +412,7 @@ public class History implements Serializable {
 			FileOutputStream output = new FileOutputStream(getFile());
 			output.write(toString().getBytes("UTF-8"));
 			output.close();
-			m_logger.info("Backend saved to '" + getFile() + "'.");
+			m_logger.info("History saved to '" + getFile() + "'.");
 		}
 		catch (FileNotFoundException e) {
 			m_logger.error("The history file does not exist.");
