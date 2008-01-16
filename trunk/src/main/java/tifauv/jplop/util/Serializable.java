@@ -44,7 +44,7 @@ public abstract class Serializable {
 	 * 
 	 * @param p_contextDir 
 	 *            the current context directory
-	 * @param p_file
+	 * @param p_path
 	 *            the given file path
 	 */
 	public static final void setDataDir(String p_contextDir, String p_path) {
