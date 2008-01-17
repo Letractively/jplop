@@ -76,6 +76,13 @@ public class PostTest extends TestCase {
 		assertEquals("<i>italic<u>underline&lt;/b&gt;bold</u></i>", post.getMessage());
 		assertEquals("login", post.getLogin());
 		
+		// Check with a bad-formatted message
+		post = new Post(0, "info", "<b>bold<i>italic<u>underline</b>normal", "login");
+		assertEquals(0, post.getId());
+		assertEquals("info", post.getInfo());
+		assertEquals("<b>bold<i>italic<u>underline</u></i></b>normal", post.getMessage());
+		assertEquals("login", post.getLogin());
+		
 		// Check with an http url in the message
 		post = new Post(0, "info", "plop http://www.example.com toto", "login");
 		assertEquals(0, post.getId());
