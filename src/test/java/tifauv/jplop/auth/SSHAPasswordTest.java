@@ -36,6 +36,10 @@ public class SSHAPasswordTest extends TestCase {
 	public void testGetPassword()
 	throws PasswordException {
 		Password psw = new SSHAPassword();
+		assertNull(psw.getPassword());
+		assertTrue(psw.check(null));
+
+		psw = new SSHAPassword();
 		psw.setPassword("{SSHA}VV8wdb4sGLy7Lroi4gxXaj33jCm9tGtP");
 		assertEquals("{SSHA}VV8wdb4sGLy7Lroi4gxXaj33jCm9tGtP", psw.getPassword());
 	}

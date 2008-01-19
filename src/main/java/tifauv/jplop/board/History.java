@@ -294,14 +294,11 @@ public class History extends Serializable {
 	 * @param p_history
 	 *            the DOM document
 	 * 
-	 * @throws ParseException
-	 *            if a post time attribute cannot be loaded
-	 * @throws NumberFormatException
-	 *            if a post id cannot be loaded
+	 * @throws BadArgumentException
+	 *            if a <post> element cannot be loaded
 	 */
 	public final void load(Document p_history)
-	throws ParseException,
-	NumberFormatException {
+	throws BadArgumentException {
 		Element board = p_history.getDocumentElement();
 		if (board != null) {
 			// site attribute

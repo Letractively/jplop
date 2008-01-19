@@ -164,16 +164,37 @@ public class Post {
 	 *            if a post id cannot be loaded
 	 */
 	public Post(Element p_post)
-	throws ParseException,
-	NumberFormatException {
+	throws BadArgumentException {
+		// Set default values
+		setId(0);
+		setTime(new Date());
+		setInfo("");
+		setRawMessage("");
+		setLogin(ANONYMOUS_LOGIN);
+
+		// Parse the given element
 		if (p_post.getTagName().equals(POST_TAGNAME)) {
 			// id attribute
-			if (p_post.hasAttribute(POST_ID_ATTRNAME))
-				setId(Long.parseLong(p_post.getAttribute(POST_ID_ATTRNAME)));
+			if (p_post.hasAttribute(POST_ID_ATTRNAME)) {
+				try {
+					setId(Long.parseLong(p_post.getAttribute(POST_ID_ATTRNAME)));
+				} catch (NumberFormatException e) {
+					throw new BadArgumentException("The '" + POST_ID_ATTRNAME + "' attribute value is not a valid long", e);
+				}
+			}
+			else
+				throw new BadArgumentException("The <" + POST_TAGNAME + "> element has no '" + POST_ID_ATTRNAME + "' attribute");
 			
 			// time attribute
-			if (p_post.hasAttribute(POST_TIME_ATTRNAME))
-				setTime(s_timeFormat.parse(p_post.getAttribute(POST_TIME_ATTRNAME)));
+			if (p_post.hasAttribute(POST_TIME_ATTRNAME)) {
+				try {
+					setTime(s_timeFormat.parse(p_post.getAttribute(POST_TIME_ATTRNAME)));
+				} catch (ParseException e) {
+					throw new BadArgumentException("The '" + POST_TIME_ATTRNAME + "' attribute does not follow the 'yyyyMMddHHmmss' scheme", e);
+				}
+			}
+			else
+				throw new BadArgumentException("The <" + POST_TAGNAME + "> element has no '" + POST_TIME_ATTRNAME + "' attribute");
 			
 			// <info> element
 			NodeList elems = p_post.getElementsByTagName(INFO_TAGNAME);
@@ -199,6 +220,8 @@ public class Post {
 				setLogin(cdata.getData());
 			}
 		}
+		else
+			throw new BadArgumentException("The element is not a <" + POST_TAGNAME + ">");
 	}
 	
 
