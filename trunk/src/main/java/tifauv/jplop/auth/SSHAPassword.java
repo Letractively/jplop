@@ -146,7 +146,9 @@ public class SSHAPassword implements Password {
 	 * Checks the given password matches this user's one.
 	 */
 	public boolean check(String p_password) {
-		if (m_hash != null && m_salt != null) {
+		if (m_hash == null)
+			return p_password == null;
+		else if (m_salt != null) {
 			try {
 				return Arrays.equals(hashPassword(m_salt, p_password), m_hash);
 			}
@@ -156,6 +158,4 @@ public class SSHAPassword implements Password {
 		}
 		return false;
 	}
-	
-	
 }
