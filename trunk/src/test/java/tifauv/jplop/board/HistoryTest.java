@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.board;
 
+import org.apache.log4j.BasicConfigurator;
+
 import junit.framework.TestCase;
 
 
@@ -19,6 +21,9 @@ public class HistoryTest extends TestCase {
 	 * Test method for {@link tifauv.jplop.board.History#History(java.lang.String)}.
 	 */
 	public void testHistoryString() {
+		System.setProperty("log4j.defaultInitOverride", "true");
+		BasicConfigurator.configure();
+
 		// Check without url
 		History history = new History(null);
 		assertNull(history.getURL());
