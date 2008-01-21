@@ -68,7 +68,11 @@ public class SSHAPassword implements Password {
 	 */
 	public void setPassword(String p_password)
 	throws PasswordException {
-		if (p_password.startsWith(SSHA_PREFIX)) {
+		if (p_password == null || p_password.length() == 0) {
+			m_salt = null;
+			m_hash = null;
+		}
+		else if (p_password.startsWith(SSHA_PREFIX)) {
 			try {
 				// Decoding to ASCII is sufficient because of the Base64 alphabet
 				byte[] binPswWithSalt = Base64.decodeBase64(p_password.substring(SSHA_SALT_LENGTH).getBytes("US-ASCII"));
@@ -146,8 +150,8 @@ public class SSHAPassword implements Password {
 	 * Checks the given password matches this user's one.
 	 */
 	public boolean check(String p_password) {
-		if (m_hash == null)
-			return p_password == null;
+		if (p_password == null)
+			return m_hash == null;
 		else if (m_salt != null) {
 			try {
 				return Arrays.equals(hashPassword(m_salt, p_password), m_hash);
