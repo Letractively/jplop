@@ -35,6 +35,6 @@
 
 		<hr/>
 
-		<%@ include file="footer.html.inc" %>
+		<%@ include file="footer.inc.jsp" %>
 	</body>
 </html>
