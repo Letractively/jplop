@@ -61,6 +61,11 @@ public class Authenticator {
 	
 	// METHODS \\
 	public boolean authenticate() {
+		if (getUsername() == null) {
+			m_logger.error("Authentication failed because no username has been given.");
+			return false;
+		}
+		
 		m_logger.debug("Authentication request for user '" + getUsername() + "'.");
 		User user = Backend.getInstance().getUserBase().get(getUsername());
 		

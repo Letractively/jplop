@@ -30,6 +30,14 @@ public class SSHAPasswordTest extends TestCase {
 		Password psw = new SSHAPassword();
 		psw.setPassword("{SSHA}VV8wdb4sGLy7Lroi4gxXaj33jCm9tGtP");
 		assertTrue(psw.check("LamePassword"));
+		
+		try {
+			psw.setPassword("{SSHA}rg");
+			fail("Setting a malformed SSHA password should fail.");
+		}
+		catch (PasswordException e) {
+			// Success
+		}
 	}
 	
 	
