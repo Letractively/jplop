@@ -254,7 +254,7 @@ public class History extends Serializable {
 	 */
 	private final void truncate() {
 		m_logger.info("Truncating history :");
-		while (size() > maxSize()) {
+		while (size() > maxSize() && size() > 0) {
 			Post removed = m_posts.removeLast();
 			m_logger.info("  - post #" + removed.getId() + " removed");
 		}
@@ -405,10 +405,10 @@ public class History extends Serializable {
 			return;
 		}
 		
+		FileOutputStream output = null;
 		try {
-			FileOutputStream output = new FileOutputStream(getFile());
+			output = new FileOutputStream(getFile());
 			output.write(toString().getBytes("UTF-8"));
-			output.close();
 			m_logger.info("History saved to '" + getFile() + "'.");
 		}
 		catch (FileNotFoundException e) {
@@ -416,6 +416,16 @@ public class History extends Serializable {
 		}
 		catch (IOException e) {
 			m_logger.error("Cannot write the history file", e);
+		}
+		finally {
+			if (output != null) {
+				try {
+					output.close();
+				}
+				catch (IOException e) {
+					// Nothing to do
+				}
+			}
 		}
 	}
 }

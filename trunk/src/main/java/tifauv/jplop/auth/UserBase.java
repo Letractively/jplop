@@ -238,10 +238,10 @@ public class UserBase extends Serializable {
 				.append(USER_ROLES_ATTR).append("=\"").append(user.getRoles()).append("\"/>");
 		buffer.append("</").append(USERS_TAG).append(">");
 		
+		FileOutputStream output = null;
 		try {
-			FileOutputStream output = new FileOutputStream(getFile());
+			output = new FileOutputStream(getFile());
 			output.write(buffer.toString().getBytes("UTF-8"));
-			output.close();
 			m_logger.info("User base saved to '" + getFile() + "'.");
 		}
 		catch (FileNotFoundException e) {
@@ -249,6 +249,16 @@ public class UserBase extends Serializable {
 		}
 		catch (IOException e) {
 			m_logger.error("Cannot write the users file", e);
+		}
+		finally {
+			if (output != null) {
+				try {	
+					output.close();
+				}	
+				catch (IOException e) {
+					// Nothing to do
+				}
+			}
 		}
 	}
 }
