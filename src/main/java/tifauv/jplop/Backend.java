@@ -206,7 +206,7 @@ public class Backend {
 		buffer.append("<field name=\"").append(CommonConstants.LOGIN_PARAM).append("\">$l</field>");
 		buffer.append("<field name=\"").append(CommonConstants.PASSWORD_PARAM).append("\">$p</field>");
 		buffer.append("</login>");
-		buffer.append("<logout method=\"get\" path=\"/logout\">");
+		buffer.append("<logout method=\"get\" path=\"/logout\"/>");
 		buffer.append("</account>");
 		buffer.append("<board name=\"board\" title=\"Tribune\">");
 		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
