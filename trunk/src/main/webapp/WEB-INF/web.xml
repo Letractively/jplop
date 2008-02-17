@@ -44,12 +44,31 @@
 	</servlet>
 	<servlet>
 		<description>
+		The account creation servlet</description>
+		<display-name>
+		Registration servlet</display-name>
+		<servlet-name>RegisterServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.RegisterServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
 		This servlet gives the board's configuration</description>
 		<display-name>
 		Discovery servlet</display-name>
 		<servlet-name>DiscoveryServlet</servlet-name>
 		<servlet-class>
 		tifauv.jplop.servlets.DiscoveryServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		The logout servlet</description>
+		<display-name>
+		LogoutServlet</display-name>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.LogoutServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -65,12 +84,25 @@
 		<url-pattern>/logon</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>DiscoveryServlet</servlet-name>
 		<url-pattern>/discover</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
+	<error-page>
+		<exception-type>Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
 </web-app>

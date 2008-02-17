@@ -138,8 +138,7 @@ public abstract class AbstractJob implements Runnable {
 				m_runner.interrupt();
 				try {
 					m_runner.join();
-				}
-				catch (InterruptedException e) {
+				} catch (InterruptedException e) {
 					// Don't mind
 				}
 			}
@@ -167,8 +166,7 @@ public abstract class AbstractJob implements Runnable {
 		while (!isStopped()) {
 			try {
 				Thread.sleep(getTimeout());
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				// Don't mind
 			}
 			doWork();

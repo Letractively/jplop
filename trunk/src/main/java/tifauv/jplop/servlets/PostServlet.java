@@ -60,8 +60,7 @@ public class PostServlet extends HttpServlet {
 		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
 		try {
 			p_request.setCharacterEncoding("UTF-8");
-		}
-		catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException e) {
 			// Cannot happen
 			m_logger.warn("Cannot decode the request as UTF-8 !");
 		}
@@ -79,7 +78,7 @@ public class PostServlet extends HttpServlet {
 
 		// Get the login of the logged user if any
 		String login = null;
-		User currentUser = (User)p_request.getSession().getAttribute(LogonServlet.USER_ATTRIBUTE);
+		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (currentUser != null) {
 			login = currentUser.getLogin();
 			currentUser = null;

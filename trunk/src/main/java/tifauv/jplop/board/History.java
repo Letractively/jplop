@@ -160,8 +160,7 @@ public class History extends Serializable {
 		
 		try {
 			return m_lastModified.after(s_httpDate.parse(p_date));
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			return true;
 		}
 	}
@@ -369,8 +368,7 @@ public class History extends Serializable {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
 				m_logger.info(size() + " posts loaded from file.");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new DeserializeException("Could not load the history file", e);
 			}
 		}
@@ -393,8 +391,7 @@ public class History extends Serializable {
 			try {
 				getFile().createNewFile();
 				m_logger.info("The file '" + getFile() + "' has been created (empty).");
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				m_logger.error("The file '" + getFile() + "' could not be created.");
 			}
 		}
@@ -410,19 +407,15 @@ public class History extends Serializable {
 			output = new FileOutputStream(getFile());
 			output.write(toString().getBytes("UTF-8"));
 			m_logger.info("History saved to '" + getFile() + "'.");
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			m_logger.error("The history file does not exist.");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			m_logger.error("Cannot write the history file", e);
-		}
-		finally {
+		} finally {
 			if (output != null) {
 				try {
 					output.close();
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					// Nothing to do
 				}
 			}

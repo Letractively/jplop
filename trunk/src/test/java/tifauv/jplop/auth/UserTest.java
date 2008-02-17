@@ -21,7 +21,7 @@ public class UserTest extends TestCase {
 	public void testUser() {
 		User user = new User();
 		assertNull(user.getLogin());
-		assertNull(user.getEmail());
+		assertEquals("", user.getEmail());
 		assertNull(user.getPassword());
 		assertEquals("", user.getRoles());
 	}
@@ -37,7 +37,7 @@ public class UserTest extends TestCase {
 
 	public void testSetEmail() {
 		User user = new User();
-		assertNull(user.getEmail());
+		assertEquals("", user.getEmail());
 		user.setEmail("tramo-p@plop.org");
 		assertEquals("tramo-p@plop.org", user.getEmail());
 	}

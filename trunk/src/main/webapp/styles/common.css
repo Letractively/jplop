@@ -50,6 +50,29 @@ a:hover {
 	text-decoration: underline;
 }
 
+
+/***** The messages *****/
+.message {
+	text-align: center;
+	width: 70%;
+	margin-top: 1em;
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	font-weight: bold;
+	padding: 0.2em;
+}
+.welcome {
+	color: #000033;
+	background-color: #d0e0f5;
+	border: 1px solid #000066;
+}
+.error {
+	color: #330000;
+	background-color: #f59999;
+	border: 1px solid #660000;
+}
+
 /***** The footer *****/
 HR {
 	width: 80%;

@@ -57,6 +57,8 @@ public class User {
 	 * Gives the user's email address.
 	 */
 	public String getEmail() {
+		if (m_email == null)
+			m_email = "";
 		return m_email;
 	}
 
