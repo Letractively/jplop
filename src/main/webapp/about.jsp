@@ -21,7 +21,7 @@
 		<h2>Crédits</h2>
 		<div id="credits">
 			<p>
-				Copyright &copy; 2007 - Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
+				Copyright &copy; 2007-2008 Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
 				Pour essayer la bête ou insulter l'auteur, c'est <a href="http://code.google.com/p/jplop/">par là</a>.
 			</p>
 		
