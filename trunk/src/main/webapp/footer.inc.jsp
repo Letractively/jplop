@@ -1,3 +1,3 @@
 		<div id="footer">
-			<p id="copyright">Copyright &copy; 2007 - <a href="http://tifauv.homeip.net">Tifauv</a>. <a href="about.jsp">&Agrave; propos de JPlop</a></p>
+			<p id="copyright">Copyright &copy; 2007-2008 <a href="http://tifauv.homeip.net">Tifauv</a>. <a href="about.jsp">&Agrave; propos de JPlop</a></p>
 		</div>
