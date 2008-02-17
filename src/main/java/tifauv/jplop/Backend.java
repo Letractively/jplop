@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import tifauv.jplop.auth.UserBase;
 import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
+import tifauv.jplop.servlets.CommonConstants;
 import tifauv.jplop.util.AbstractJob;
 import tifauv.jplop.util.DeserializeException;
 import tifauv.jplop.util.Serializable;
@@ -200,6 +201,13 @@ public class Backend {
 			.append("\" title=\"").append(getFullName())
 			.append("\" baseurl=\"").append(getURL())
 			.append("\" version=\"1.0\">");
+		buffer.append("<account>");
+		buffer.append("<login method=\"post\" path=\"/logon\">");
+		buffer.append("<field name=\"").append(CommonConstants.LOGIN_PARAM).append("\">$l</field>");
+		buffer.append("<field name=\"").append(CommonConstants.PASSWORD_PARAM).append("\">$p</field>");
+		buffer.append("</login>");
+		buffer.append("<logout method=\"get\" path=\"/logout\">");
+		buffer.append("</account>");
 		buffer.append("<board name=\"board\" title=\"Tribune\">");
 		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
 		buffer.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")

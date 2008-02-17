@@ -22,6 +22,13 @@
 			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
 			<pre class="cc-config">
 &lt;site name="<jsp:getProperty name="backend" property="name"/>" title="<jsp:getProperty name="backend" property="fullName"/>" baseurl="<jsp:getProperty name="backend" property="URL"/>" version="1.0"&gt;
+	&lt;account&gt;
+		&lt;login method="post" path="/logon"&gt;
+			&lt;field name="login"&gt;$l&lt;/field&gt;
+			&lt;field name="password"&gt;$p&lt;/field&gt;
+		&lt;/login&gt;
+		&lt;logout method="get" path="/logout"/&gt;
+	&lt;/account&gt;
 	&lt;board name="board" title="Tribune"&gt;
 		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
 		&lt;post method="post" path="/post" anonymous="true" max_length="<jsp:getProperty name="backend" property="maxPostLength"/>"&gt;
