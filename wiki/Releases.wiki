@@ -3,6 +3,11 @@
 
 = Versions rilizées =
 
+== JPlop 0.8 ==
+Fritures :
+ * Création de compte
+ * Authentification
+
 == JPlop 0.6 ==
 Fritures :
   * Ajout d'une page À Propos
@@ -29,9 +34,8 @@ Fritures :
 
 == JPlop 1.0 ==
 Fritures :
-  * `[ToBeDone]` Authentication utilisant JAAS
-  * `[ToBeDone]` Reconnaissance des [:totoz]
+  * Reconnaissance des [:totoz]
 
 == JPlop 1.1 ==
 Fritures :
-  * `[ToBeDone]` Page(s) d'administration (autorisation _via_ JAAS)
+  * Page(s) d'administration
