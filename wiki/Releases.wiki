@@ -3,6 +3,10 @@
 
 = Versions rilizées =
 
+== JPlop 0.8.1 ==
+Correction :
+ * Flux XML de configuration des coincoins corrigé
+
 == JPlop 0.8 ==
 Fritures :
  * Création de compte
