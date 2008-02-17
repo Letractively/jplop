@@ -275,8 +275,7 @@ public class Backend {
 				s_instance.m_backupJob.stop();
 			try {
 				s_instance.saveToDisk();
-			}
-			catch (SerializeException e) {
+			} catch (SerializeException e) {
 				s_instance.m_logger.error(e);
 			}
 			s_instance = null;
@@ -305,46 +304,39 @@ public class Backend {
 			// Load the name property
 			try {
 				name = config.getString(NAME_KEY);
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the fullname property
 			try {
 				fullName = config.getString(FULLNAME_KEY);
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the URL property
 			try {
 				url = config.getString(URL_KEY);
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the history size property
 			try {
 				size = Integer.parseInt(config.getString(SIZE_KEY));
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
 			
 			// Load the backup job's timeout
 			try {
 				backupTimeout = Integer.parseInt(config.getString(WRITE_CACHE_KEY));
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + WRITE_CACHE_KEY + "' doesn't have an integer value.");
 			}
 			
@@ -352,11 +344,9 @@ public class Backend {
 			// Load the max post length property
 			try {
 				maxPostLength = Integer.parseInt(config.getString(POST_LENGTH_KEY));
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
 			}
 
@@ -364,12 +354,10 @@ public class Backend {
 			// Load the data directory name
 			try {
 				dataDir = config.getString(DATADIR_KEY);
-			}
-			catch (MissingResourceException e) {
+			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
-		}
-		catch (MissingResourceException e) {
+		} catch (MissingResourceException e) {
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
 		}
 

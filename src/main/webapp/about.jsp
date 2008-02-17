@@ -16,7 +16,7 @@
 		<%@ include file="header.inc.jsp" %>
 		
 		<h2>Version</h2>
-		<div id="version">JPlop version 0.6.</div>
+		<div id="version">JPlop version 0.8-devel.</div>
 		
 		<h2>Crédits</h2>
 		<div id="credits">

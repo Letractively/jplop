@@ -3,6 +3,9 @@
  */
 package tifauv.jplop.servlets;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
 import tifauv.jplop.auth.Authenticator;
+import tifauv.jplop.auth.User;
 import tifauv.jplop.auth.UserBase;
 
 /**
@@ -26,14 +30,11 @@ import tifauv.jplop.auth.UserBase;
 	/** The serialization UID. */
 	private static final long serialVersionUID = -666278634960900803L;
 	
-	/** The login request parameter. */
-	private static final String LOGIN_PARAM = "login";
+	/** The name of the page to forward to if the registration succeeds. */
+	private static final String SUCCESS_PAGE = "/index.jsp";
 	
-	/** The password request parameter. */
-	private static final String PASSWORD_PARAM = "password";
-	
-	/** The name of the session attribute that contains the authenticated subject. */
-	public static final String USER_ATTRIBUTE = "subject";
+	/** The name of the page to forward to if the registration fails. */
+	private static final String FAILURE_PAGE = "/logon.jsp";
 	
 	
 	// FIELDS \\
@@ -54,17 +55,57 @@ import tifauv.jplop.auth.UserBase;
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
+	throws IOException,
+	ServletException {
 		m_logger.info("New POST logon request from [" + p_request.getRemoteAddr() + "].");
+		
+		// Check whether we are already logged on
+		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
+		if (currentUser != null) {
+			m_logger.warn("The user '" + currentUser.getLogin() + "' tried to logon but he is already authenticated.");
+			getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
+			currentUser = null;
+			return;
+		}
+		
 		UserBase users = Backend.getInstance().getUserBase();
 		if (users != null) {
-			String username = p_request.getParameter(LOGIN_PARAM);
-			String password = p_request.getParameter(PASSWORD_PARAM);
+			// Check the parameters are all there
+			String username = p_request.getParameter(CommonConstants.LOGIN_PARAM);
+			if (username == null) {
+				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' is null.");
+				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le login est obligatoire.");
+				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
+				return;
+			}
+
+			String password = p_request.getParameter(CommonConstants.PASSWORD_PARAM);
+			if (password == null) {
+				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' is null.");
+				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe est obligatoire.");
+				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
+				return;
+			}
+
+			// OK, now we are sure we got all the required fields 
 			m_logger.info("Logon request for user '" + username + "'.");
-		
 			Authenticator authn = new Authenticator(username, password);
-			if (authn.authenticate())
-				p_request.getSession().setAttribute(USER_ATTRIBUTE, authn.getUser());
+			if (authn.authenticate()) {
+				p_request.getSession().setAttribute(CommonConstants.USER_SESSION_ATTR, authn.getUser());
+				getServletContext().getRequestDispatcher(SUCCESS_PAGE).forward(p_request, p_response);
+			}
+			else {
+				m_logger.warn("Authentication failed for user '" + username + "'.");
+				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "L'authentification a échoué.");
+				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
+			}
+
+			return;
 		}
+
+		m_logger.warn("There is no user base.");
+		p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "La création de compte n'est pas possible.");
+		getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 	}
 }

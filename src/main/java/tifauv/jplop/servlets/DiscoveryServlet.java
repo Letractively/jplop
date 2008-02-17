@@ -1,5 +1,7 @@
 package tifauv.jplop.servlets;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,20 +34,15 @@ import tifauv.jplop.Backend;
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
+	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	throws IOException {
 		String config = Backend.getInstance().getBoardConfig();
 		
 		// Send the response
 		p_response.setStatus(HttpServletResponse.SC_OK);
 		p_response.setContentType("text/xml;charset=UTF-8");
 		p_response.setCharacterEncoding("UTF-8");
-		try {
-			p_response.setContentLength(config.getBytes("UTF-8").length);
-			p_response.getWriter().write(config);
-		}
-		catch (Exception e) {
-			p_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			p_response.setContentLength(0);
-		}
+		p_response.setContentLength(config.getBytes("UTF-8").length);
+		p_response.getWriter().write(config);
 	}  	  	  	    
 }

@@ -91,8 +91,7 @@ public class SSHAPassword implements Password {
 				}
 				else
 					throw new PasswordException("The given password is too short to be Salted SHA");
-			}
-			catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException e) {
 				throw new PasswordException("The given password could not be decoded as US-ASCII", e);
 			}
 		}
@@ -103,8 +102,7 @@ public class SSHAPassword implements Password {
 				
 				m_salt = salt;
 				m_hash = hash;
-			}
-			catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException e) {
 				throw new PasswordException("The given password could not be decoded as UTF-8", e);
 			}
 		}
@@ -118,7 +116,7 @@ public class SSHAPassword implements Password {
 	 */
 	private static Random getSaltGenerator() {
 		if (s_saltGen == null)
-				s_saltGen = new Random();
+			s_saltGen = new Random();
 		return s_saltGen;
 	}
 	
@@ -155,8 +153,7 @@ public class SSHAPassword implements Password {
 		else if (m_salt != null) {
 			try {
 				return Arrays.equals(hashPassword(m_salt, p_password), m_hash);
-			}
-			catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException e) {
 				// UTF-8 is not supported ?!?
 			}
 		}

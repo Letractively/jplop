@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.servlets;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +58,8 @@ public class BackendServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	@Override
-	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response) {
+	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	throws IOException {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(HTTP_IF_MODIFIED_SINCE);
 		m_logger.info("If-Modified-Since : " + ifModifiedSince);
@@ -76,14 +79,8 @@ public class BackendServlet extends HttpServlet {
 			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setCharacterEncoding("UTF-8");
 			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
-			try {
-				p_response.setContentLength(text.getBytes("UTF-8").length);
-				p_response.getWriter().write(text);
-			}
-			catch (Exception e) {
-				p_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				p_response.setContentLength(0);
-			}
+			p_response.setContentLength(text.getBytes("UTF-8").length);
+			p_response.getWriter().write(text);
 		}
 	}
 }

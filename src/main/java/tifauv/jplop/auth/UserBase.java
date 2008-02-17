@@ -98,26 +98,74 @@ public class UserBase extends Serializable {
 	}
 	
 	
+	/**
+	 * Return the default roles.
+	 * TODO implement the roles system
+	 */
+	public String getDefaultRoles() {
+		return "";
+	}
+	
+	
 	// METHODS \\
+	/**
+	 * Removes all the defined roles.
+	 */
 	public synchronized void clearRoles() {
 		m_roles.clear();
 	}
 	
 	
+	/**
+	 * Adds a new role.
+	 * 
+	 * @param p_role
+	 *            the role to add
+	 */
 	public synchronized void addRole(String p_role) {
 		m_roles.add(p_role);
 		m_logger.debug("Role '" + p_role + "' added.");
 	}
 	
 	
+	/**
+	 * Removes all the users.
+	 */
 	public synchronized void clearUsers() {
 		m_users.clear();
 	}
 	
 	
+	/**
+	 * Adds a new user.
+	 * 
+	 * @param p_user
+	 *            the user to add
+	 */
 	public synchronized void addUser(User p_user) {
-		m_users.put(p_user.getLogin(), p_user);
-		m_logger.debug("User '" + p_user.getLogin() + "' added.");
+		if (p_user == null) {
+			m_logger.warn("Tried to add a 'null' user.");
+		}
+		
+		if (!m_users.containsKey(p_user.getLogin())) {
+			m_users.put(p_user.getLogin(), p_user);
+			m_logger.debug("User '" + p_user.getLogin() + "' added.");
+		}
+		else
+			m_logger.warn("The user '" + p_user.getLogin() + "' already exists in the user base.");
+	}
+	
+	
+	/**
+	 * Tells whether the base contains the given user.
+	 * 
+	 * @param p_userName
+	 *            the login of the user
+	 * 
+	 * @return <code>true</code> iff the base contains a user which has the given username
+	 */
+	public boolean containsUser(String p_userName) {
+		return m_users.containsKey(p_userName);
 	}
 	
 	
@@ -162,8 +210,7 @@ public class UserBase extends Serializable {
 					user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
 					user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
 					addUser(user);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					m_logger.error("Could not load a user", e);
 				}
 			}
@@ -190,8 +237,7 @@ public class UserBase extends Serializable {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
 				m_logger.info(size() + " users loaded from cache.");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new DeserializeException("Could not load the user base file", e);
 			}
 		}
@@ -212,8 +258,7 @@ public class UserBase extends Serializable {
 			try {
 				getFile().createNewFile();
 				m_logger.info("The file '" + getFile() + "' has been created (empty).");
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				m_logger.error("The file '" + getFile() + "' could not be created.");
 			}
 		}
@@ -243,19 +288,15 @@ public class UserBase extends Serializable {
 			output = new FileOutputStream(getFile());
 			output.write(buffer.toString().getBytes("UTF-8"));
 			m_logger.info("User base saved to '" + getFile() + "'.");
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			m_logger.error("The users file does not exist.");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			m_logger.error("Cannot write the users file", e);
-		}
-		finally {
+		} finally {
 			if (output != null) {
 				try {	
 					output.close();
-				}	
-				catch (IOException e) {
+				} catch (IOException e) {
 					// Nothing to do
 				}
 			}
