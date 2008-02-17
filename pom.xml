@@ -4,7 +4,7 @@
   <artifactId>jplop</artifactId>
   <packaging>war</packaging>
   <name>JPlop</name>
-  <version>0.8</version>
+  <version>0.9-SNAPSHOT</version>
   <description>JPlop is a web-based chat board with an XML backend written in Java.</description>
   <url>http://jplop.googlecode.com</url>
   <issueManagement>
@@ -45,9 +45,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:http://jplop.googlecode.com/svn/tags/jplop-0.8</connection>
-    <developerConnection>scm:svn:https://jplop.googlecode.com/svn/tags/jplop-0.8</developerConnection>
-    <url>http://jplop.googlecode.com/svn/tags/jplop-0.8</url>
+    <connection>scm:svn:http://jplop.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://jplop.googlecode.com/svn/trunk</developerConnection>
+    <url>http://jplop.googlecode.com/svn/trunk</url>
   </scm>
   <build>
     <plugins>
