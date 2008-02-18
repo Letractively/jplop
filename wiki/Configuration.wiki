@@ -69,7 +69,7 @@ Manager pour mettre à jour vos webapps, il faut que ce répertoire soit en-deho
 contexte de la webapp. Sinon, il sera effacé à chaque mise à jour. Par défaut, c'est
 le répertoire `jplop-data` à la racine de Tomcat.
 
-_Valeur par défaut_ : ${catalina.home}/jplop-data
+_Valeur par défaut_ : ${catalina.base}/jplop-data
 
 
 == Configuration des logs ==
