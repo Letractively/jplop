@@ -41,7 +41,7 @@ _Valeur par défaut_ : `Da J2EE tribioune`
 === `jplop.url` ===
 L'URL complète de l'installation. Elle est utilisée dans l'attribut `board[@site]` du backend.
 
-_Valeur par défaut_: `http://localhost:8080/jplop`
+_Valeur par défaut_ : `http://localhost:8080/jplop`
 
 
 === `jplop.history.size` ===
@@ -69,7 +69,7 @@ Manager pour mettre à jour vos webapps, il faut que ce répertoire soit en-deho
 contexte de la webapp. Sinon, il sera effacé à chaque mise à jour. Par défaut, c'est
 le répertoire `jplop-data` à la racine de Tomcat.
 
-_Valeur par défaut_ : ${catalina.base}/jplop-data
+_Valeur par défaut_ : `${catalina.base}/jplop-data`
 
 
 == Configuration des logs ==
