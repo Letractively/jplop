@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
 
 	// METHODS \\
 	/**
-	 * Searches the {@link #LOGIN_PARAM}, {@link #PASSWORD_PARAM} and {@link #PASSWORD_CONFIRM_PARAM}
+	 * Searches the {@link CommonConstants#LOGIN_PARAM}, {@link CommonConstants#PASSWORD_PARAM} and {@link CommonConstants#PASSWORD_CONFIRM_PARAM}
 	 * request parameters then tries to create a new account.
 	 * 
 	 * @param p_request

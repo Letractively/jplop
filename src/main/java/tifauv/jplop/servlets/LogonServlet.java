@@ -44,7 +44,7 @@ import tifauv.jplop.auth.UserBase;
 
 	// METHODS \\
 	/**
-	 * Searches the {@link #LOGIN_PARAM} and {@link #PASSWORD_PARAM} request parameters
+	 * Searches the {@link CommonConstants#LOGIN_PARAM} and {@link CommonConstants#PASSWORD_PARAM} request parameters
 	 * then tries to identify and authenticate the user.
 	 * 
 	 * @param p_request
