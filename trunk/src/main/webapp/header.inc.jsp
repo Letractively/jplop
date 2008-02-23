@@ -1,4 +1,3 @@
-		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<div id="header">
 			<h1><jsp:getProperty name="backend" property="name"/> - <jsp:getProperty name="backend" property="fullName"/></h1>
 			<div class="links">
@@ -16,6 +15,6 @@
 					</c:otherwise>
 				</c:choose>
 				::
-				<a href="<jsp:getProperty name="backend" property="URL"/>" title="Accueil de la tribune">Accueil</a>
+				<a href="index.jsp" title="Accueil de la tribune">Accueil</a>
 			</div>
 		</div>
