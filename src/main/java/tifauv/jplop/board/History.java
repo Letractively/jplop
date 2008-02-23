@@ -170,7 +170,7 @@ public class History extends Serializable {
 	/**
 	 * Sets the next post identifier.
 	 */
-	private synchronized void setNextId(long p_id) {
+	private void setNextId(long p_id) {
 		m_idCounter = p_id;
 	}
 	
@@ -242,7 +242,7 @@ public class History extends Serializable {
 	 */
 	protected final synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
-		m_logger.info("New post added.");
+		m_logger.info("Post #" + p_post.getId() + " added.");
 		setModified();
 		truncate();
 	}
@@ -252,19 +252,20 @@ public class History extends Serializable {
 	 * Removes the old posts until the size of the history is at most the maximum size.
 	 */
 	private final void truncate() {
-		m_logger.info("Truncating history :");
-		while (size() > maxSize() && size() > 0) {
-			Post removed = m_posts.removeLast();
-			m_logger.info("  - post #" + removed.getId() + " removed");
+		if (size() > maxSize() && size() > 0) {
+			m_logger.info("Truncating history :");
+			do {
+				Post removed = m_posts.removeLast();
+				m_logger.info("  - post #" + removed.getId() + " removed");
+			} while (size() > maxSize() && size() > 0);
 		}
-		m_logger.info("  - done.");
 	}
 
 	
 	/**
 	 * Gives the maximum size of the history.
 	 */
-	public final synchronized int maxSize() {
+	public final int maxSize() {
 		return m_maxSize;
 	}
 	
@@ -272,7 +273,7 @@ public class History extends Serializable {
 	/**
 	 * Gives the number of posts in the history.
 	 */
-	public final synchronized int size() {
+	public final int size() {
 		return m_posts.size();
 	}
 	
@@ -296,7 +297,7 @@ public class History extends Serializable {
 	 * @throws BadArgumentException
 	 *            if a <post> element cannot be loaded
 	 */
-	public final void load(Document p_history)
+	public final synchronized void load(Document p_history)
 	throws BadArgumentException {
 		Element board = p_history.getDocumentElement();
 		if (board != null) {
@@ -367,7 +368,7 @@ public class History extends Serializable {
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
-				m_logger.info(size() + " posts loaded from file.");
+				m_logger.info(size() + " posts loaded.");
 			} catch (Exception e) {
 				throw new DeserializeException("Could not load the history file", e);
 			}

@@ -221,7 +221,7 @@ public class UserBase extends Serializable {
 	
 	
 	/**
-	 * Loads the backend from the cache file. 
+	 * Loads the users base from the backup file. 
 	 */
 	@Override
 	public void loadFromFile()
@@ -236,7 +236,7 @@ public class UserBase extends Serializable {
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(getFile()));
-				m_logger.info(size() + " users loaded from cache.");
+				m_logger.info(size() + " users loaded.");
 			} catch (Exception e) {
 				throw new DeserializeException("Could not load the user base file", e);
 			}
@@ -247,8 +247,7 @@ public class UserBase extends Serializable {
 	
 	
 	/**
-	 * Saves the history to a file.
-	 * Does nothing if the history is empty.
+	 * Saves the users base to a file.
 	 */
 	@Override
 	public void saveToFile()
@@ -289,7 +288,7 @@ public class UserBase extends Serializable {
 			output.write(buffer.toString().getBytes("UTF-8"));
 			m_logger.info("User base saved to '" + getFile() + "'.");
 		} catch (FileNotFoundException e) {
-			m_logger.error("The users file does not exist.");
+			m_logger.error("The users file cannot be open or written.");
 		} catch (IOException e) {
 			m_logger.error("Cannot write the users file", e);
 		} finally {
