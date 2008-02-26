@@ -23,6 +23,7 @@ BODY {
 
 /***** The header *****/
 #header .links {
+	font-family: sans-serif;
 	font-size: small;
 	font-style: italic;
 	text-align: right;

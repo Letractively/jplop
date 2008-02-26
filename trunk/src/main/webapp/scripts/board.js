@@ -1,5 +1,5 @@
 /** ************************************************************************** **/
-/**  This file contains methods to used to manage the board.                   **/
+/**  This file contains methods to manage the board.                           **/
 /**                                                                            **/
 /**  Version: 1.0                                                              **/
 /**  Author : Olivier Serve <tifauv@gmail.com>                                 **/
@@ -104,10 +104,13 @@ function reloadBackend() {
 
 /**
  * Executes an XPath search on the document.
+ *
+ * @param p_xpath
+ *            the XPath search expression
  */
-function searchItems(xpath) {
+function searchItems(p_xpath) {
 	return document.evaluate(
-			xpath,
+			p_xpath,
 			document,
 			null,
 			XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
@@ -127,5 +130,5 @@ function initBoard() {
 }
 
 
-// Auto-load the initBackend() function
+// Auto-load the initBoard() function
 addEvent(window, 'load', initBoard);
