@@ -201,7 +201,8 @@ public class Post {
 			if (elems.getLength() > 0) {
 				Element elem = (Element)elems.item(0);
 				CDATASection cdata = (CDATASection)elem.getFirstChild();
-				setInfo(cdata.getData());
+				if (cdata != null)
+					setInfo(cdata.getData());
 			}
 			
 			// <message> element
@@ -209,7 +210,8 @@ public class Post {
 			if (elems.getLength() > 0) {
 				Element elem = (Element)elems.item(0);
 				CDATASection cdata = (CDATASection)elem.getFirstChild();
-				setRawMessage(cdata.getData());
+				if (cdata != null)
+					setRawMessage(cdata.getData());
 			}
 			
 			// <login> element
@@ -217,7 +219,8 @@ public class Post {
 			if (elems.getLength() > 0) {
 				Element elem = (Element)elems.item(0);
 				CDATASection cdata = (CDATASection)elem.getFirstChild();
-				setLogin(cdata.getData());
+				if (cdata != null)
+					setLogin(cdata.getData());
 			}
 		}
 		else

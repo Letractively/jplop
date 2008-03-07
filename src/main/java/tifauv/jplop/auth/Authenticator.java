@@ -66,21 +66,21 @@ public class Authenticator {
 			return false;
 		}
 		
-		m_logger.debug("Authentication request for user '" + getUsername() + "'.");
+		m_logger.debug("Authentication request for user [" + getUsername() + "].");
 		User user = Backend.getInstance().getUserBase().get(getUsername());
 		
 		// If the user doesn't exist, exit
 		if (user == null) {
-			m_logger.warn("Authentication failed: user '" + getUsername() + "' does not exist.");
+			m_logger.warn("Authentication failed: user [" + getUsername() + "] does not exist.");
 			return false;
 		}
 
 		// Else check the user's password
 		if (!user.checkPassword(getPassword())) {
-			m_logger.warn("Authentication failed: user '" + getUsername() + "' gave a bad password.");
+			m_logger.warn("Authentication failed: user [" + getUsername() + "] gave a bad password.");
 			return false;
 		}
-		m_logger.info("Authentication of user '" + getUsername() + "' succeeded.");
+		m_logger.info("Authentication of user [" + getUsername() + "] succeeded.");
 		
 		setUser(user);
 		return true;
