@@ -301,10 +301,6 @@ public class History extends Serializable {
 	throws BadArgumentException {
 		Element board = p_history.getDocumentElement();
 		if (board != null) {
-			// site attribute
-			if (board.hasAttribute(BOARD_SITE_ATTRNAME))
-				setURL(board.getAttribute(BOARD_SITE_ATTRNAME));
-			
 			// <post> elements
 			NodeList posts = board.getElementsByTagName(Post.POST_TAGNAME);
 			Post post = null;
