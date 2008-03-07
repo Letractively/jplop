@@ -2,7 +2,9 @@
 #labels Releases,Featured
 
 = Versions rilizées =
-Ces versions sont censées être stables. Vous pouvez les récupérer rapidement les {{{war}}} et archives sources depuis la [http://code.google.com/p/jplop/downloads/list page de téléchargement]. Vous pouvez également aller sur le [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/ dépôt des releases].
+Ces versions sont censées être stables. Vous pouvez les récupérer rapidement les {{{war}}} et archives sources depuis la [http://code.google.com/p/jplop/downloads/list page de téléchargement]. Vous pouvez également aller sur le [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop dépôt des releases].
+
+Si vous voulez vous aventurer dans le bizarre, vous pouvez essayer les [http://tifauv.homeip.net/~jplop/repos/snapshots/tifauv/jplop toutes dernières versions]. C'est en développement, à vos risques et périls. C'est vous qui voyez !
 
 == JPlop 0.8.2 ==
 Fritures:
