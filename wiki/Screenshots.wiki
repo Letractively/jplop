@@ -1,8 +1,13 @@
 #summary JPlop live in action !
 #labels Featured
 
-= JPlop 0.8.1 =
+= JPlop 0.8.2 =
+La tribune :
 
+http://jplop.googlecode.com/svn/images/0.8.2/jplop-board-0.8.2.png
+
+
+= JPlop 0.8.1 =
 La page d'accueil :
 
 http://jplop.googlecode.com/svn/images/0.8.1/jplop-index-0.8.1.png
