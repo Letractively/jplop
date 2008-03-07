@@ -2,10 +2,26 @@
 #labels Releases,Featured
 
 = Versions rilizées =
+Ces versions sont censées être stables. Vous pouvez les récupérer rapidement les {{{war}}} et archives sources depuis la [http://code.google.com/p/jplop/downloads/list page de téléchargement]. Vous pouvez également aller sur le [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/ dépôt des releases].
+
+== JPlop 0.8.2 ==
+Fritures:
+ * Style différent pour ses propres messages
+ * Style des posts (un peu) modifié
+Correction :
+ * Plantage lors du chargement d'un historique avec des posts anonymes
+[http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2 Dépôt] : http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2/jplop-0.8.2.war Archive Web]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2/jplop-0.8.2.pom Descripteur du projet]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2/jplop-0.8.2-sources.jar Sources]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.2/jplop-0.8.2-javadoc.jar Javadoc]
 
 == JPlop 0.8.1 ==
 Correction :
  * Flux XML de configuration des coincoins corrigé
+[http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.1 Dépôt] : http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.1
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.1/jplop-0.8.1.war Archive Web]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/0.8.1/jplop-0.8.1.pom Descripteur du projet]
 
 == JPlop 0.8 ==
 Fritures :
