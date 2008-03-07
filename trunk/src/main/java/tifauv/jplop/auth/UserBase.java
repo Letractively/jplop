@@ -124,7 +124,7 @@ public class UserBase extends Serializable {
 	 */
 	public synchronized void addRole(String p_role) {
 		m_roles.add(p_role);
-		m_logger.debug("Role '" + p_role + "' added.");
+		m_logger.debug("Role [" + p_role + "] added.");
 	}
 	
 	
@@ -144,15 +144,15 @@ public class UserBase extends Serializable {
 	 */
 	public synchronized void addUser(User p_user) {
 		if (p_user == null) {
-			m_logger.warn("Tried to add a 'null' user.");
+			m_logger.warn("Tried to add a null user.");
 		}
 		
 		if (!m_users.containsKey(p_user.getLogin())) {
 			m_users.put(p_user.getLogin(), p_user);
-			m_logger.debug("User '" + p_user.getLogin() + "' added.");
+			m_logger.debug("User [" + p_user.getLogin() + "] added.");
 		}
 		else
-			m_logger.warn("The user '" + p_user.getLogin() + "' already exists in the user base.");
+			m_logger.warn("The user [" + p_user.getLogin() + "] already exists in the user base.");
 	}
 	
 	

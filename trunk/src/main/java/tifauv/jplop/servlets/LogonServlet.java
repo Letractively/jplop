@@ -63,7 +63,7 @@ import tifauv.jplop.auth.UserBase;
 		// Check whether we are already logged on
 		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (currentUser != null) {
-			m_logger.warn("The user '" + currentUser.getLogin() + "' tried to logon but he is already authenticated.");
+			m_logger.warn("The user [" + currentUser.getLogin() + "] tried to logon but he is already authenticated.");
 			getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			currentUser = null;
 			return;
@@ -74,7 +74,7 @@ import tifauv.jplop.auth.UserBase;
 			// Check the parameters are all there
 			String username = p_request.getParameter(CommonConstants.LOGIN_PARAM);
 			if (username == null) {
-				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' is null.");
+				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' request parameter is null.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le login est obligatoire.");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
@@ -82,21 +82,21 @@ import tifauv.jplop.auth.UserBase;
 
 			String password = p_request.getParameter(CommonConstants.PASSWORD_PARAM);
 			if (password == null) {
-				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' is null.");
+				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' request parameter is null.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe est obligatoire.");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
 
 			// OK, now we are sure we got all the required fields 
-			m_logger.info("Logon request for user '" + username + "'.");
+			m_logger.info("Logon request for user [" + username + "].");
 			Authenticator authn = new Authenticator(username, password);
 			if (authn.authenticate()) {
 				p_request.getSession().setAttribute(CommonConstants.USER_SESSION_ATTR, authn.getUser());
 				getServletContext().getRequestDispatcher(SUCCESS_PAGE).forward(p_request, p_response);
 			}
 			else {
-				m_logger.warn("Authentication failed for user '" + username + "'.");
+				m_logger.warn("Authentication failed for user [" + username + "].");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "L'authentification a échoué.");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			}

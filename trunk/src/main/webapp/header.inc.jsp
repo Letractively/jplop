@@ -4,7 +4,7 @@
 				<c:choose>
 					<c:when test="${not empty sessionScope.subject}">
 						<jsp:useBean id="subject" type="tifauv.jplop.auth.User" scope="session" />
-						<jsp:getProperty name="subject" property="login" />
+						<span id="currentUser"><jsp:getProperty name="subject" property="login" /></span>
 						::
 						<a href="logout">Logout</a>
 					</c:when>

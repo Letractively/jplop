@@ -3,18 +3,33 @@
 	list-style-type: none;
 	display: table-row;
 	text-align: left;
+	width: 100%;
 }
 
-.post.highlighted {
+.highlighted.post {
 	background-color: #0c3762;
 }
+
+.my.post {
+	background-color: #4477aa;
+}
+
+.my.highlighted.post {
+	background-color: #0c3762;
+}
+
 	
 .clock {
 	color: #87dc1e;
 	background-color: transparent;
 	display: table-cell;
 	font-size: small;
-	font-weight: bold;
+	padding-left: 3px;
+}
+
+.my.post .clock {
+	border-left: 3px solid #fb9200;
+	padding-left: 0;
 }
 
 .ref {
@@ -24,7 +39,7 @@
 	background-color: transparent;
 }
 
-.ref.highlighted {
+.highlighted.ref {
 	background-color: #0c3762;
 }
 
@@ -40,7 +55,6 @@
 
 .anonymous.login {
 	font-style: oblique;
-	font-weight: bold;
 	color: #b96e3c;
 }
 

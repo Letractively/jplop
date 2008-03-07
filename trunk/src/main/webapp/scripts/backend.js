@@ -52,6 +52,12 @@ function initBackend() {
 
 	//add_highlight_div();
 
+	// If authenticated, get the current username (will be null otherwise)
+	var user = null;
+	var userElement = window.top.document.getElementById('currentUser');
+	if (userElement != null)
+		user = userElement.innerHTML + '&gt;';
+
 	// Find the clock references in the messages
 	var items = searchItems("//*[@class='post']/*[@class='message']");
 	for (var i=0; i<items.snapshotLength; ++i) {
@@ -62,6 +68,16 @@ function initBackend() {
 				.replace(/&amp;/g, '&')
 				.replace(/&quot;/g, '"');
 		item.innerHTML = message.replace(clockRegex, '$1<span class="ref">$2</span>');
+
+		// If we are authenticated, apply a special style for my messages
+		if (user != null) {
+			var spans = item.parentNode.getElementsByTagName('span');
+			for (var j=0; j<spans.length; ++j) {
+				var span = spans.item(j);
+				if (span.className == 'login' && span.innerHTML == user)
+					item.parentNode.className += ' my';
+			}
+		}
 	}
 	
 	// Add event listeners message -> responses
@@ -97,13 +113,6 @@ function initBackend() {
 				//GFloatPanel.style.display='none'; 
 			};
 		addEvent(item, 'mouseout', unhighlightFn);
-
-		// Special style for my messages
-		/*for (var j=0; j<GMyPosts.length; ++j) {
-			if (item.innerHTML == GMyPosts[j]) {
-				item.style.color = MyHorlogeColor;
-			}
-		}*/
 	}
     
 	// Special highlight for 'my' messages
@@ -130,8 +139,13 @@ function highlightPost(p_clock, p_class) {
 	var clockValue = p_clock.innerHTML.substring(1, 9);
 	
 	// Highlight the post
-	p_clock.parentNode.className = 'post ' + p_class;
-	
+	var className = p_clock.parentNode.className;
+	var newClassName = 'post';
+	if (className.indexOf('my') > -1)
+		newClassName += ' my';
+	newClassName += ' ' + p_class;
+	p_clock.parentNode.className = newClassName;
+
 	// Highlight the clock-references
 	var refs = searchItems("//*[contains(@class, 'ref')]");
 	for (var i=0; i<refs.snapshotLength; ++i) {
@@ -158,8 +172,14 @@ function highlightRef(p_ref, p_class) {
 	var clocks = searchItems("//*[contains(@class, 'clock')]");
 	for (var i=0; i<clocks.snapshotLength; ++i) {
 		var clock = clocks.snapshotItem(i);
-		if (clock.innerHTML.indexOf('[' + clockValue + ']') > -1)
-			clock.parentNode.className = 'post ' + p_class;
+		if (clock.innerHTML.indexOf(clockValue) > -1) {
+			var className = clock.parentNode.className;
+			var newClassName = 'post';
+			if (className.indexOf('my') > -1)
+				newClassName += ' my';
+			newClassName += ' ' + p_class;
+			clock.parentNode.className = newClassName;
+		}
 	}
 	
 	// Highlight the same references
