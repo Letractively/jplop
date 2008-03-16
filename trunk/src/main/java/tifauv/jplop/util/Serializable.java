@@ -43,11 +43,16 @@ public abstract class Serializable {
 	 * it will be prefixed with the context directory.
 	 * 
 	 * @param p_contextDir 
-	 *            the current context directory
+	 *            the current context (webapp) directory
 	 * @param p_path
 	 *            the given file path
 	 */
 	public static final void setDataDir(String p_contextDir, String p_path) {
+		if (p_path == null) {
+			s_dataDir = null;
+			return;
+		}
+		
 		String path = p_path;
 		String home = System.getProperty("catalina.home");
 		if (home != null && home.length() > 0)
@@ -57,7 +62,7 @@ public abstract class Serializable {
 			path = path.replaceAll("\\$\\{catalina.base\\}", base);
 		
 		File file = new File(path);
-		if (file.isAbsolute())
+		if (file.isAbsolute() || p_contextDir == null || p_contextDir.length() == 0)
 			s_dataDir = file;
 		else
 			s_dataDir = new File(p_contextDir + File.separator + "WEB-INF", path);
@@ -65,10 +70,8 @@ public abstract class Serializable {
 		if (!s_dataDir.exists()) {
 			if (s_dataDir.mkdir())
 				s_logger.info("The data directory '" + s_dataDir + "' has been created.");
-			else {
+			else
 				s_logger.error("The data directory '" + s_dataDir + "' is needed but could be created.");
-				s_logger.warn("JPlop's status will not be saved !");
-			}
 		}
 	}
 	
