@@ -12,8 +12,8 @@
     <url>http://code.google.com/p/jplop/issues/list</url>
   </issueManagement>
   <ciManagement>
-    <system>continuum</system>
-    <url>http://tifauv.homeip.net:8080/continuum</url>
+    <system>hudson</system>
+    <url>http://tifauv.homeip.net:8080/hudson</url>
     <notifiers>
       <notifier>
         <sendOnSuccess>false</sendOnSuccess>
