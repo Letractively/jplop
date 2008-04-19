@@ -12,7 +12,7 @@ package tifauv.jplop.servlets;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class CommonConstants {
+public final class CommonConstants {
 	
 	// REQUEST PARAMETERS \\
 	/** The login request parameter. */
@@ -24,6 +24,9 @@ public class CommonConstants {
 	/** The password confirmation request parameter. */
 	public static final String PASSWORD_CONFIRM_PARAM = "password-confirm";
 	
+	/** The message request parameter. */
+	public static final String MESSAGE_PARAM = "message";
+	
 	
 	// CONTEXT ATTRIBUTES \\
 	/** The name of the application attribute that contains the backend. */
@@ -34,5 +37,13 @@ public class CommonConstants {
 	
 	/** The name of the request attribute that contains an error message. */
 	public static final String ERROR_REQUEST_ATTR = "errorMsg";
-
+	
+	
+	// CONSTRUCTOR \\
+	/**
+	 * Prevent from instanciating this class.
+	 */
+	private CommonConstants() {
+		// Nothing to do
+	}
 }

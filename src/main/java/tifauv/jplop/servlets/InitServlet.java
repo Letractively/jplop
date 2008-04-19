@@ -17,7 +17,7 @@ import tifauv.jplop.Backend;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class InitServlet extends HttpServlet {
+public final class InitServlet extends HttpServlet {
 
 	// CONSTANTS \\
 	/** The serialization UID. */
@@ -26,7 +26,7 @@ public class InitServlet extends HttpServlet {
 	
 	// FIELDS \\
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(InitServlet.class);
+	private final Logger m_logger = Logger.getLogger(InitServlet.class);
 	
 
 	// METHODS \\
@@ -38,8 +38,7 @@ public class InitServlet extends HttpServlet {
 		m_logger.info("====> \\_o< JPlop starting >o_/ <====");
 		try {
 			super.init();
-			Backend.getInstance().init(getServletContext().getRealPath("/"));
-			Backend.getInstance().loadFromDisk();
+			Backend.create(getServletContext().getRealPath("/"));
 			getServletContext().setAttribute(CommonConstants.BACKEND_APPLICATION_ATTR, Backend.getInstance());
 		} catch (Exception e) {
 			m_logger.error("Cannot initialize the backend.", e);

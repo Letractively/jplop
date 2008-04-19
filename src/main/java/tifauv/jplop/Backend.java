@@ -11,11 +11,10 @@ import org.apache.log4j.Logger;
 import tifauv.jplop.auth.UserBase;
 import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
+import tifauv.jplop.persistence.DeserializeException;
+import tifauv.jplop.persistence.PersistenceManager;
 import tifauv.jplop.servlets.CommonConstants;
 import tifauv.jplop.util.AbstractJob;
-import tifauv.jplop.util.DeserializeException;
-import tifauv.jplop.util.Serializable;
-import tifauv.jplop.util.SerializeException;
 
 
 /**
@@ -25,7 +24,7 @@ import tifauv.jplop.util.SerializeException;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class Backend {
+public final class Backend {
 
 	// CONSTANTS \\
 	/** The default configuration file. */
@@ -44,30 +43,30 @@ public class Backend {
 	public static final String DEFAULT_DATADIR = "${catalina.base}/jplop-data";
 	
 	/** The configuration key of the name. */
-	private static final String NAME_KEY = "jplop.name";
+	private static final String KEY_NAME = "jplop.name";
 	
 	/** The configuration key of the full name. */
-	private static final String FULLNAME_KEY = "jplop.fullName";
+	private static final String KEY_FULLNAME = "jplop.fullName";
 	
 	/** The configuration key of the URL. */
-	private static final String URL_KEY = "jplop.url";
+	private static final String KEY_URL = "jplop.url";
 	
 	/** The configuration key of the size of the history. */
-	private static final String SIZE_KEY = "jplop.history.size";
-	
-	/** The configuration key of the save rate of the history. */
-	private static final String WRITE_CACHE_KEY = "jplop.history.saveEvery";
+	private static final String KEY_HISTORY_SIZE = "jplop.history.size";
 	
 	/** The configuration key of the maximum length of an incoming message. */
-	private static final String POST_LENGTH_KEY = "jplop.post.maxLength";
+	private static final String KEY_POST_LENGTH = "jplop.post.maxLength";
 
 	/** The configuration key of the data directory. */
-	private static final String DATADIR_KEY = "jplop.datadir";
+	private static final String KEY_DATADIR = "jplop.datadir";
+
+	/** The configuration key of the backup frequency of the backend. */
+	private static final String KEY_BACKUP_FREQ = "jplop.backupEvery";
 	
 	
 	// STATIC FIELDS \\
 	/** The backend's instance. */
-	private static Backend s_instance = new Backend();
+	private static Backend s_instance;
 	
 	
 	// FIELDS \\
@@ -83,11 +82,11 @@ public class Backend {
 	/** The user base.*/
 	private UserBase m_users;
 	
-	/** The backup job. */
-	private BackupJob m_backupJob;
+	/** The persistence manager. */
+	private PersistenceManager m_persistence;
 	
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(Backend.class);
+	private final Logger m_logger = Logger.getLogger(Backend.class);
 	
 
 	// CONSTRUCTORS \\
@@ -95,7 +94,7 @@ public class Backend {
 	 * Default constructor.
 	 */
 	private Backend() {
-		m_backupJob = new BackupJob();
+		// Nothing to do
 	}
 	
 
@@ -121,6 +120,16 @@ public class Backend {
 	 */
 	protected final History getHistory() {
 		return m_history;
+	}
+	
+	
+	/**
+	 * Gives the persistence manager.
+	 */
+	private final PersistenceManager getPersistenceManager() {
+		if (m_persistence == null)
+			m_persistence = new PersistenceManager();
+		return m_persistence;
 	}
 	
 	
@@ -212,7 +221,7 @@ public class Backend {
 		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
 		buffer.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")
 			.append(getMaxPostLength()).append("\">");
-		buffer.append("<field name=\"message\">$m</field>");
+		buffer.append("<field name=\"").append(CommonConstants.MESSAGE_PARAM).append("\">$m</field>");
 		buffer.append("</post>");
 		buffer.append("</board>");
 		buffer.append("</site>");
@@ -266,6 +275,13 @@ public class Backend {
 	
 	
 	// METHODS \\
+	public static void create(String p_contextDir) {
+		s_instance = new Backend();
+		getInstance().init(p_contextDir);
+		getInstance().getPersistenceManager().startBackupJob();
+	}
+	
+	
 	/**
 	 * Gives the backend's instance.
 	 */
@@ -278,14 +294,8 @@ public class Backend {
 	 * Stops the backup job and saves the backend.
 	 */
 	public static synchronized void destroy() {
-		if (s_instance != null) {
-			if (s_instance.m_backupJob != null)
-				s_instance.m_backupJob.stop();
-			try {
-				s_instance.saveToDisk();
-			} catch (SerializeException e) {
-				s_instance.m_logger.error(e);
-			}
+		if (getInstance() != null) {
+			getInstance().getPersistenceManager().clean();
 			s_instance = null;
 		}
 	}
@@ -303,65 +313,69 @@ public class Backend {
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
 		String dataDir = DEFAULT_DATADIR;
-		int backupTimeout = AbstractJob.DEFAULT_TIMEOUT;
+		int backupTimeout = AbstractJob.DEFAULT_FREQUENCY;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
+		
 		try {
 			// Load the .properties
 			ResourceBundle config = ResourceBundle.getBundle(CONFIG_PROPERTIES);
 			
 			// Load the name property
 			try {
-				name = config.getString(NAME_KEY);
+				name = config.getString(KEY_NAME);
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the fullname property
 			try {
-				fullName = config.getString(FULLNAME_KEY);
+				fullName = config.getString(KEY_FULLNAME);
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the URL property
 			try {
-				url = config.getString(URL_KEY);
+				url = config.getString(KEY_URL);
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
 			
 			// Load the history size property
 			try {
-				size = Integer.parseInt(config.getString(SIZE_KEY));
+				size = Integer.parseInt(config.getString(KEY_HISTORY_SIZE));
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			} catch (NumberFormatException e) {
-				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
+				m_logger.warn("The configuration key '" + KEY_HISTORY_SIZE + "' doesn't have an integer value.");
 			}
 			
-			// Load the backup job's timeout
+			// Load the backup frenquency
 			try {
-				backupTimeout = Integer.parseInt(config.getString(WRITE_CACHE_KEY));
+				backupTimeout = Integer.parseInt(config.getString(KEY_BACKUP_FREQ));
+				if (backupTimeout == 0) {
+					backupTimeout = AbstractJob.DEFAULT_FREQUENCY;
+				}
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			} catch (NumberFormatException e) {
-				m_logger.warn("The configuration key '" + WRITE_CACHE_KEY + "' doesn't have an integer value.");
+				m_logger.warn("The configuration key '" + KEY_BACKUP_FREQ + "' doesn't have an integer value.");
 			}
 			
 			
 			// Load the max post length property
 			try {
-				maxPostLength = Integer.parseInt(config.getString(POST_LENGTH_KEY));
+				maxPostLength = Integer.parseInt(config.getString(KEY_POST_LENGTH));
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			} catch (NumberFormatException e) {
-				m_logger.warn("The configuration key '" + SIZE_KEY + "' doesn't have an integer value.");
+				m_logger.warn("The configuration key '" + KEY_HISTORY_SIZE + "' doesn't have an integer value.");
 			}
 
 			
 			// Load the data directory name
 			try {
-				dataDir = config.getString(DATADIR_KEY);
+				dataDir = config.getString(KEY_DATADIR);
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			}
@@ -369,23 +383,33 @@ public class Backend {
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
 		}
 
-		/* Update the data directory */
-		Serializable.setDataDir(p_contextDir, dataDir);
+		/* Update the persistence */
+		getPersistenceManager().setDataDir(p_contextDir, dataDir);
+		getPersistenceManager().setTimeout(backupTimeout);
 		
 		/* Update the history */
-		if (getHistory() == null)
+		if (getHistory() == null) {
 			setHistory(new History(url, size));
+			try {
+				getPersistenceManager().register(getHistory());
+			} catch (DeserializeException e) {
+				m_logger.error("Could not restore the history state : ", e);
+			}
+		}
 		else {
 			getHistory().setURL(url);
 			getHistory().setMaxSize(size);
 		}
 		
 		/* Update the user base */
-		if (getUserBase() == null)
+		if (getUserBase() == null) {
 			setUserBase(new UserBase());
-		
-		/* Update the backup job. */
-		m_backupJob.setTimeout(backupTimeout * 60000);
+			try {
+				getPersistenceManager().register(getUserBase());
+			} catch (DeserializeException e) {
+				m_logger.error("Could not restore the user base : ", e);
+			}
+		}
 		
 		setName(name);
 		setFullName(fullName);
@@ -393,35 +417,9 @@ public class Backend {
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
 		m_logger.info(" |- the board is hosted at '" + url + "'");
 		m_logger.info(" |- the backend keeps " + size + " posts");
-		m_logger.info(" |- the data are stored in '" + Serializable.getDataDir() + "'");
-		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minutes");
+		m_logger.info(" |- the data are stored in '" + getPersistenceManager().getDataDir() + "'");
+		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minute" + (backupTimeout < 2 ? "" : "s"));
 		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
-
-		/* start the backup job if needed. */
-		if (m_backupJob.isStopped())
-			m_backupJob.start();
-	}
-
-	
-	/**
-	 * Loads the backend from the disk.
-	 * This currently loads the history and user base.
-	 */
-	public synchronized final void loadFromDisk()
-	throws DeserializeException {
-		getHistory().loadFromFile();
-		getUserBase().loadFromFile();
-	}
-	
-	
-	/**
-	 * Saves the backend to disk.
-	 * This currently saves the user base and history.
-	 */
-	public synchronized final void saveToDisk()
-	throws SerializeException {
-		getUserBase().saveToFile();
-		getHistory().saveToFile();
 	}
 	
 	

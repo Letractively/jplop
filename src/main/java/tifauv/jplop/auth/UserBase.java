@@ -17,9 +17,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import tifauv.jplop.util.DeserializeException;
-import tifauv.jplop.util.Serializable;
-import tifauv.jplop.util.SerializeException;
+import tifauv.jplop.persistence.DeserializeException;
+import tifauv.jplop.persistence.Persistable;
+import tifauv.jplop.persistence.SerializeException;
 
 /**
  * This is a list of users.
@@ -28,7 +28,7 @@ import tifauv.jplop.util.SerializeException;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class UserBase extends Serializable {
+public class UserBase implements Persistable {
 	
 	// CONSTANTS \\
 	/** The name of the default list file on disk. */
@@ -84,9 +84,8 @@ public class UserBase extends Serializable {
 	/**
 	 * Gives the file where the users list is saved.
 	 */
-	@Override
-	public File getFile() {
-		return new File(getDataDir(), FILE_NAME);
+	public final String getFilename() {
+		return FILE_NAME;
 	}
 	
 	
@@ -224,10 +223,10 @@ public class UserBase extends Serializable {
 	 * Loads the users base from the backup file. 
 	 */
 	@Override
-	public void loadFromFile()
+	public void loadFromFile(File p_file)
 	throws DeserializeException {
-		if (getFile().exists()) {
-			m_logger.info("Loading the user base from '" + getFile() + "'...");
+		if (p_file != null && p_file.exists()) {
+			m_logger.info("Loading the user base from '" + p_file + "'...");
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
 			factory.setNamespaceAware(true);
@@ -235,7 +234,7 @@ public class UserBase extends Serializable {
 			
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				load(builder.parse(getFile()));
+				load(builder.parse(p_file));
 				m_logger.info(size() + " users loaded.");
 			} catch (Exception e) {
 				throw new DeserializeException("Could not load the user base file", e);
@@ -249,22 +248,24 @@ public class UserBase extends Serializable {
 	/**
 	 * Saves the users base to a file.
 	 */
-	@Override
-	public void saveToFile()
+	public void saveToFile(File p_file)
 	throws SerializeException {
+		if (p_file == null)
+			return;
+
 		// Create the file if needed
-		if (!getFile().exists()) {
+		if (!p_file.exists()) {
 			try {
-				getFile().createNewFile();
-				m_logger.info("The file '" + getFile() + "' has been created (empty).");
+				p_file.createNewFile();
+				m_logger.info("The file '" + p_file + "' has been created (empty).");
 			} catch (IOException e) {
-				m_logger.error("The file '" + getFile() + "' could not be created.");
+				m_logger.error("The file '" + p_file + "' could not be created.");
 			}
 		}
 
 		// Check whether the file is writable
-		if (!getFile().canWrite()) {
-			m_logger.error("The users file '" + getFile() + "' is not writable.");
+		if (!p_file.canWrite()) {
+			m_logger.error("The users file '" + p_file + "' is not writable.");
 			return;
 		}
 		
@@ -284,9 +285,9 @@ public class UserBase extends Serializable {
 		
 		FileOutputStream output = null;
 		try {
-			output = new FileOutputStream(getFile());
+			output = new FileOutputStream(p_file);
 			output.write(buffer.toString().getBytes("UTF-8"));
-			m_logger.info("User base saved to '" + getFile() + "'.");
+			m_logger.info("User base saved to '" + p_file + "'.");
 		} catch (FileNotFoundException e) {
 			m_logger.error("The users file cannot be open or written.");
 		} catch (IOException e) {

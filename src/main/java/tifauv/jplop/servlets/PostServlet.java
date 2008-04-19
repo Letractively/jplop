@@ -25,7 +25,7 @@ import tifauv.jplop.auth.User;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class PostServlet extends HttpServlet {
+public final class PostServlet extends HttpServlet {
 
 	// CONSTANTS \\
 	/** The serialization UID. */
@@ -34,13 +34,10 @@ public class PostServlet extends HttpServlet {
 	/** The User-Agent request header. */
 	private static final String USER_AGENT = "User-Agent";
 	
-	/** The message request parameter. */
-	private static final String MESSAGE_PARAM = "message";
-	
 	
 	// FIELDS \\
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(PostServlet.class);
+	private final Logger m_logger = Logger.getLogger(PostServlet.class);
 
 	
 	// METHODS \\
@@ -66,7 +63,7 @@ public class PostServlet extends HttpServlet {
 		}
 		
 		// Get the message parameter and check it
-		String message = p_request.getParameter(MESSAGE_PARAM);
+		String message = p_request.getParameter(CommonConstants.MESSAGE_PARAM);
 		if (message == null) {
 			m_logger.info("No message parameter, skipping...");
 			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
