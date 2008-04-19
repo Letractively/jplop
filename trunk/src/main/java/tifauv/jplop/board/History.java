@@ -24,8 +24,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import tifauv.jplop.util.DeserializeException;
-import tifauv.jplop.util.Serializable;
+import tifauv.jplop.persistence.DeserializeException;
+import tifauv.jplop.persistence.Persistable;
 
 
 /**
@@ -35,7 +35,7 @@ import tifauv.jplop.util.Serializable;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class History extends Serializable {
+public class History implements Persistable {
 
 	// CONSTANTS \\
 	/** The default size of the history. */
@@ -129,9 +129,8 @@ public class History extends Serializable {
 	/**
 	 * Gives the file where the history is saved.
 	 */
-	@Override
-	public final File getFile() {
-		return new File(getDataDir(), FILE_NAME);
+	public final String getFilename() {
+		return FILE_NAME;
 	}
 	
 	
@@ -351,11 +350,10 @@ public class History extends Serializable {
 	/**
 	 * Loads the backend from the cache file.
 	 */
-	@Override
-	public synchronized final void loadFromFile()
+	public synchronized final void loadFromFile(File p_file)
 	throws DeserializeException {
-		if (getFile().exists()) {
-			m_logger.info("Loading the history from '" + getFile() + "'...");
+		if (p_file != null && p_file.exists()) {
+			m_logger.info("Loading the history from '" + p_file + "'...");
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
 			factory.setNamespaceAware(true);
@@ -363,7 +361,7 @@ public class History extends Serializable {
 			
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
-				load(builder.parse(getFile()));
+				load(builder.parse(p_file));
 				m_logger.info(size() + " posts loaded.");
 			} catch (Exception e) {
 				throw new DeserializeException("Could not load the history file", e);
@@ -378,32 +376,31 @@ public class History extends Serializable {
 	 * Saves the history to a file.
 	 * Does nothing if the history is empty.
 	 */
-	@Override
-	public synchronized final void saveToFile() {
-		if (isEmpty())
+	public synchronized final void saveToFile(File p_file) {
+		if (isEmpty() || p_file == null)
 			return;
 		
 		// Create the file if needed
-		if (!getFile().exists()) {
+		if (!p_file.exists()) {
 			try {
-				getFile().createNewFile();
-				m_logger.info("The file '" + getFile() + "' has been created (empty).");
+				p_file.createNewFile();
+				m_logger.info("The file '" + p_file + "' has been created (empty).");
 			} catch (IOException e) {
-				m_logger.error("The file '" + getFile() + "' could not be created.");
+				m_logger.error("The file '" + p_file + "' could not be created.");
 			}
 		}
 
 		// Check whether the file is writable
-		if (!getFile().canWrite()) {
-			m_logger.error("The history file '" + getFile() + "' is not writable.");
+		if (!p_file.canWrite()) {
+			m_logger.error("The history file '" + p_file + "' is not writable.");
 			return;
 		}
 		
 		FileOutputStream output = null;
 		try {
-			output = new FileOutputStream(getFile());
+			output = new FileOutputStream(p_file);
 			output.write(toString().getBytes("UTF-8"));
-			m_logger.info("History saved to '" + getFile() + "'.");
+			m_logger.info("History saved to '" + p_file + "'.");
 		} catch (FileNotFoundException e) {
 			m_logger.error("The history file does not exist.");
 		} catch (IOException e) {

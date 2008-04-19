@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
 public abstract class AbstractJob implements Runnable {
 
 	// CONSTANTS \\
-	/** Default timeout is 5 minutes (5 * 60 * 1000 = 300000ms). */
-	public static final int DEFAULT_TIMEOUT = 300000;
+	/** Default frequency is 5 minutes (5 * 60 * 1000 = 300000ms). */
+	public static final int DEFAULT_FREQUENCY = 300000;
 	
 	/** The default name of a job. */
 	public static final String DEFAULT_NAME = "JPlop job";
@@ -37,28 +37,28 @@ public abstract class AbstractJob implements Runnable {
 	private boolean m_stop;
 	
 	/** The wake-up timeout. */
-	private long m_timeout;
+	private long m_frequency;
 	
 	
 	// CONSTRUCTORS \\
 	/**
-	 * Default constructor initializes the timeout to {@link #DEFAULT_TIMEOUT}
+	 * Default constructor initializes the frequency to {@link #DEFAULT_FREQUENCY}
 	 * and the job's name to {@link #DEFAULT_NAME}.
 	 */
 	public AbstractJob() {
 		m_stop = true;
-		setTimeout(DEFAULT_TIMEOUT);
 		setJobName(DEFAULT_NAME);
+		setFrequency(DEFAULT_FREQUENCY);
 	}
 	
 	
 	/**
-	 * Default constructor initializes the timeout to {@link #DEFAULT_TIMEOUT}.
+	 * Default constructor initializes the frequency to {@link #DEFAULT_FREQUENCY}.
 	 */
 	public AbstractJob(String p_name) {
 		m_stop = true;
-		setTimeout(DEFAULT_TIMEOUT);
 		setJobName(p_name);
+		setFrequency(DEFAULT_FREQUENCY);
 	}
 	
 	
@@ -66,10 +66,20 @@ public abstract class AbstractJob implements Runnable {
 	/**
 	 * Gives the time (in ms) between two wake-ups.
 	 * 
-	 * @see #setTimeout(long)
+	 * @see #setFrequency(long)
 	 */
-	public final long getTimeout() {
-		return m_timeout;
+	public final long getFrequency() {
+		return m_frequency;
+	}
+	
+	
+	/**
+	 * Gives the job's name (if any).
+	 * 
+	 * @see #setJobName(String)
+	 */
+	public final String getJobName() {
+		return m_jobName;
 	}
 	
 	
@@ -83,12 +93,16 @@ public abstract class AbstractJob implements Runnable {
 	
 	// SETTERS \\
 	/**
-	 * Sets the time (in ms) between two wake-ups.
+	 * Sets the time between two wake-ups.
 	 * 
-	 * @see #getTimeout()
+	 * @param p_frequency
+	 *            the frequency in milliseconds
+	 * 
+	 * @see #getFrequency()
 	 */
-	public final void setTimeout(long p_timeout) {
-		m_timeout = p_timeout;
+	public final void setFrequency(long p_frequency) {
+		m_frequency = p_frequency;
+		m_logger.info("The Job [" + getJobName() + "] will wake up every " + (m_frequency/60000) + " minutes .");
 	}
 	
 	
@@ -97,13 +111,19 @@ public abstract class AbstractJob implements Runnable {
 	 * 
 	 * @param p_jobName
 	 *            the job name
+	 * 
+	 * @see #getJobName()
 	 */
 	protected synchronized void setJobName(String p_jobName) {
 		String temp = DEFAULT_NAME;
-		if (p_jobName == null)
+		if (p_jobName != null)
 			temp = p_jobName;
 		if (m_runner != null)
 			m_runner.setName(temp);
+		if (getJobName() == null)
+			m_logger.info("A new job known as [" + temp + "] has been created.");
+		else
+			m_logger.info("The job [" + getJobName() + "] is now known as [" + temp + "].");
 		m_jobName = temp;
 	}
 	
@@ -112,14 +132,13 @@ public abstract class AbstractJob implements Runnable {
 	/**
 	 * Starts the job.
 	 * 
-	 * @see #start()
 	 * @see #stop()
 	 */
 	public final synchronized void start() {
 		if (m_runner == null) {
-			m_runner = new Thread(this, m_jobName);
+			m_runner = new Thread(this, getJobName());
 			m_stop = false;
-			m_logger.info("Starting job...");
+			m_logger.info("Starting job [" + getJobName() + "]...");
 			m_runner.start();
 		}
 	}
@@ -133,7 +152,7 @@ public abstract class AbstractJob implements Runnable {
 	public final synchronized void stop() {
 		if (m_runner != null) {
 			if (m_runner.isAlive()) {
-				m_logger.info("Stopping job...");
+				m_logger.info("Stopping job [" + getJobName() + "]...");
 				m_stop = true;
 				m_runner.interrupt();
 				try {
@@ -160,12 +179,12 @@ public abstract class AbstractJob implements Runnable {
 	 * @see #cleanup()
 	 */
 	public final void run() {
-		m_logger.info("Job started.");
+		m_logger.info("Job [" + getJobName() + "] started.");
 		init();
 
 		while (!isStopped()) {
 			try {
-				Thread.sleep(getTimeout());
+				Thread.sleep(getFrequency());
 			} catch (InterruptedException e) {
 				// Don't mind
 			}
@@ -174,7 +193,7 @@ public abstract class AbstractJob implements Runnable {
 		
 		cleanup();
 		forcedCleanup();
-		m_logger.info("Job stopped.");
+		m_logger.info("Job [" + getJobName() + "] stopped.");
 	}
 	
 	

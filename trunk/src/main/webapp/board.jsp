@@ -3,6 +3,7 @@
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
 <%@ page session="true"      %>
+<%@ page import="tifauv.jplop.servlets.CommonConstants"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="backend" type="tifauv.jplop.Backend" scope="application" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -34,7 +35,7 @@
 				</div>
 				<div id="edition">
 					<input type="reset" value="" />
-					<input type="text"  id="message" name="message" maxlength="512" accesskey="m" />
+					<input type="text"  id="message" name="<%= CommonConstants.MESSAGE_PARAM %>" maxlength="512" accesskey="m" />
 					<input type="submit" />
 					<input type="button" id="reloadBtn" onclick="javascript: reloadBackend();" value="Reload" accesskey="r" />
 					<img id="reloadIndicator" src="images/reloading.gif" alt="Reloading..."/>

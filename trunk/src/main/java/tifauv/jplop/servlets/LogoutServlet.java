@@ -18,19 +18,19 @@ import tifauv.jplop.auth.User;
  * 
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class LogoutServlet extends HttpServlet {
+public final class LogoutServlet extends HttpServlet {
 	
 	// CONSTANTS \\
 	/** The serialization UID. */
 	private static final long serialVersionUID = -2521791355556452988L;
 	
 	/** The page displayed when the action finishes. */
-	private static final String SUCCESS_PAGE = "/index.jsp";
+	private static final String SUCCESS_PAGE = "/board.jsp";
 
 	
 	// FIELDS \\
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(LogoutServlet.class);
+	private final Logger m_logger = Logger.getLogger(LogoutServlet.class);
 	
 	
 	// METHODS \\
@@ -45,7 +45,7 @@ public class LogoutServlet extends HttpServlet {
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException,
 	ServletException {
 		m_logger.info("New GET logout request from [" + p_request.getRemoteAddr() + "].");

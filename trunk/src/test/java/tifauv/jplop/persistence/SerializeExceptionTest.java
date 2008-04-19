@@ -1,8 +1,9 @@
 /**
  * Dec 14, 2007
  */
-package tifauv.jplop.util;
+package tifauv.jplop.persistence;
 
+import tifauv.jplop.persistence.SerializeException;
 import junit.framework.TestCase;
 
 

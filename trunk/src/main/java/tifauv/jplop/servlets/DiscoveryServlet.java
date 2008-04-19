@@ -15,7 +15,7 @@ import tifauv.jplop.Backend;
  * 
  * @author Olivier Serve <tifauv@gmail.com>
  */
- public class DiscoveryServlet extends HttpServlet {
+ public final class DiscoveryServlet extends HttpServlet {
 	 
 	// CONSTANTS \\
     /** The serialization identifier. */
@@ -34,7 +34,7 @@ import tifauv.jplop.Backend;
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
 		String config = Backend.getInstance().getBoardConfig();
 		

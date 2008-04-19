@@ -20,7 +20,7 @@ import tifauv.jplop.Backend;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class BackendServlet extends HttpServlet {
+public final class BackendServlet extends HttpServlet {
 
 	// CONSTANTS \\
 	/** The serialization UID. */
@@ -44,7 +44,7 @@ public class BackendServlet extends HttpServlet {
 	
 	// FIELDS \\
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(BackendServlet.class);
+	private final Logger m_logger = Logger.getLogger(BackendServlet.class);
 	
 
 	// METHODS \\

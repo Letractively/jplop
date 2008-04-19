@@ -3,6 +3,7 @@
 <%@ page isErrorPage="false" %>
 <%@ page isThreadSafe="true" %>
 <%@ page session="true"      %>
+<%@ page import="tifauv.jplop.servlets.CommonConstants"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="backend" type="tifauv.jplop.Backend" scope="application" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -25,15 +26,15 @@
 &lt;site name="<jsp:getProperty name="backend" property="name"/>" title="<jsp:getProperty name="backend" property="fullName"/>" baseurl="<jsp:getProperty name="backend" property="URL"/>" version="1.0"&gt;
 	&lt;account&gt;
 		&lt;login method="post" path="/logon"&gt;
-			&lt;field name="login"&gt;$l&lt;/field&gt;
-			&lt;field name="password"&gt;$p&lt;/field&gt;
+			&lt;field name="<%= CommonConstants.LOGIN_PARAM %>"&gt;$l&lt;/field&gt;
+			&lt;field name="<%= CommonConstants.PASSWORD_PARAM %>"&gt;$p&lt;/field&gt;
 		&lt;/login&gt;
 		&lt;logout method="get" path="/logout"/&gt;
 	&lt;/account&gt;
 	&lt;board name="board" title="Tribune"&gt;
 		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
 		&lt;post method="post" path="/post" anonymous="true" max_length="<jsp:getProperty name="backend" property="maxPostLength"/>"&gt;
-			&lt;field name="message"&gt;$m&lt;/field&gt;
+			&lt;field name="<%= CommonConstants.MESSAGE_PARAM %>"&gt;$m&lt;/field&gt;
 		&lt;/post&gt;
 	&lt;/board&gt;
 &lt;/site&gt;</pre>

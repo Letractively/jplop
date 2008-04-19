@@ -24,14 +24,14 @@ import tifauv.jplop.auth.UserBase;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class RegisterServlet extends HttpServlet {
+public final class RegisterServlet extends HttpServlet {
 
 	// CONSTANTS \\
 	/** The serialization UID. */
 	private static final long serialVersionUID = 3353591499960135295L;
 	
 	/** The name of the page to forward to if the registration succeeds. */
-	private static final String SUCCESS_PAGE = "/index.jsp";
+	private static final String SUCCESS_PAGE = "/board.jsp";
 	
 	/** The name of the page to forward to if the registration fails. */
 	private static final String FAILURE_PAGE = "/register.jsp";
@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
 	
 	// FIELDS \\
 	/** The logger. */
-	private Logger m_logger = Logger.getLogger(RegisterServlet.class);
+	private final Logger m_logger = Logger.getLogger(RegisterServlet.class);
 	 
 
 	// METHODS \\
@@ -55,7 +55,7 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected final void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException,
 	ServletException {
 		m_logger.info("New POST register request from [" + p_request.getRemoteAddr() + "].");
