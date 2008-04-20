@@ -189,7 +189,7 @@ public class PostTest extends TestCase {
 			assertEquals("info", post.getInfo());
 			assertEquals("message", post.getMessage());
 			assertEquals(Post.ANONYMOUS_LOGIN, post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 		
@@ -200,7 +200,7 @@ public class PostTest extends TestCase {
 			assertEquals("info", post.getInfo());
 			assertEquals("message", post.getMessage());
 			assertEquals("login", post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 		
@@ -211,7 +211,7 @@ public class PostTest extends TestCase {
 			assertEquals("info", post.getInfo());
 			assertEquals("<i>italic</i>", post.getMessage());
 			assertEquals("login", post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 		
@@ -222,7 +222,7 @@ public class PostTest extends TestCase {
 			assertEquals("info", post.getInfo());
 			assertEquals("<i>italic", post.getMessage());
 			assertEquals("login", post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 		
@@ -231,7 +231,7 @@ public class PostTest extends TestCase {
 			Element bad = doc.createElement("plop");
 			new Post(bad);
 			fail("A post should not be built (even with default values) from a bad DOM element.");
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			// Nothing, this is expected
 		}
 
@@ -243,7 +243,7 @@ public class PostTest extends TestCase {
 			fail("A post should not be built (even with default values) if the <post> element has no id.");
 		} catch (NumberFormatException e) {
 			fail("The id attribute is missing, but there should not be a NumberFormatException");
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			// Nothing, this is expected
 		}
 
@@ -255,7 +255,7 @@ public class PostTest extends TestCase {
 			fail("Didn't detect the id attribute is not a number");
 		} catch (NumberFormatException e) {
 			fail("The id attribute is missing, but there should not be a NumberFormatException");
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			// Nothing, this is expected
 		}
 
@@ -265,7 +265,7 @@ public class PostTest extends TestCase {
 			bad.removeAttribute("time");
 			new Post(bad);
 			fail("A post should not be built (even with default values) if the <post> element has no time.");
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			// This is expected
 		}
 
@@ -275,7 +275,7 @@ public class PostTest extends TestCase {
 			bad.setAttribute("time", "toto");
 			new Post(bad);
 			fail("Didn't detect the time attribute is wrong");
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			// Nothing, the exception is expected
 		}
 
@@ -288,7 +288,7 @@ public class PostTest extends TestCase {
 			assertEquals("", post.getInfo());
 			assertEquals("msg", post.getMessage());
 			assertEquals("user", post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 
@@ -301,7 +301,7 @@ public class PostTest extends TestCase {
 			assertEquals("inf", post.getInfo());
 			assertEquals("", post.getMessage());
 			assertEquals("user", post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 
@@ -314,7 +314,7 @@ public class PostTest extends TestCase {
 			assertEquals("inf", post.getInfo());
 			assertEquals("msg", post.getMessage());
 			assertEquals(Post.ANONYMOUS_LOGIN, post.getLogin());
-		} catch (BadArgumentException e) {
+		} catch (BadPostException e) {
 			fail(e.getMessage());
 		}
 	}

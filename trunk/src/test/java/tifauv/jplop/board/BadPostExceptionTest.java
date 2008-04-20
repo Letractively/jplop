@@ -13,44 +13,44 @@ import junit.framework.TestCase;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class BadArgumentExceptionTest extends TestCase {
+public class BadPostExceptionTest extends TestCase {
 
 	/**
-	 * Test method for {@link tifauv.jplop.board.BadArgumentException#BadArgumentException(java.lang.String)}.
+	 * Test method for {@link tifauv.jplop.board.BadPostException#BadPostException(java.lang.String)}.
 	 */
-	public void testBadArgumentExceptionString() {
+	public void testBadPostExceptionString() {
 		// Check without message
-		Exception e = new BadArgumentException(null);
+		Exception e = new BadPostException(null);
 		assertNull(e.getMessage());
 
 		// Check with a message
-		e = new BadArgumentException("plop pikaron");
+		e = new BadPostException("plop pikaron");
 		assertEquals("plop pikaron", e.getMessage());
 	}
 	
 	
 	/**
-	 * Test method for {@link tifauv.jplop.board.BadArgumentException#BadArgumentException(java.lang.String, java.lang.Throwable)}.
+	 * Test method for {@link tifauv.jplop.board.BadPostException#BadPostException(java.lang.String, java.lang.Throwable)}.
 	 */
-	public void testBadArgumentExceptionStringThrowable() {
+	public void testBadPostExceptionStringThrowable() {
 		// Check without message and cause
-		Exception e = new BadArgumentException(null, null);
+		Exception e = new BadPostException(null, null);
 		assertNull(e.getMessage());
 		assertNull(e.getCause());
 
 		// Check with a message only
-		e = new BadArgumentException("plop pikaron", null);
+		e = new BadPostException("plop pikaron", null);
 		assertEquals("plop pikaron", e.getMessage());
 		assertNull(e.getCause());
 
 		// Check with a cause only
 		Exception cause = new Exception();
-		e = new BadArgumentException(null, cause);
+		e = new BadPostException(null, cause);
 		assertNull(e.getMessage());
 		assertEquals(cause, e.getCause());
 
 		// Check with a message only
-		e = new BadArgumentException("plop pikaron", cause);
+		e = new BadPostException("plop pikaron", cause);
 		assertEquals("plop pikaron", e.getMessage());
 		assertEquals(cause, e.getCause());
 	}

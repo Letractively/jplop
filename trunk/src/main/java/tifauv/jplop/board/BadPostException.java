@@ -11,7 +11,7 @@ package tifauv.jplop.board;
  * 
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class BadArgumentException extends Exception {
+public class BadPostException extends Exception {
 	
 	// CONSTANTS \\
 	/** The serialization id. */
@@ -25,7 +25,7 @@ public class BadArgumentException extends Exception {
 	 * @param p_message
 	 *            the error message
 	 */
-	public BadArgumentException(String p_message) {
+	public BadPostException(String p_message) {
 		super(p_message);
 	}
 	
@@ -38,7 +38,7 @@ public class BadArgumentException extends Exception {
 	 * @param p_cause
 	 *            the cause of the error
 	 */
-	public BadArgumentException(String p_message, Throwable p_cause) {
+	public BadPostException(String p_message, Throwable p_cause) {
 		super(p_message, p_cause);
 	}
 }
