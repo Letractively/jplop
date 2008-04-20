@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
+import tifauv.jplop.CommonConstants;
 import tifauv.jplop.auth.User;
 
 
