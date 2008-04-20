@@ -13,7 +13,6 @@ import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
 import tifauv.jplop.persistence.DeserializeException;
 import tifauv.jplop.persistence.PersistenceManager;
-import tifauv.jplop.servlets.CommonConstants;
 import tifauv.jplop.util.AbstractJob;
 
 
@@ -92,6 +91,8 @@ public final class Backend {
 	// CONSTRUCTORS \\
 	/**
 	 * Default constructor.
+	 * 
+	 * @see #create(String)
 	 */
 	private Backend() {
 		// Nothing to do
@@ -275,7 +276,15 @@ public final class Backend {
 	
 	
 	// METHODS \\
-	public static void create(String p_contextDir) {
+	/**
+	 * Creates the singleton.
+	 * 
+	 * @param p_contextDir
+	 *            the context directory of the webapp
+	 * 
+	 * @see #destroy()
+	 */
+	public static final void create(String p_contextDir) {
 		s_instance = new Backend();
 		getInstance().init(p_contextDir);
 		getInstance().getPersistenceManager().startBackupJob();
@@ -285,15 +294,17 @@ public final class Backend {
 	/**
 	 * Gives the backend's instance.
 	 */
-	public static Backend getInstance() {
+	public static final Backend getInstance() {
 		return s_instance;
 	}
 	
 	
 	/**
 	 * Stops the backup job and saves the backend.
+	 * 
+	 * @see #create(String)
 	 */
-	public static synchronized void destroy() {
+	public static final synchronized void destroy() {
 		if (getInstance() != null) {
 			getInstance().getPersistenceManager().clean();
 			s_instance = null;
@@ -307,7 +318,7 @@ public final class Backend {
 	 * @param p_contextDir
 	 *            the context directory
 	 */
-	public final synchronized void init(String p_contextDir) {
+	private final synchronized void init(String p_contextDir) {
 		String name = DEFAULT_NAME;
 		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;

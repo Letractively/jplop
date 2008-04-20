@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
+import tifauv.jplop.CommonConstants;
 
 /**
  * This servlet initializes and cleans JPlop.

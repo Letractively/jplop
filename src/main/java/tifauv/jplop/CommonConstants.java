@@ -1,7 +1,7 @@
 /**
  * Feb 17, 2008
  */
-package tifauv.jplop.servlets;
+package tifauv.jplop;
 
 /**
  * This class contains some constants shared between the other classes.
