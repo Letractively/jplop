@@ -164,7 +164,7 @@ public class Post {
 	 *            if a post id cannot be loaded
 	 */
 	public Post(Element p_post)
-	throws BadArgumentException {
+	throws BadPostException {
 		// Set default values
 		setId(0);
 		setTime(new Date());
@@ -179,22 +179,22 @@ public class Post {
 				try {
 					setId(Long.parseLong(p_post.getAttribute(POST_ID_ATTRNAME)));
 				} catch (NumberFormatException e) {
-					throw new BadArgumentException("The '" + POST_ID_ATTRNAME + "' attribute value is not a valid long", e);
+					throw new BadPostException("The '" + POST_ID_ATTRNAME + "' attribute value is not a valid long", e);
 				}
 			}
 			else
-				throw new BadArgumentException("The <" + POST_TAGNAME + "> element has no '" + POST_ID_ATTRNAME + "' attribute");
+				throw new BadPostException("The <" + POST_TAGNAME + "> element has no '" + POST_ID_ATTRNAME + "' attribute");
 			
 			// time attribute
 			if (p_post.hasAttribute(POST_TIME_ATTRNAME)) {
 				try {
 					setTime(s_timeFormat.parse(p_post.getAttribute(POST_TIME_ATTRNAME)));
 				} catch (ParseException e) {
-					throw new BadArgumentException("The '" + POST_TIME_ATTRNAME + "' attribute does not follow the 'yyyyMMddHHmmss' scheme", e);
+					throw new BadPostException("The '" + POST_TIME_ATTRNAME + "' attribute does not follow the 'yyyyMMddHHmmss' scheme", e);
 				}
 			}
 			else
-				throw new BadArgumentException("The <" + POST_TAGNAME + "> element has no '" + POST_TIME_ATTRNAME + "' attribute");
+				throw new BadPostException("The <" + POST_TAGNAME + "> element has no '" + POST_TIME_ATTRNAME + "' attribute");
 			
 			// <info> element
 			NodeList elems = p_post.getElementsByTagName(INFO_TAGNAME);
@@ -224,7 +224,7 @@ public class Post {
 			}
 		}
 		else
-			throw new BadArgumentException("The element is not a <" + POST_TAGNAME + ">");
+			throw new BadPostException("The element is not a <" + POST_TAGNAME + ">");
 	}
 	
 

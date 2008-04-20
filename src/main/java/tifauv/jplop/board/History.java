@@ -293,11 +293,11 @@ public class History implements Persistable {
 	 * @param p_history
 	 *            the DOM document
 	 * 
-	 * @throws BadArgumentException
+	 * @throws BadPostException
 	 *            if a <post> element cannot be loaded
 	 */
 	public final synchronized void load(Document p_history)
-	throws BadArgumentException {
+	throws BadPostException {
 		Element board = p_history.getDocumentElement();
 		if (board != null) {
 			// <post> elements
