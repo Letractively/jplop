@@ -3,7 +3,7 @@
 			<div class="links">
 				<a href="board.jsp" title="Je veux ploper !">Tribune</a>
 				::
-				<a href="config.jsp" title="Configuration pour les coincoins">Configuration</a>
+				<a href="config.jsp" title="Configuration pour les coincoins">Coincoins</a>
 				::
 				<c:choose>
 					<c:when test="${not empty sessionScope.subject}">
