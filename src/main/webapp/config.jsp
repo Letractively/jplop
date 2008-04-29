@@ -17,7 +17,7 @@
 	<body>
 		<%@ include file="header.inc.jsp" %>
 		
-		<h2>Configuration</h2>
+		<h2>Configuration des coincoins</h2>
 		<div class="config">
 			<h3>Coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
 			<p>L'URL d'auto-configuration est <a href="<jsp:getProperty name="backend" property="URL"/>/discover"><jsp:getProperty name="backend" property="URL"/>/discover</a>.</p>
@@ -43,14 +43,28 @@
 		<div class="config">
 			<h3><a href="http://hules.free.fr/wmcoincoin" title="Le VRAI coincoin">wmcc</a></h3>
 			<p>Ajoutez les lignes suivantes dans le fichier .wmcoincoin/options de votre dossier personnel&nbsp;:</p>
+<c:choose>
+	<c:when test="${not empty sessionScope.subject}">
 			<pre class="cc-config">
 board_site:                <jsp:getProperty name="backend" property="name"/>
 .backend_flavour:          2
-.palmipede.userlogin:      Anonymous
+.palmipede.userlogin:      <jsp:getProperty name="subject" property="login" />
+.http.cookie:              JSESSIONID=<%=request.getSession().getId() %>
 .backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
 .post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
 .tribune.delay:            60
 .palmipede.msg_max_length: <jsp:getProperty name="backend" property="maxPostLength" /></pre>
+	</c:when>
+	<c:otherwise>
+			<pre class="cc-config">
+board_site:                <jsp:getProperty name="backend" property="name"/>
+.backend_flavour:          2
+.backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
+.post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
+.tribune.delay:            60
+.palmipede.msg_max_length: <jsp:getProperty name="backend" property="maxPostLength" /></pre>
+	</c:otherwise>
+</c:choose>
 		</div>
 		
 		<div class="config">
