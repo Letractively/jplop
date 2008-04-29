@@ -46,7 +46,7 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.subject}">
 			<pre class="cc-config">
-board_site:                <jsp:getProperty name="backend" property="name"/>
+board_site:                "<jsp:getProperty name="backend" property="name"/>"
 .backend_flavour:          2
 .palmipede.userlogin:      <jsp:getProperty name="subject" property="login" />
 .http.cookie:              JSESSIONID=<%=request.getSession().getId() %>
@@ -57,7 +57,7 @@ board_site:                <jsp:getProperty name="backend" property="name"/>
 	</c:when>
 	<c:otherwise>
 			<pre class="cc-config">
-board_site:                <jsp:getProperty name="backend" property="name"/>
+board_site:                "<jsp:getProperty name="backend" property="name"/>"
 .backend_flavour:          2
 .backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
 .post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
