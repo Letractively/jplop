@@ -96,6 +96,10 @@
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	
+	<session-config>
+		<session-timeout>180</session-timeout>
+	</session-config>
+   
 	<welcome-file-list>
 		<welcome-file>board.jsp</welcome-file>
 	</welcome-file-list>
