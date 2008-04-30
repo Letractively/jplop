@@ -4,6 +4,7 @@
 package tifauv.jplop.servlets;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +61,12 @@ import tifauv.jplop.auth.UserBase;
 	throws IOException,
 	ServletException {
 		m_logger.info("New POST logon request from [" + p_request.getRemoteAddr() + "].");
+		try {
+			p_request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// Cannot happen
+			m_logger.warn("Cannot decode the request as UTF-8 !");
+		}
 		
 		// Check whether we are already logged on
 		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
