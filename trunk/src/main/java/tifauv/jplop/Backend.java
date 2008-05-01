@@ -103,7 +103,7 @@ public final class Backend {
 	/**
 	 * Gives the board's name.
 	 */
-	public final String getName() {
+	public String getName() {
 		return m_name;
 	}
 
@@ -111,7 +111,7 @@ public final class Backend {
 	/**
 	 * Gives the board's full name.
 	 */
-	public final String getFullName() {
+	public String getFullName() {
 		return m_fullName;
 	}
 	
@@ -119,7 +119,7 @@ public final class Backend {
 	/**
 	 * Gives the history.
 	 */
-	protected final History getHistory() {
+	protected History getHistory() {
 		return m_history;
 	}
 	
@@ -127,7 +127,7 @@ public final class Backend {
 	/**
 	 * Gives the persistence manager.
 	 */
-	private final PersistenceManager getPersistenceManager() {
+	private PersistenceManager getPersistenceManager() {
 		if (m_persistence == null)
 			m_persistence = new PersistenceManager();
 		return m_persistence;
@@ -137,7 +137,7 @@ public final class Backend {
 	/**
 	 * Gives the board's URL.
 	 */
-	public final String getURL() {
+	public String getURL() {
 		return getHistory().getURL();
 	}
 	
@@ -145,7 +145,7 @@ public final class Backend {
 	/**
 	 * Gives the maximum number of messages of the history.
 	 */
-	public final int getMaxSize() {
+	public int getMaxSize() {
 		return getHistory().maxSize();
 	}
 	
@@ -153,7 +153,7 @@ public final class Backend {
 	/**
 	 * Gives the user base.
 	 */
-	public final UserBase getUserBase() {
+	public UserBase getUserBase() {
 		return m_users;
 	}
 	
@@ -164,7 +164,7 @@ public final class Backend {
 	 * 
 	 * @see #addMessage(String, String, String)
 	 */
-	public final int getMaxPostLength() {
+	public int getMaxPostLength() {
 		return Post.getMaxLength();
 	}
 	
@@ -172,7 +172,7 @@ public final class Backend {
 	/**
 	 * Gives the Last-Modified header value to send.
 	 */
-	public final String getLastModified() {
+	public String getLastModified() {
 		return getHistory().getLastModified();
 	}
 	
@@ -180,7 +180,7 @@ public final class Backend {
 	/**
 	 * Gives the backend text.
 	 */
-	public final String getText() {
+	public String getText() {
 		return getHistory().toString();
 	}
 
@@ -194,7 +194,7 @@ public final class Backend {
 	 * 
 	 * @return the backend text or <code>null</code>
 	 */
-	public final synchronized String getText(String p_modifiedSince) {
+	public synchronized String getText(String p_modifiedSince) {
 		if (getHistory().isModifiedSince(p_modifiedSince))
 			return getHistory().toString();
 		return null;
@@ -204,7 +204,7 @@ public final class Backend {
 	/**
 	 * Gives the board's configuration for compliant coincoins.
 	 */
-	public final String getBoardConfig() {
+	public String getBoardConfig() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<?xml version=\"1.0\"?>");
 		buffer.append("<site name=\"").append(getName())
@@ -237,7 +237,7 @@ public final class Backend {
 	 * @param p_name
 	 *            the name of the board
 	 */
-	private final void setName(String p_name) {
+	private void setName(String p_name) {
 		m_name = p_name;
 	}
 	
@@ -248,7 +248,7 @@ public final class Backend {
 	 * @param p_fullName
 	 *            the full name of the board
 	 */
-	private final void setFullName(String p_fullName) {
+	private void setFullName(String p_fullName) {
 		m_fullName = p_fullName;
 	}
 	
@@ -259,7 +259,7 @@ public final class Backend {
 	 * @param p_history
 	 *            the history
 	 */
-	private final void setHistory(History p_history) {
+	private void setHistory(History p_history) {
 		m_history = p_history;
 	}
 	
@@ -270,7 +270,7 @@ public final class Backend {
 	 * @param p_userBase
 	 *            the user base
 	 */
-	private final void setUserBase(UserBase p_userBase) {
+	private void setUserBase(UserBase p_userBase) {
 		m_users = p_userBase;
 	}
 	
@@ -318,7 +318,7 @@ public final class Backend {
 	 * @param p_contextDir
 	 *            the context directory
 	 */
-	private final synchronized void init(String p_contextDir) {
+	private synchronized void init(String p_contextDir) {
 		String name = DEFAULT_NAME;
 		String fullName = DEFAULT_FULLNAME;
 		String url = DEFAULT_URL;
@@ -444,7 +444,7 @@ public final class Backend {
 	 * @param p_login
 	 *            the login
 	 */
-	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
+	public synchronized void addMessage(String p_info, String p_message, String p_login) {
 		m_history.addMessage(p_info, p_message, p_login);
 	}
 }

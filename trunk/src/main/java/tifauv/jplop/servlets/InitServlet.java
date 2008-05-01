@@ -35,7 +35,7 @@ public final class InitServlet extends HttpServlet {
 	 * Creates the Backend.
 	 */
 	@Override
-	public final void init() {
+	public void init() {
 		m_logger.info("====> \\_o< JPlop starting >o_/ <====");
 		try {
 			super.init();
@@ -51,7 +51,7 @@ public final class InitServlet extends HttpServlet {
 	 * Destroys the Backend.
 	 */
 	@Override
-	public final void destroy() {
+	public void destroy() {
 		getServletContext().removeAttribute(CommonConstants.BACKEND_APPLICATION_ATTR);
 		Backend.destroy();
 		m_logger.info("====> \\_x<~ JPlop stopped ~>x_/ <====");

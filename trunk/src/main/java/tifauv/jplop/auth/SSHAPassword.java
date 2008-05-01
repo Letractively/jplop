@@ -17,7 +17,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class SSHAPassword implements Password {
+public final class SSHAPassword implements Password {
 
 	// CONSTANTS \\
 	/** The secure SHA1 password prefix. */
@@ -147,14 +147,15 @@ public class SSHAPassword implements Password {
 	/**
 	 * Checks the given password matches this user's one.
 	 */
-	public boolean check(String p_password) {
+	public boolean check(String p_password)
+	throws PasswordException {
 		if (p_password == null)
 			return m_hash == null;
-		else if (m_salt != null) {
+		if (m_salt != null) {
 			try {
 				return Arrays.equals(hashPassword(m_salt, p_password), m_hash);
 			} catch (UnsupportedEncodingException e) {
-				// UTF-8 is not supported ?!?
+				throw new PasswordException("UTF-8 is not supported", e);
 			}
 		}
 		return false;

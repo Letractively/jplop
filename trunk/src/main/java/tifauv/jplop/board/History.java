@@ -410,7 +410,7 @@ public class History implements Persistable {
 				try {
 					output.close();
 				} catch (IOException e) {
-					// Nothing to do
+					m_logger.error("An error occured while closing the history file.");
 				}
 			}
 		}

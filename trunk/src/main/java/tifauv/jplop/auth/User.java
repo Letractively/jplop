@@ -14,7 +14,7 @@ import java.util.TreeSet;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class User {
+public final class User {
 
 	// CONSTANTS \\
 	/** The roles separator. */
@@ -31,6 +31,7 @@ public class User {
 	/** The user's password. */
 	private Password m_password;
 	
+	/** The user's roles. */
 	private SortedSet<String> m_roles;
 
 	
@@ -120,7 +121,13 @@ public class User {
 	 * Checks the given password matches the user's one.
 	 */
 	public boolean checkPassword(String p_otherPassword) {
-		return m_password.check(p_otherPassword);
+		try {
+			return m_password.check(p_otherPassword);
+		} catch (PasswordException e) {
+			// XXX We should log the error here, but isn't building a logger
+			// just for that exception a bit overkill ?
+			return false;
+		}
 	}
 	
 	

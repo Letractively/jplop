@@ -57,7 +57,7 @@ public final class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected final void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException,
 	ServletException {
 		m_logger.info("New POST register request from [" + p_request.getRemoteAddr() + "].");

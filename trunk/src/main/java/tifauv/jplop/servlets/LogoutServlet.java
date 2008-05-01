@@ -46,7 +46,7 @@ public final class LogoutServlet extends HttpServlet {
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException,
 	ServletException {
 		m_logger.info("New GET logout request from [" + p_request.getRemoteAddr() + "].");

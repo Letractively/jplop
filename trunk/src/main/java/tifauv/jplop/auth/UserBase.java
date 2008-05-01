@@ -28,7 +28,7 @@ import tifauv.jplop.persistence.SerializeException;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class UserBase implements Persistable {
+public final class UserBase implements Persistable {
 	
 	// CONSTANTS \\
 	/** The name of the default list file on disk. */
@@ -297,7 +297,7 @@ public class UserBase implements Persistable {
 				try {	
 					output.close();
 				} catch (IOException e) {
-					// Nothing to do
+					m_logger.error("An error occured while closing the users file.");
 				}
 			}
 		}

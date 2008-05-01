@@ -54,7 +54,7 @@ public final class PostServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	@Override
-	protected final void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
 		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
 		try {
 			p_request.setCharacterEncoding("UTF-8");
