@@ -34,7 +34,7 @@ import tifauv.jplop.Backend;
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
 		String config = Backend.getInstance().getBoardConfig();
 		

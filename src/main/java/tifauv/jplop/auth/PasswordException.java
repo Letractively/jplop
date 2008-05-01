@@ -10,7 +10,7 @@ package tifauv.jplop.auth;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class PasswordException extends Exception {
+public final class PasswordException extends Exception {
 
 	// CONSTANTS \\
 	/** The serialization identifier. */

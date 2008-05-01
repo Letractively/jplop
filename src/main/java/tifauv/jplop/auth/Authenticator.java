@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
 
-public class Authenticator {
+public final class Authenticator {
 
 	// FIELDS \\
 	/** The user name. */

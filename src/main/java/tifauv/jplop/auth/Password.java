@@ -45,7 +45,11 @@ public interface Password {
 	 * @return <code>true</code> if the two passwords match,
 	 *         <code>false</code> otherwise
 	 * 
+	 * @throws PasswordException
+	 *            if some error occured while checking the passwords
+	 *
 	 * @see #setPassword(String)
 	 */
-	public boolean check(String p_otherPassword);
+	public boolean check(String p_otherPassword)
+	throws PasswordException;
 }

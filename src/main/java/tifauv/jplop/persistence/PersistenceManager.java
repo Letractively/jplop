@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.Backend;
 import tifauv.jplop.util.AbstractJob;
 
 public class PersistenceManager {
@@ -237,7 +236,7 @@ final class BackupJob extends AbstractJob {
 	 * @see tifauv.jplop.util.AbstractJob#doWork()
 	 */
 	@Override
-	protected final void doWork() {
+	protected void doWork() {
 		m_logger.info("Auto-backup started.");
 		m_persistence.saveAll();
 		m_logger.info("Auto-backup finished.");

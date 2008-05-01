@@ -58,7 +58,7 @@ public final class BackendServlet extends HttpServlet {
 	 *            the HTTP response
 	 */
 	@Override
-	protected final void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
+	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(HTTP_IF_MODIFIED_SINCE);
