@@ -84,7 +84,7 @@ public final class UserBase implements Persistable {
 	/**
 	 * Gives the file where the users list is saved.
 	 */
-	public final String getFilename() {
+	public String getFilename() {
 		return FILE_NAME;
 	}
 	
@@ -184,7 +184,7 @@ public final class UserBase implements Persistable {
 	 * @param p_users
 	 *            the DOM document
 	 */
-	public final synchronized void load(Document p_users) {
+	public synchronized void load(Document p_users) {
 		// Load the roles
 		clearRoles();
 		NodeList roles = p_users.getElementsByTagName(ROLE_TAG);

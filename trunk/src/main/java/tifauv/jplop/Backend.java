@@ -284,7 +284,7 @@ public final class Backend {
 	 * 
 	 * @see #destroy()
 	 */
-	public static final void create(String p_contextDir) {
+	public static void create(String p_contextDir) {
 		s_instance = new Backend();
 		getInstance().init(p_contextDir);
 		getInstance().getPersistenceManager().startBackupJob();
@@ -294,7 +294,7 @@ public final class Backend {
 	/**
 	 * Gives the backend's instance.
 	 */
-	public static final Backend getInstance() {
+	public static Backend getInstance() {
 		return s_instance;
 	}
 	
@@ -304,7 +304,7 @@ public final class Backend {
 	 * 
 	 * @see #create(String)
 	 */
-	public static final synchronized void destroy() {
+	public static synchronized void destroy() {
 		if (getInstance() != null) {
 			getInstance().getPersistenceManager().clean();
 			s_instance = null;
