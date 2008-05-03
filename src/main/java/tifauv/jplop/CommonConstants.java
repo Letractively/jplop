@@ -39,6 +39,29 @@ public final class CommonConstants {
 	public static final String ERROR_REQUEST_ATTR = "errorMsg";
 	
 	
+	// HTTP HEADERS \\
+	/** The name of the User-Agent HTTP header. */
+	public static final String USER_AGENT_HDR = "User-Agent";
+
+	/** The name of the Post-Id HTTP header. */
+	public static final String POSTID_HDR = "Post-Id";
+
+	/** The If-Modified-Since header name. */
+	public static final String IF_MODIFIED_SINCE_HDR = "If-Modified-Since";
+	
+	/** The Last-Modified header name.*/
+	public static final String LAST_MODIFIED_HDR = "Last-Modified";
+	
+	/** The Pragma header name. */
+	public static final String PRAGMA_HDR = "Pragma";
+	
+	/** The Cache-Control name. */
+	public static final String CACHE_CONTROL_HDR = "Cache-Control";
+	
+	/** The no-cache header value. */
+	public static final String NO_CACHE = "no-cache";
+
+	
 	// CONSTRUCTOR \\
 	/**
 	 * Prevent from instanciating this class.
