@@ -443,8 +443,10 @@ public final class Backend {
 	 *            the message
 	 * @param p_login
 	 *            the login
+	 * 
+	 * @return the id of the new post
 	 */
-	public synchronized void addMessage(String p_info, String p_message, String p_login) {
-		m_history.addMessage(p_info, p_message, p_login);
+	public synchronized long addMessage(String p_info, String p_message, String p_login) {
+		return m_history.addMessage(p_info, p_message, p_login);
 	}
 }

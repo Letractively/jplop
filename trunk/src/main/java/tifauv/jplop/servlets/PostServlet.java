@@ -3,6 +3,7 @@
  */
 package tifauv.jplop.servlets;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServlet;
@@ -44,7 +45,8 @@ public final class PostServlet extends HttpServlet {
 	// METHODS \\
 	/**
 	 * Adds the {@link #MESSAGE_PARAM} request parameter to the history.
-	 * Responds with a 201 CREATED status if the message is added.
+	 * Responds with a 201 CREATED status if the message is added. The id
+	 * of the new message is also sent back in the response's body.
 	 * If no {@link #MESSAGE_PARAM} parameter exist in the request,
 	 * responds with a 406 NOT_ACCEPTABLE.
 	 * 
@@ -52,9 +54,13 @@ public final class PostServlet extends HttpServlet {
 	 *            the HTTP request
 	 * @param p_response
 	 *            the HTTP response
+	 * 
+	 * @throws IOException
+	 *            if the response cannot be written
 	 */
 	@Override
-	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
+	throws IOException {
 		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
 		try {
 			p_request.setCharacterEncoding("UTF-8");
@@ -87,7 +93,8 @@ public final class PostServlet extends HttpServlet {
 		
 		// Add the message
 		String userAgent = p_request.getHeader(USER_AGENT);
-		Backend.getInstance().addMessage(userAgent, message, login);
+		long id = Backend.getInstance().addMessage(userAgent, message, login);
 		p_response.setStatus(HttpServletResponse.SC_CREATED);
+		p_response.getWriter().write("id=" + id);
 	}
 }
