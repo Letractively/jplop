@@ -224,9 +224,13 @@ public class History implements Persistable {
 	 *            the message
 	 * @param p_login
 	 *            the poster's login
+	 * 
+	 * @return the id of the new post
 	 */
-	public final synchronized void addMessage(String p_info, String p_message, String p_login) {
-		addPost(new Post(getNextId(), p_info, p_message, p_login));
+	public final synchronized long addMessage(String p_info, String p_message, String p_login) {
+		long id = getNextId();
+		addPost(new Post(id, p_info, p_message, p_login));
+		return id;
 	}
 	
 	
