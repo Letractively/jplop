@@ -3,7 +3,6 @@
  */
 package tifauv.jplop.servlets;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServlet;
@@ -32,9 +31,6 @@ public final class PostServlet extends HttpServlet {
 	// CONSTANTS \\
 	/** The serialization UID. */
 	private static final long serialVersionUID = -6158071296626158191L;
-
-	/** The User-Agent request header. */
-	private static final String USER_AGENT = "User-Agent";
 	
 	
 	// FIELDS \\
@@ -54,13 +50,9 @@ public final class PostServlet extends HttpServlet {
 	 *            the HTTP request
 	 * @param p_response
 	 *            the HTTP response
-	 * 
-	 * @throws IOException
-	 *            if the response cannot be written
 	 */
 	@Override
-	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response)
-	throws IOException {
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) {
 		m_logger.info("New POST message request from [" + p_request.getRemoteAddr() + "].");
 		try {
 			p_request.setCharacterEncoding("UTF-8");
@@ -92,9 +84,9 @@ public final class PostServlet extends HttpServlet {
 			m_logger.info("Message is '" + message + "' from an anonymous coward.");
 		
 		// Add the message
-		String userAgent = p_request.getHeader(USER_AGENT);
+		String userAgent = p_request.getHeader(CommonConstants.USER_AGENT_HDR);
 		long id = Backend.getInstance().addMessage(userAgent, message, login);
 		p_response.setStatus(HttpServletResponse.SC_CREATED);
-		p_response.getWriter().write("id=" + id);
+		p_response.addHeader(CommonConstants.POSTID_HDR, Long.toString(id));
 	}
 }

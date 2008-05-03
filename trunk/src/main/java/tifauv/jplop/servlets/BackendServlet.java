@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tifauv.jplop.Backend;
+import tifauv.jplop.CommonConstants;
 
 /**
  * This servlet sends the backend.
@@ -25,21 +26,6 @@ public final class BackendServlet extends HttpServlet {
 	// CONSTANTS \\
 	/** The serialization UID. */
 	private static final long serialVersionUID = 8034380019578813009L;
-
-	/** The If-Modified-Since header name. */
-	private static final String HTTP_IF_MODIFIED_SINCE = "If-Modified-Since";
-	
-	/** The Last-Modified header name.*/
-	private static final String HTTP_LAST_MODIFIED = "Last-Modified";
-	
-	/** The Pragma header name. */
-	private static final String HTTP_PRAGMA = "Pragma";
-	
-	/** The Cache-Control name. */
-	private static final String HTTP_CACHE_CONTROL = "Cache-Control";
-	
-	/** The no-cache header value. */
-	private static final String NO_CACHE = "no-cache";
 	
 	
 	// FIELDS \\
@@ -61,24 +47,24 @@ public final class BackendServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
-		String ifModifiedSince = p_request.getHeader(HTTP_IF_MODIFIED_SINCE);
+		String ifModifiedSince = p_request.getHeader(CommonConstants.IF_MODIFIED_SINCE_HDR);
 		m_logger.info("If-Modified-Since : " + ifModifiedSince);
 		m_logger.info("Last-Modified : " + Backend.getInstance().getLastModified());
 		String text = Backend.getInstance().getText(ifModifiedSince);
 
-		p_response.setHeader(HTTP_PRAGMA, NO_CACHE);
-		p_response.setHeader(HTTP_CACHE_CONTROL, NO_CACHE);
+		p_response.setHeader(CommonConstants.PRAGMA_HDR, CommonConstants.NO_CACHE);
+		p_response.setHeader(CommonConstants.CACHE_CONTROL_HDR, CommonConstants.NO_CACHE);
 		
 		if (text == null) {
 			p_response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Backend.getInstance().getLastModified());
 			p_response.setContentLength(0);
 		}
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
 			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setCharacterEncoding("UTF-8");
-			p_response.setHeader(HTTP_LAST_MODIFIED, Backend.getInstance().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Backend.getInstance().getLastModified());
 			p_response.setContentLength(text.getBytes("UTF-8").length);
 			p_response.getWriter().write(text);
 		}
