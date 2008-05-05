@@ -106,7 +106,7 @@ import tifauv.jplop.auth.UserBase;
 			else {
 				m_logger.warn("Authentication failed for user [" + username + "].");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "L'authentification a échoué.");
-				p_response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+				p_response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			}
 
