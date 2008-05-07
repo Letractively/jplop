@@ -35,7 +35,7 @@ import tifauv.jplop.persistence.Persistable;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class History implements Persistable {
+public final class History implements Persistable {
 
 	// CONSTANTS \\
 	/** The default size of the history. */
@@ -49,6 +49,9 @@ public class History implements Persistable {
 	
 	/** The site attribute of the backend. */
 	private static final String BOARD_SITE_ATTRNAME = "site";
+	
+	/** The timezone attribute of the backend. */
+	private static final String BOARD_TZ_ATTRNAME = "timezone";
 	
 	/** The format of the Last-Modified header. */
 	private static final String HTTP_DATE = "EEE, dd MMM yyyy HH:mm:ss zzz";
@@ -121,7 +124,7 @@ public class History implements Persistable {
 	/**
 	 * Gives the history's URL.
 	 */
-	public final String getURL() {
+	public String getURL() {
 		return m_url;
 	}
 
@@ -129,7 +132,7 @@ public class History implements Persistable {
 	/**
 	 * Gives the file where the history is saved.
 	 */
-	public final String getFilename() {
+	public String getFilename() {
 		return FILE_NAME;
 	}
 	
@@ -139,7 +142,7 @@ public class History implements Persistable {
 	 * 
 	 * @return the date of the last modification of the history
 	 */
-	public final String getLastModified() {
+	public String getLastModified() {
 		return s_httpDate.format(m_lastModified);
 	}
 	
@@ -153,7 +156,7 @@ public class History implements Persistable {
 	 * @return <code>true</code> if the history has been modified,
 	 *         <code>false</code> otherwise
 	 */
-	public final synchronized boolean isModifiedSince(String p_date) {
+	public synchronized boolean isModifiedSince(String p_date) {
 		if (p_date == null)
 			return true;
 		
@@ -162,6 +165,40 @@ public class History implements Persistable {
 		} catch (ParseException e) {
 			return true;
 		}
+	}
+	
+	
+	/**
+	 * Gives the timezone value to put in the backend.
+	 * The timezone format is <tt>UTC([+-]hhmm)?</tt>.
+	 * If the timezone is UTC, no offset will be added.
+	 */
+	public static String getTimezone() {
+		String tz = "UTC";
+		Date now = new Date();
+		int offset = TimeZone.getDefault().getOffset(now.getTime());
+		if (offset != 0) {
+			// Add the sign
+			if (offset > 0)
+				tz += '+';
+			else {
+				tz += '-';
+				offset = -offset;
+			}
+
+			// Add the hours
+			int hours = offset / 3600000; // 1h = 60 m * 60 s * 1000 ms
+			if (hours < 10)
+				tz += '0';
+			tz += Integer.toString(hours);
+
+			// Add the minutes
+			int minutes = (offset % 3600000) / 60000; // 1m = 60s * 1000 ms
+			if (minutes < 10)
+				tz += '0';
+			tz += Integer.toString(minutes);
+		}
+		return tz;
 	}
 	
 	
@@ -180,7 +217,7 @@ public class History implements Persistable {
 	 * @param p_url
 	 *            the history's URL
 	 */
-	public final void setURL(String p_url) {
+	public void setURL(String p_url) {
 		m_url = p_url;
 		setModified();
 	}
@@ -196,7 +233,7 @@ public class History implements Persistable {
 	 * 
 	 * @see #truncate()
 	 */
-	public final synchronized void setMaxSize(int p_size) {
+	public synchronized void setMaxSize(int p_size) {
 		m_maxSize = p_size;
 		truncate();
 	}
@@ -206,7 +243,7 @@ public class History implements Persistable {
 	 * Sets the GMT date of the last modification to now,
 	 * and toggles the rewrite cache flag.
 	 */
-	private final void setModified() {
+	private void setModified() {
 		Calendar now = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
 		now.set(Calendar.MILLISECOND, 0);
 		m_lastModified = now.getTime();
@@ -227,7 +264,7 @@ public class History implements Persistable {
 	 * 
 	 * @return the id of the new post
 	 */
-	public final synchronized long addMessage(String p_info, String p_message, String p_login) {
+	public synchronized long addMessage(String p_info, String p_message, String p_login) {
 		long id = getNextId();
 		addPost(new Post(id, p_info, p_message, p_login));
 		return id;
@@ -243,7 +280,7 @@ public class History implements Persistable {
 	 * @see #setModified()
 	 * @see #truncate()
 	 */
-	protected final synchronized void addPost(Post p_post) {
+	private synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
 		m_logger.info("Post #" + p_post.getId() + " added.");
 		setModified();
@@ -254,7 +291,7 @@ public class History implements Persistable {
 	/**
 	 * Removes the old posts until the size of the history is at most the maximum size.
 	 */
-	private final void truncate() {
+	private void truncate() {
 		if (size() > maxSize() && size() > 0) {
 			m_logger.info("Truncating history :");
 			do {
@@ -268,7 +305,7 @@ public class History implements Persistable {
 	/**
 	 * Gives the maximum size of the history.
 	 */
-	public final int maxSize() {
+	public int maxSize() {
 		return m_maxSize;
 	}
 	
@@ -276,7 +313,7 @@ public class History implements Persistable {
 	/**
 	 * Gives the number of posts in the history.
 	 */
-	public final int size() {
+	public int size() {
 		return m_posts.size();
 	}
 	
@@ -286,7 +323,7 @@ public class History implements Persistable {
 	 * 
 	 * @return <code>true</code> iif size == 0
 	 */
-	public final boolean isEmpty() {
+	public boolean isEmpty() {
 		return size() == 0;
 	}
 	
@@ -300,7 +337,7 @@ public class History implements Persistable {
 	 * @throws BadPostException
 	 *            if a <post> element cannot be loaded
 	 */
-	public final synchronized void load(Document p_history)
+	public synchronized void load(Document p_history)
 	throws BadPostException {
 		Element board = p_history.getDocumentElement();
 		if (board != null) {
@@ -322,13 +359,14 @@ public class History implements Persistable {
 	/**
 	 * Rewrites the cached XML representation of the history.
 	 */
-	private final void updateCache() {
+	private void updateCache() {
 		if (m_mustRewriteCache) {
 			m_logger.info("Updating the history cache...");
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n");
 			buffer.append("<").append(BOARD_TAGNAME).append(" ")
-				.append(BOARD_SITE_ATTRNAME).append("=\"").append(getURL()).append("\">\n");
+				.append(BOARD_SITE_ATTRNAME).append("=\"").append(getURL()).append("\" ")
+				.append(BOARD_TZ_ATTRNAME).append("=\"").append(getTimezone()).append("\">\n");
 			for (Post post : m_posts)
 				buffer.append(post.toString());
 			buffer.append("</").append(BOARD_TAGNAME).append(">");
@@ -345,7 +383,7 @@ public class History implements Persistable {
 	 * Gives the XML representation of the history.
 	 */
 	@Override
-	public final synchronized String toString() {
+	public synchronized String toString() {
 		updateCache();
 		return m_cache;
 	}
@@ -354,7 +392,7 @@ public class History implements Persistable {
 	/**
 	 * Loads the backend from the cache file.
 	 */
-	public synchronized final void loadFromFile(File p_file)
+	public synchronized void loadFromFile(File p_file)
 	throws DeserializeException {
 		if (p_file != null && p_file.exists()) {
 			m_logger.info("Loading the history from '" + p_file + "'...");
@@ -380,7 +418,7 @@ public class History implements Persistable {
 	 * Saves the history to a file.
 	 * Does nothing if the history is empty.
 	 */
-	public synchronized final void saveToFile(File p_file) {
+	public synchronized void saveToFile(File p_file) {
 		if (isEmpty() || p_file == null)
 			return;
 		
