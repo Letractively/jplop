@@ -22,3 +22,8 @@
 	padding: 0.4em;
 	background-color: #eeeeee;
 }
+
+.file {
+	font-style: italic;
+	font-family: monospace;
+}

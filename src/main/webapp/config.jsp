@@ -42,18 +42,20 @@
 		
 		<div class="config">
 			<h3><a href="http://hules.free.fr/wmcoincoin" title="Le VRAI coincoin">wmcc</a></h3>
-			<p>Ajoutez les lignes suivantes dans le fichier .wmcoincoin/options de votre dossier personnel&nbsp;:</p>
+			<p>Ajoutez les lignes suivantes dans le fichier <span class="file">.wmcoincoin/options</span> de votre dossier personnel&nbsp;:</p>
 <c:choose>
 	<c:when test="${not empty sessionScope.subject}">
 			<pre class="cc-config">
 board_site:                "<jsp:getProperty name="backend" property="name"/>"
 .backend_flavour:          2
 .palmipede.userlogin:      <jsp:getProperty name="subject" property="login" />
-.http.cookie:              JSESSIONID=<%=request.getSession().getId() %>
 .backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
 .post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
 .tribune.delay:            60
 .palmipede.msg_max_length: <jsp:getProperty name="backend" property="maxPostLength" /></pre>
+			<p>Ajoutez également la ligne suivante dans le fichier <span class="file">.wmcoincoin/options.auth</span> de votre dossier personnel&nbsp;:</p>
+			<pre class="cc-config">
+"<jsp:getProperty name="backend" property="name"/>" cookie: "JSESSIONID=<%=request.getSession().getId() %>"</pre>
 	</c:when>
 	<c:otherwise>
 			<pre class="cc-config">
