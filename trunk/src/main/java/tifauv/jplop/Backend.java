@@ -13,7 +13,6 @@ import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
 import tifauv.jplop.persistence.DeserializeException;
 import tifauv.jplop.persistence.PersistenceManager;
-import tifauv.jplop.util.AbstractJob;
 
 
 /**
@@ -324,7 +323,7 @@ public final class Backend {
 		String url = DEFAULT_URL;
 		int size = History.DEFAULT_SIZE;
 		String dataDir = DEFAULT_DATADIR;
-		int backupTimeout = AbstractJob.DEFAULT_FREQUENCY;
+		int backupTimeout = PersistenceManager.DEFAULT_BACKUP_FREQUENCY;
 		int maxPostLength = Post.DEFAULT_MAX_POST_LENGTH;
 		
 		try {
@@ -364,9 +363,8 @@ public final class Backend {
 			// Load the backup frenquency
 			try {
 				backupTimeout = Integer.parseInt(config.getString(KEY_BACKUP_FREQ));
-				if (backupTimeout == 0) {
-					backupTimeout = AbstractJob.DEFAULT_FREQUENCY;
-				}
+				if (backupTimeout == 0)
+					backupTimeout = PersistenceManager.DEFAULT_BACKUP_FREQUENCY;
 			} catch (MissingResourceException e) {
 				m_logger.warn("The configuration key '" + e.getKey() + "' does not exist.");
 			} catch (NumberFormatException e) {

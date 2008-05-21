@@ -72,6 +72,7 @@ import tifauv.jplop.auth.UserBase;
 		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (currentUser != null) {
 			m_logger.warn("The user [" + currentUser.getLogin() + "] tried to logon but he is already authenticated.");
+			p_response.addHeader(CommonConstants.ERROR_HDR, "Already authenticated");
 			getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			currentUser = null;
 			return;
@@ -81,17 +82,21 @@ import tifauv.jplop.auth.UserBase;
 		if (users != null) {
 			// Check the parameters are all there
 			String username = p_request.getParameter(CommonConstants.LOGIN_PARAM);
-			if (username == null) {
-				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' request parameter is null.");
+			if (username == null || username.length() == 0) {
+				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' request parameter is null or empty.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le login est obligatoire.");
+				p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Missing " + CommonConstants.LOGIN_PARAM + " parameter");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
 
 			String password = p_request.getParameter(CommonConstants.PASSWORD_PARAM);
-			if (password == null) {
-				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' request parameter is null.");
+			if (password == null || password.length() == 0) {
+				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' request parameter is null or empty.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe est obligatoire.");
+				p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Missing " + CommonConstants.PASSWORD_PARAM + " parameter");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
@@ -107,6 +112,7 @@ import tifauv.jplop.auth.UserBase;
 				m_logger.warn("Authentication failed for user [" + username + "].");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "L'authentification a échoué.");
 				p_response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Authentication failed");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			}
 
@@ -114,7 +120,9 @@ import tifauv.jplop.auth.UserBase;
 		}
 
 		m_logger.warn("There is no user base.");
-		p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "La création de compte n'est pas possible.");
+		p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "L'authentification n'est pas possible.");
+		p_response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+		p_response.addHeader(CommonConstants.ERROR_HDR, "Account management disabled");
 		getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 	}
 }

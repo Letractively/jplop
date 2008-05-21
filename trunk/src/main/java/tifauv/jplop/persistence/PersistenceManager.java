@@ -11,6 +11,11 @@ import tifauv.jplop.util.AbstractJob;
 
 public class PersistenceManager {
 	
+	// CONSTANTS \\
+	/** The default backup frquency is every 5 minutes. */
+	public static final int DEFAULT_BACKUP_FREQUENCY = 5;
+	
+	
 	// FIELDS \\
 	/** The data directory. */
 	private File m_dataDir;
