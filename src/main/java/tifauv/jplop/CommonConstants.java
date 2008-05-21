@@ -43,8 +43,11 @@ public final class CommonConstants {
 	/** The name of the User-Agent HTTP header. */
 	public static final String USER_AGENT_HDR = "User-Agent";
 
-	/** The name of the Post-Id HTTP header. */
-	public static final String POSTID_HDR = "Post-Id";
+	/** The name of the X-Post-Id HTTP header. */
+	public static final String POSTID_HDR = "X-Post-Id";
+
+	/** The name of the X-Error HTTP header. */
+	public static final String ERROR_HDR = "X-Error";
 
 	/** The If-Modified-Since header name. */
 	public static final String IF_MODIFIED_SINCE_HDR = "If-Modified-Since";

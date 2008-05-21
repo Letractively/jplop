@@ -72,6 +72,8 @@ public final class RegisterServlet extends HttpServlet {
 		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (currentUser != null) {
 			m_logger.warn("The user '" + currentUser.getLogin() + "' tried to logon but he is already authenticated.");
+			p_response.setStatus(HttpServletResponse.SC_CONFLICT);
+			p_response.addHeader(CommonConstants.ERROR_HDR, "Already authenticated");
 			getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 			currentUser = null;
 			return;
@@ -81,25 +83,31 @@ public final class RegisterServlet extends HttpServlet {
 		if (users != null) {
 			// Check the parameters are all there
 			String username = p_request.getParameter(CommonConstants.LOGIN_PARAM);
-			if (username == null) {
-				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' is null.");
+			if (username == null || username.trim().length() == 0) {
+				m_logger.warn("The '" + CommonConstants.LOGIN_PARAM + "' is null or empty.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le login est obligatoire.");
+				p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Missing " + CommonConstants.LOGIN_PARAM + " parameter");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
 
 			String password = p_request.getParameter(CommonConstants.PASSWORD_PARAM);
-			if (password == null) {
-				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' is null.");
+			if (password == null || password.length() == 0) {
+				m_logger.warn("The '" + CommonConstants.PASSWORD_PARAM + "' is null or empty.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe est obligatoire.");
+				p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Missing " + CommonConstants.PASSWORD_PARAM + " parameter");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
 
 			String confirm  = p_request.getParameter(CommonConstants.PASSWORD_CONFIRM_PARAM);
-			if (confirm == null) {
-				m_logger.warn("The '" + CommonConstants.PASSWORD_CONFIRM_PARAM + "' is null.");
+			if (confirm == null || confirm.length() == 0) {
+				m_logger.warn("The '" + CommonConstants.PASSWORD_CONFIRM_PARAM + "' is null or empty.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "La confirmation du mot de passe est obligatoire.");
+				p_response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Missing " + CommonConstants.PASSWORD_CONFIRM_PARAM + " parameter");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
@@ -111,6 +119,8 @@ public final class RegisterServlet extends HttpServlet {
 			if (!password.equals(confirm)) {
 				m_logger.warn("The password and confirmation for user '" + username + "' don't match.");
 				p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe et sa confirmation ne correspondent pas, veuillez réessayer.");
+				p_response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				p_response.addHeader(CommonConstants.ERROR_HDR, "Password confirmation failed");
 				getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 				return;
 			}
@@ -120,6 +130,8 @@ public final class RegisterServlet extends HttpServlet {
 				if (users.containsUser(username)) {
 					m_logger.warn("There is already an account for user '" + username + "'.");
 					p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le compte \"" + username + "\" existe déjà, veuillez choisir un autre login.");
+					p_response.setStatus(HttpServletResponse.SC_CONFLICT);
+					p_response.addHeader(CommonConstants.ERROR_HDR, "Account already exists");
 					getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 					return;
 				}
@@ -134,6 +146,8 @@ public final class RegisterServlet extends HttpServlet {
 					user = null;
 					m_logger.warn("Could not create the user '" + username + "' : " + e.getMessage());
 					p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "Le mot de passe ne correspond pas aux critères exigés.");
+					p_response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					p_response.addHeader(CommonConstants.ERROR_HDR, "Invalid password");
 					getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 					return;
 				}
@@ -141,6 +155,7 @@ public final class RegisterServlet extends HttpServlet {
 				// Add the user
 				users.addUser(user);
 				p_request.getSession().setAttribute(CommonConstants.USER_SESSION_ATTR, user);
+				p_response.setStatus(HttpServletResponse.SC_CREATED);
 				getServletContext().getRequestDispatcher(SUCCESS_PAGE).forward(p_request, p_response);
 				return;
 			}
@@ -148,6 +163,8 @@ public final class RegisterServlet extends HttpServlet {
 
 		m_logger.warn("There is no user base.");
 		p_request.setAttribute(CommonConstants.ERROR_REQUEST_ATTR, "La création de compte n'est pas possible.");
+		p_response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+		p_response.addHeader(CommonConstants.ERROR_HDR, "Account management disabled");
 		getServletContext().getRequestDispatcher(FAILURE_PAGE).forward(p_request, p_response);
 	}
 }

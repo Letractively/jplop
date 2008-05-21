@@ -66,6 +66,7 @@ public final class PostServlet extends HttpServlet {
 		if (message == null) {
 			m_logger.info("No message parameter, skipping...");
 			p_response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+			p_response.addHeader(CommonConstants.ERROR_HDR, "No message parameter");
 			return;
 		}
 		
