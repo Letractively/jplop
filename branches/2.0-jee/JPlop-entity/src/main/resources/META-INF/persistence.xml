@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<persistence>
+	<persistence-unit name="jplop-board">
+		<jta-data-source>jdbc/jplopDS</jta-data-source>
+		<properties>
+			<property name="toplink.ddl-generation" value="drop-and-create-tables"/>
+			<property name="toplink.target-database" value="oracle.toplink.essentials.platform.database.DerbyPlatform"/>
+		</properties>
+	</persistence-unit>
+</persistence>

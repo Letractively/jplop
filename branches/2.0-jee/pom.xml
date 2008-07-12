@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tifauv</groupId>
+	<artifactId>jplop</artifactId>
+	<version>1.90-SNAPSHOT</version>
+	<description>The parent package of JPlop</description>
+	<packaging>pom</packaging>
+	<!-- <url>http://maven.apache.org</url> -->
+
+	<modules>
+		<module>JPlop-exceptions</module>
+		<module>JPlop-entity</module>
+		<module>JPlop-stateless</module>
+		<module>JPlop-web</module>
+		<module>JPlop-ear</module>
+	</modules>
+</project>

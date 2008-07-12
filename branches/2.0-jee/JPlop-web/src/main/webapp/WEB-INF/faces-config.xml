@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<managed-bean>
+	<managed-bean-name>history</managed-bean-name>
+	<managed-bean-class>tifauv.jplop.controller.HistoryController</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
