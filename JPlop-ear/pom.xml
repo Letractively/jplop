@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tifauv.jplop</groupId>
+	<artifactId>ear</artifactId>
+	<version>1.90-SNAPSHOT</version>
+	<description>The application package of JPlop</description>
+	<packaging>ear</packaging>
+	<!-- <url>http://maven.apache.org</url> -->
+
+        <parent>
+		<groupId>tifauv</groupId>
+		<artifactId>jplop</artifactId>
+		<version>1.90-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>tifauv.jplop</groupId>
+			<artifactId>exceptions</artifactId>
+			<version>1.90-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>tifauv.jplop</groupId>
+			<artifactId>entity</artifactId>
+			<version>1.90-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>tifauv.jplop</groupId>
+			<artifactId>stateless</artifactId>
+			<version>1.90-SNAPSHOT</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>tifauv.jplop</groupId>
+			<artifactId>web</artifactId>
+			<version>1.90-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+                <finalName>jplop-${artifactId}-${version}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<modules>
+						<jarModule>
+							<groupId>tifauv.jplop</groupId>
+							<artifactId>exceptions</artifactId>
+						</jarModule>
+						<jarModule>
+							<groupId>tifauv.jplop</groupId>
+							<artifactId>entity</artifactId>
+						</jarModule>
+						<ejbModule>
+							<groupId>tifauv.jplop</groupId>
+							<artifactId>stateless</artifactId>
+						</ejbModule>
+						<webModule>
+							<groupId>tifauv.jplop</groupId>
+							<artifactId>web</artifactId>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
