@@ -41,7 +41,7 @@ public class AccountBean implements AccountLocal {
 	@Override
 	public Account createUser(Account p_user, String p_login, String p_password) {
 		p_user.setLogin(p_login);
-		p_user.hashPassword(p_password);
+		p_user.setPassword(p_password);
 		m_entities.persist(p_user);
 		return p_user;
 	}
@@ -66,7 +66,7 @@ public class AccountBean implements AccountLocal {
 		query.setParameter("login", p_login);
 		Account user = (Account)query.getSingleResult();
 		
-		if (user != null && !user.matchPassword(p_password))
+		if (user != null && !user.getPassword().matchPassword(p_password))
 			user = null;
 		
 		return user;
@@ -163,7 +163,7 @@ public class AccountBean implements AccountLocal {
 		if (p_password == null)
 			throw new ValidationException("");
 		
-		p_user.hashPassword(p_password);
+		p_user.setPassword(p_password);
 		m_entities.merge(p_user);
 		return p_user;
 	}

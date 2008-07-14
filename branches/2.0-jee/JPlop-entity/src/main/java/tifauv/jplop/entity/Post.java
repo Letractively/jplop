@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
  * @author Olivier Serve <tifauv@gmail.com>
  */
 @Entity
-public final class Post implements Serializable {
+public class Post implements Serializable {
 
 	// CONSTANTS \\
 	/** The serialization id. */
