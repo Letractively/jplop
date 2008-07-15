@@ -62,7 +62,7 @@ public class Post implements Serializable {
 
 	/** The post's author. */
 	@ManyToOne
-	@JoinColumn(name="author_id")
+	@JoinColumn(name="post_id")
 	private Account m_author;
 
 

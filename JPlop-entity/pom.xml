@@ -4,15 +4,16 @@
 	<groupId>tifauv.jplop</groupId>
 	<artifactId>entity</artifactId>
 	<version>1.90-SNAPSHOT</version>
+	<name>JPlop persistence entities</name>
 	<description>Persistence layer of JPlop</description>
 	<packaging>jar</packaging>
 	<!-- <url>http://maven.apache.org</url> -->
 
-        <parent>
+	<parent>
 		<groupId>tifauv</groupId>
 		<artifactId>jplop</artifactId>
 		<version>1.90-SNAPSHOT</version>
-        </parent>
+	</parent>
 
 	<dependencies>
 		<dependency>
@@ -34,7 +35,7 @@
 	</dependencies>
 
 	<build>
-                <finalName>jplop-${artifactId}-${version}</finalName>
+		<finalName>jplop-${pom.artifactId}-${pom.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

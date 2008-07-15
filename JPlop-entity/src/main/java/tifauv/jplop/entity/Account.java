@@ -15,6 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -176,6 +179,19 @@ public class Account implements Serializable {
 
 		if (getPassword() == null)
 			throw new ValidationException("The user password cannot be null");
+	}
+	
+	
+	/**
+	 * Prepares the password by decoding its salt and hash parts.
+	 * Those parts will be used to match the user's value.
+	 */
+	@PostLoad
+	@PostPersist
+	@PostUpdate
+	protected void preparePassword() {
+		if (getPassword() != null)
+			getPassword().extractPassword();
 	}
 
 	

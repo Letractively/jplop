@@ -48,12 +48,7 @@ public class Password implements Serializable {
 	/** The password hash. */
 	@Transient
 	private byte[] m_hash;
-
-	public Password() {
-		super();
-	}
    
-	
 	
 	// GETTERS \\
 	/**
@@ -111,10 +106,7 @@ public class Password implements Serializable {
 	/**
 	 * Extracts the password salt and hash.
 	 */
-	@PostLoad
-	@PostPersist
-	@PostUpdate
-	public void explodePassword() {
+	protected void extractPassword() {
 		if (getPassword().startsWith(SSHA_PREFIX)) {
 			try {
 				// Decoding to ASCII is sufficient because of the Base64 alphabet
@@ -176,7 +168,7 @@ public class Password implements Serializable {
 	 * @param p_password
 	 *            the cleartext password
 	 */
-	public void hashPassword(String p_password) {
+	protected void hashPassword(String p_password) {
 		try {
 			byte[] salt = generateSalt();
 			byte[] hash = hashPassword(salt, p_password);
