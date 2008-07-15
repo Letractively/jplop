@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<managed-bean>
-	<managed-bean-name>history</managed-bean-name>
-	<managed-bean-class>tifauv.jplop.controller.HistoryController</managed-bean-class>
-	<managed-bean-scope>session</managed-bean-scope>
-</managed-bean>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN" "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<managed-bean>
+		<managed-bean-name>history</managed-bean-name>
+		<managed-bean-class>tifauv.jplop.controller.HistoryController</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>account</managed-bean-name>
+		<managed-bean-class>tifauv.jplop.controller.AccountController</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>logon</from-outcome>
+			<to-view-id>/logon.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/logout.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>showAccount</from-outcome>
+			<to-view-id>/account.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/logon.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>user.logged.in</from-outcome>
+			<to-view-id>/index.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>account.created</from-outcome>
+			<to-view-id>/index.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

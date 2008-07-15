@@ -1,0 +1,33 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/core"      prefix="f" %>
+<%@ taglib uri="http://java.sun.com/jsf/html"      prefix="h" %>
+
+<f:subview id="header">
+    <h:form>
+        <div id="header">
+			<h1>JPlop - Da JEE board</h1>
+			<div class="links">
+				<a href="board.jsp" title="Je veux ploper !">Tribune</a>
+				::
+				<a href="config.jsp" title="Configuration pour les coincoins">Coincoins</a>
+				::
+				<c:choose>
+					<c:when test="${empty sessionScope.account}">
+						<h:commandLink action="logon">
+							<h:outputText value="Entrer"/>
+						</h:commandLink>
+					</c:when>
+					<c:otherwise>
+						<h:commandLink action="showAccount">
+							<h:outputText value="Mon compte"/>
+						</h:commandLink>
+						::
+						<h:commandLink action="#{account.doLogout}">
+							<h:outputText value="Sortir"/>
+						</h:commandLink>
+					</c:otherwise>
+				</c:choose>
+			</div>
+        </div>
+    </h:form>
+</f:subview>
