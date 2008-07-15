@@ -4,6 +4,7 @@
 	<groupId>tifauv.jplop</groupId>
 	<artifactId>exceptions</artifactId>
 	<version>1.90-SNAPSHOT</version>
+	<name>JPlop exceptions</name>
 	<description>Exceptions of JPlop</description>
 	<packaging>jar</packaging>
 	<!-- <url>http://maven.apache.org</url> -->
@@ -15,7 +16,7 @@
 	</parent>
 
 	<build>
-		<finalName>jplop-${artifactId}-${version}</finalName>
+		<finalName>jplop-${pom.artifactId}-${pom.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
