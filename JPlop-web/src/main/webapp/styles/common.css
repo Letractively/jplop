@@ -1,0 +1,88 @@
+/***** The whole page *****/
+BODY {
+	margin: 0;
+	text-align: center;
+	font-family: sans-serif;
+}
+
+
+/***** The title *****/
+#header {
+	font-family: serif;
+	background-color: #326495;
+	background-image: url('../images/coincoin.png');
+	border-bottom: 0.2em solid #0c3762;
+	color: #ffffff;
+}
+
+#header H1 {
+	text-align: center;
+	margin: 0;
+}
+
+
+/***** The header *****/
+#header .links {
+	font-family: sans-serif;
+	font-size: small;
+	font-style: italic;
+	text-align: right;
+}
+
+#header .links :link, #header .links :visited {
+	color: #fb9200;
+}
+
+
+/***** Other titles *****/
+H2, H3, H4, H5, H6 {
+	text-align: left;
+}
+
+
+/***** The links *****/
+:link, :visited {
+	color: #336698;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #43ae39;
+	text-decoration: underline;
+}
+
+
+/***** The messages *****/
+.message {
+	text-align: center;
+	width: 70%;
+	margin-top: 1em;
+	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	font-weight: bold;
+	padding: 0.2em;
+}
+.welcome {
+	color: #000033;
+	background-color: #d0e0f5;
+	border: 1px solid #000066;
+}
+.error {
+	color: #330000;
+	background-color: #f59999;
+	border: 1px solid #660000;
+}
+
+/***** The footer *****/
+HR {
+	width: 80%;
+}
+
+#footer {
+	font-size: small;
+	text-align: center;
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
