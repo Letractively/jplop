@@ -62,7 +62,7 @@ public class AccountBean implements AccountLocal {
 		if (p_login == null || p_login.isEmpty())
 			throw new ValidationException("The login must not be null or empty");
 		
-		Query query = m_entities.createQuery("SELECT u FROM User u WHERE u.login=:login");
+		Query query = m_entities.createQuery("SELECT a FROM Account a WHERE a.login=:login");
 		query.setParameter("login", p_login);
 		Account user = (Account)query.getSingleResult();
 		
@@ -146,23 +146,29 @@ public class AccountBean implements AccountLocal {
 	
 
 	/**
-	 * Changes a user's password.
+	 * Updates a user.
 	 * 
 	 * @param p_user
 	 *            the user
+	 * @param p_password
+	 *            the new login
 	 * @param p_password
 	 *            the new password
 	 * 
 	 * @return the updated user
 	 */
 	@Override
-	public Account changePassword(Account p_user, String p_password) {
+	public Account update(Account p_user, String p_login, String p_password) {
 		if (p_user == null)
+			throw new ValidationException("");
+
+		if (p_login == null)
 			throw new ValidationException("");
 
 		if (p_password == null)
 			throw new ValidationException("");
 		
+		p_user.setLogin(p_login);
 		p_user.setPassword(p_password);
 		m_entities.merge(p_user);
 		return p_user;
