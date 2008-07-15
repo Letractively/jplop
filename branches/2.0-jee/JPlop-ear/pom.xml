@@ -4,11 +4,12 @@
 	<groupId>tifauv.jplop</groupId>
 	<artifactId>ear</artifactId>
 	<version>1.90-SNAPSHOT</version>
+	<name>JPlop application package</name>
 	<description>The application package of JPlop</description>
 	<packaging>ear</packaging>
 	<!-- <url>http://maven.apache.org</url> -->
 
-        <parent>
+	<parent>
 		<groupId>tifauv</groupId>
 		<artifactId>jplop</artifactId>
 		<version>1.90-SNAPSHOT</version>
@@ -42,11 +43,12 @@
 	</dependencies>
 
 	<build>
-                <finalName>jplop-${artifactId}-${version}</finalName>
+		<finalName>jplop-${pom.artifactId}-${pom.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
+					<defaultLibBundleDir>/lib</defaultLibBundleDir>
 					<modules>
 						<jarModule>
 							<groupId>tifauv.jplop</groupId>
@@ -63,6 +65,7 @@
 						<webModule>
 							<groupId>tifauv.jplop</groupId>
 							<artifactId>web</artifactId>
+							<contextRoot>jplop</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>
