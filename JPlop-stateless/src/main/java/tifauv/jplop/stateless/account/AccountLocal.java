@@ -90,12 +90,14 @@ public interface AccountLocal {
 	 * 
 	 * @param p_user
 	 *            the user
+	 * @param p_login
+	 *            the new login
 	 * @param p_password
 	 *            the new password
 	 * 
 	 * @return the updated user
 	 */
-	Account changePassword(Account p_user, String p_password);
+	Account update(Account p_user, String p_login, String p_password);
 	
 	
 	/**
