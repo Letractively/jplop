@@ -5,23 +5,40 @@ package tifauv.jplop.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import tifauv.jplop.exceptions.ValidationException;
+
+/**
+ * These are the queries used to manage the Account entities.
+ */
+@NamedQueries({
+	
+	/**
+	 * Finds an account by the user's login.
+	 * 
+	 * @param login
+	 *            the user login
+	 * 
+	 * @return the account (or <tt>null</tt>)
+	 */
+	@NamedQuery (
+			name="findAccountByLogin",
+			query="SELECT a FROM Account a WHERE a.m_login = :login"
+	)
+})
+
 
 /**
  * This is a user account.
@@ -53,26 +70,13 @@ public class Account implements Serializable {
 	private String m_login;
 	
 	/** The user password. */
-	@Embedded
-	private Password m_password;
-   
-	/** The user roles. */
-	@OneToMany
-	private Set<Role> m_roles;
+	@Column(name="password", nullable=false)
+	private String m_password;
 	
 	/** The user's posts. */
 	@OneToMany(mappedBy="m_author")
 	@JoinColumn(name="account_id")
 	private List<Post> m_posts;
-	
-	
-	// CONSTRUCTORS \\
-	/**
-	 * Default constructor.
-	 */
-	public Account() {
-		m_password = new Password();
-	}
 	
 	
 	// GETTERS \\
@@ -95,21 +99,8 @@ public class Account implements Serializable {
 	/**
 	 * Gives the user password.
 	 */
-	public Password getPassword() {
+	public String getPassword() {
 		return m_password;
-	}
-	
-	
-	/**
-	 * Tells whether the user has the given role.
-	 * 
-	 * @param p_role
-	 *            the role 
-	 * 
-	 * @return <tt>true</tt> iff the user has the given role
-	 */
-	public boolean hasRole(Role p_role) {
-		return m_roles.contains(p_role);
 	}
 	
 	
@@ -130,39 +121,11 @@ public class Account implements Serializable {
 	}
 	
 	
-	public void setPassword(String p_password) {
-		if (m_password == null)
-			m_password = new Password();
-		m_password.hashPassword(p_password);
-	}
-	
 	/**
 	 * Sets the user's password.
 	 */
-	public void setPassword(Password p_password) {
+	public void setPassword(String p_password) {
 		m_password = p_password;
-	}
-	
-	
-	/**
-	 * Adds a role to the user.
-	 * 
-	 * @param p_role
-	 *            the role to add
-	 */
-	public void addRole(Role p_role) {
-		m_roles.add(p_role);
-	}
-	
-	
-	/**
-	 * Removes a role from the user.
-	 * 
-	 * @param p_role
-	 *            the role to remove
-	 */
-	public void removeRole(Role p_role) {
-		m_roles.remove(p_role);
 	}
 	
 	
@@ -179,19 +142,6 @@ public class Account implements Serializable {
 
 		if (getPassword() == null)
 			throw new ValidationException("The user password cannot be null");
-	}
-	
-	
-	/**
-	 * Prepares the password by decoding its salt and hash parts.
-	 * Those parts will be used to match the user's value.
-	 */
-	@PostLoad
-	@PostPersist
-	@PostUpdate
-	protected void preparePassword() {
-		if (getPassword() != null)
-			getPassword().extractPassword();
 	}
 
 	

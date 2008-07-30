@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en">
+	<body>
+		<wicket:panel>
+			<h1>
+				<span wicket:id="name"/> - <span wicket:id="title"/>
+			</h1>
+			<div class="links">
+				<a wicket:id="board"    title="Je veux ploper !">Tribune</a>
+				::
+				<a wicket:id="config"   title="Configuration pour les coincoins">Coincoins</a>
+				::
+				<wicket:enclosure child="logon">
+					<a wicket:id="register" title="Je veux un compte">Cr&eacute;er un compte</a>
+					::
+					<a wicket:id="logon"    title="Authentifiez-vous">Entrer</a>
+				</wicket:enclosure>
+				<wicket:enclosure child="logout">
+					<a wicket:id="account"  title="Mon compte">Mon compte</a>
+					::
+					<a wicket:id="logout"   title="Au revoir !">Sortir</a>
+				</wicket:enclosure>
+			</div>
+		</wicket:panel>
+	</body>
+</html>

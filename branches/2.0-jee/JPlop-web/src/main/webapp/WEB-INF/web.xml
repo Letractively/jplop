@@ -3,22 +3,65 @@
 
 	<display-name>JPlop board</display-name>
 
-	<!-- Faces servlet -->
-	<servlet>
-		<servlet-name>Faces servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<!-- Faces servlet mapping -->
-	<servlet-mapping>
-		<servlet-name>Faces servlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Welcome page -->
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
+	<!-- Wicket configuration -->
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>development</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>WebApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>tifauv.jplop.web.JPlopApplication</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>WebApplication</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Security restrictions -->
+<!--	<security-constraint>
+		<display-name>Constraint name</display-name>
+		<web-resource-collection>
+			<web-resource-name>Logon page</web-resource-name>
+			<url-pattern>/logon</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>-->
+
+	<!-- Login configuration -->
+<!--	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>jplop-realm</realm-name>
+		<form-login-config>
+			<form-login-page>/logon</form-login-page>
+			<form-error-page>/</form-error-page>
+		</form-login-config>
+	</login-config>-->
+
+	<!-- EJB references -->
+	<ejb-local-ref>
+        <ejb-ref-name>ejb/stateless/Account</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>tifauv.jplop.ejb.account.AccountLocal</local>
+    </ejb-local-ref>
+<!--	<ejb-local-ref>
+        <ejb-ref-name>ejb/stateless/role</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>tifauv.jplop.stateless.role.RoleLocal</local>
+    </ejb-local-ref>
+	<ejb-local-ref>
+        <ejb-ref-name>ejb/stateless/post</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>tifauv.jplop.stateless.post.PostLocal</local>
+    </ejb-local-ref> -->
 
 </web-app>

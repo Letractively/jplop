@@ -4,14 +4,15 @@
 	<groupId>tifauv</groupId>
 	<artifactId>jplop</artifactId>
 	<version>1.90-SNAPSHOT</version>
+	<name>JPlop</name>
 	<description>The parent package of JPlop</description>
 	<packaging>pom</packaging>
 	<!-- <url>http://maven.apache.org</url> -->
 
 	<modules>
-		<module>JPlop-exceptions</module>
+		<module>JPlop-common</module>
 		<module>JPlop-entity</module>
-		<module>JPlop-stateless</module>
+		<module>JPlop-ejb</module>
 		<module>JPlop-web</module>
 		<module>JPlop-ear</module>
 	</modules>

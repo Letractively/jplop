@@ -13,8 +13,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+/**
+ * 
+ */
+@NamedQueries({
+	
+	/**
+	 * Finds an post by its clock and rank.
+	 */
+	@NamedQuery (
+			name="findPostByClockAndRank",
+			query="SELECT p FROM Post p WHERE p.m_time=:time AND p.m_rank=:rank"
+	)
+})
+
+
+
 
 /**
  * A post has the following elements:

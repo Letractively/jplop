@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>tifauv.jplop</groupId>
-	<artifactId>jplop-entity</artifactId>
+	<artifactId>jplop-ejb</artifactId>
 	<version>1.90-SNAPSHOT</version>
-	<name>JPlop persistence entities</name>
-	<description>The persistence layer of JPlop</description>
-	<packaging>jar</packaging>
+	<name>JPlop stateless ejbs</name>
+	<description>The stateless EJB layer of JPlop</description>
+	<packaging>ejb</packaging>
 	<!-- <url>http://maven.apache.org</url> -->
 
 	<parent>
@@ -24,6 +24,12 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<ejbVersion>3.0</ejbVersion>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -34,15 +40,21 @@
 			<version>1.90-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>tifauv.jplop</groupId>
+			<artifactId>jplop-entity</artifactId>
+			<version>1.90-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.3</version>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
