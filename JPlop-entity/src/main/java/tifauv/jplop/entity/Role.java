@@ -37,9 +37,13 @@ public class Role implements Serializable {
 	@Column(name="id")
 	private int m_id;
 	
+	/** The user login. */
+	@Column(name="login", nullable=false)
+	private String m_login;
+	
 	/** The role name. */
-	@Column(name="name", nullable=false)
-	private String m_name;
+	@Column(name="role", nullable=false)
+	private String m_role;
 	
 	
 	// GETTERS \\
@@ -52,19 +56,35 @@ public class Role implements Serializable {
 	
 	
 	/**
+	 * Gives the user login.
+	 */
+	public String getLogin() {
+		return m_login;
+	}
+	
+	
+	/**
 	 * Gives the role name.
 	 */
-	public String getName() {
-		return m_name;
+	public String getRole() {
+		return m_role;
 	}
 
 	
 	// SETTERS \\
 	/**
+	 * Sets the user login.
+	 */
+	public void setLogin(String p_login) {
+		m_login = p_login;
+	}
+
+	
+	/**
 	 * Sets the role name.
 	 */
-	public void setName(String p_name) {
-		m_name = p_name;
+	public void setRole(String p_role) {
+		m_role = p_role;
 	}
 	
 	
@@ -76,7 +96,10 @@ public class Role implements Serializable {
 	@PrePersist
 	@PreUpdate
 	protected void validateData() {
-		if (getName() == null || getName().trim().isEmpty())
+		if (getLogin() == null || getLogin().trim().isEmpty())
+			throw new ValidationException("The user login cannot be null or empty");
+
+		if (getRole() == null || getRole().trim().isEmpty())
 			throw new ValidationException("The role name cannot be null or empty");
 	}
 
@@ -94,11 +117,11 @@ public class Role implements Serializable {
 	
 	
 	/**
-	 * Returns the following string "<name>".
+	 * Returns the following string "<role>:<login>".
 	 */
 	@Override
 	public String toString() {
-		return getName();
+		return getRole() + ':' + getLogin();
 	}
 	
 	

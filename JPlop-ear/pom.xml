@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>tifauv.jplop</groupId>
-	<artifactId>ear</artifactId>
+	<artifactId>jplop-ear</artifactId>
 	<version>1.90-SNAPSHOT</version>
 	<name>JPlop application package</name>
 	<description>The application package of JPlop</description>
@@ -18,32 +18,31 @@
 	<dependencies>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
-			<artifactId>exceptions</artifactId>
+			<artifactId>jplop-common</artifactId>
 			<version>1.90-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
-			<artifactId>entity</artifactId>
+			<artifactId>jplop-entity</artifactId>
 			<version>1.90-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
-			<artifactId>stateless</artifactId>
+			<artifactId>jplop-ejb</artifactId>
 			<version>1.90-SNAPSHOT</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
-			<artifactId>web</artifactId>
+			<artifactId>jplop-web</artifactId>
 			<version>1.90-SNAPSHOT</version>
 			<type>war</type>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>jplop-${pom.artifactId}-${pom.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
@@ -52,19 +51,19 @@
 					<modules>
 						<jarModule>
 							<groupId>tifauv.jplop</groupId>
-							<artifactId>exceptions</artifactId>
+							<artifactId>jplop-common</artifactId>
 						</jarModule>
 						<jarModule>
 							<groupId>tifauv.jplop</groupId>
-							<artifactId>entity</artifactId>
+							<artifactId>jplop-entity</artifactId>
 						</jarModule>
 						<ejbModule>
 							<groupId>tifauv.jplop</groupId>
-							<artifactId>stateless</artifactId>
+							<artifactId>jplop-ejb</artifactId>
 						</ejbModule>
 						<webModule>
 							<groupId>tifauv.jplop</groupId>
-							<artifactId>web</artifactId>
+							<artifactId>jplop-web</artifactId>
 							<contextRoot>jplop</contextRoot>
 						</webModule>
 					</modules>
