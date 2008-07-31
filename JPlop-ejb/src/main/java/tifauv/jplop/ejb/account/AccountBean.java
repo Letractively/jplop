@@ -141,12 +141,10 @@ public class AccountBean implements AccountLocal {
 
 		if (p_login == null)
 			throw new ValidationException("Cannot update an account with a non-existent login");
-
-		if (p_password == null)
-			throw new ValidationException("Cannot update an account with a non-existent password");
 		
 		p_user.setLogin(p_login);
-		p_user.setPassword(p_password);
+		if (p_password != null && !p_password.isEmpty())
+			p_user.setPassword(p_password);
 		m_entities.merge(p_user);
 		return p_user;
 	}
