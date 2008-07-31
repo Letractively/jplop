@@ -1,7 +1,7 @@
 /**
  * 29 juil. 08
  */
-package tifauv.jplop.web.components.account;
+package tifauv.jplop.web.models;
 
 import java.io.Serializable;
 
@@ -70,12 +70,6 @@ public final class AccountModel implements Serializable {
 	throws ValidationException {
 		if (getLogin() == null || getLogin().isEmpty())
 			throw new ValidationException("The login cannot be empty");
-		
-		if (getPassword() == null || getPassword().isEmpty())
-			throw new ValidationException("The password cannot be empty");
-		
-		if (getConfirm() == null || getConfirm().isEmpty())
-			throw new ValidationException("The password confirmation cannot be empty");
 		
 		if (!getPassword().equals(getConfirm()))
 			throw new ValidationException("The password must match its confirmation");
