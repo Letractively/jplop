@@ -23,29 +23,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- Security restrictions -->
-<!--	<security-constraint>
-		<display-name>Constraint name</display-name>
-		<web-resource-collection>
-			<web-resource-name>Logon page</web-resource-name>
-			<url-pattern>/logon</url-pattern>
-			<http-method>GET</http-method>
-			<http-method>POST</http-method>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>*</role-name>
-		</auth-constraint>
-	</security-constraint>-->
-
-	<!-- Login configuration -->
-<!--	<login-config>
-		<auth-method>FORM</auth-method>
-		<realm-name>jplop-realm</realm-name>
-		<form-login-config>
-			<form-login-page>/logon</form-login-page>
-			<form-error-page>/</form-error-page>
-		</form-login-config>
-	</login-config>-->
 
 	<!-- EJB references -->
 	<ejb-local-ref>
@@ -53,15 +30,15 @@
         <ejb-ref-type>Session</ejb-ref-type>
         <local>tifauv.jplop.ejb.account.AccountLocal</local>
     </ejb-local-ref>
-<!--	<ejb-local-ref>
-        <ejb-ref-name>ejb/stateless/role</ejb-ref-name>
+	<ejb-local-ref>
+        <ejb-ref-name>ejb/stateless/Role</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <local>tifauv.jplop.stateless.role.RoleLocal</local>
+        <local>tifauv.jplop.ejb.role.RoleLocal</local>
     </ejb-local-ref>
 	<ejb-local-ref>
-        <ejb-ref-name>ejb/stateless/post</ejb-ref-name>
+        <ejb-ref-name>ejb/stateless/History</ejb-ref-name>
         <ejb-ref-type>Session</ejb-ref-type>
-        <local>tifauv.jplop.stateless.post.PostLocal</local>
-    </ejb-local-ref> -->
+        <local>tifauv.jplop.ejb.history.HistoryLocal</local>
+    </ejb-local-ref>
 
 </web-app>
