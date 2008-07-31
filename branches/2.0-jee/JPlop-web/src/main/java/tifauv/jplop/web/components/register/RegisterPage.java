@@ -5,9 +5,9 @@ package tifauv.jplop.web.components.register;
 
 import org.apache.wicket.markup.html.WebPage;
 
-import tifauv.jplop.web.components.account.AccountModel;
 import tifauv.jplop.web.components.footer.FooterPanel;
 import tifauv.jplop.web.components.header.HeaderPanel;
+import tifauv.jplop.web.models.AccountModel;
 
 /**
  * This page manages the user registration.

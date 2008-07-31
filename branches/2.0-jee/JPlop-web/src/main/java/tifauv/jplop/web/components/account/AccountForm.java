@@ -1,7 +1,7 @@
 /**
- * 28 juil. 08
+ * 31 juil. 08
  */
-package tifauv.jplop.web.components.register;
+package tifauv.jplop.web.components.account;
 
 import javax.ejb.EJB;
 
@@ -12,24 +12,23 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 import tifauv.jplop.ejb.account.AccountLocal;
-import tifauv.jplop.entity.Account;
 import tifauv.jplop.utils.PasswordUtils;
 import tifauv.jplop.web.JPlopSession;
-import tifauv.jplop.web.components.account.AccountPage;
+import tifauv.jplop.web.components.board.BoardPage;
 import tifauv.jplop.web.models.AccountModel;
 
 /**
- * This is the account registration form.
+ * This is the account edition form.
  *
  * @author Olivier Serve <tifauv@gmail.com>
  *
  * @version 1.0
  */
-public class RegisterForm extends Form {
+public class AccountForm extends Form {
 
 	// CONSTANTS \\
 	/** The serialization id. */
-	private static final long serialVersionUID = 2502959180024187180L;
+	private static final long serialVersionUID = 6824569790279063844L;
 
 	
 	// FIELDS \\
@@ -42,7 +41,7 @@ public class RegisterForm extends Form {
 	/**
 	 * Default constructor.
 	 */
-	public RegisterForm(String p_name, AccountModel p_account) {
+	public AccountForm(String p_name, AccountModel p_account) {
 		super(p_name, new CompoundPropertyModel(p_account));
 		add(new TextField("login"));
 		add(new PasswordTextField("password"));
@@ -59,9 +58,14 @@ public class RegisterForm extends Form {
 		AccountModel model = (AccountModel)getModel().getObject();
 		model.validate();
 		
-		Account user = m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
-		((JPlopSession)Session.get()).setAccount(user);
+		// Manage the password special case
+		String password = model.getPassword();
+		if (password != null && !password.isEmpty())
+			password = PasswordUtils.sha256B64(model.getPassword());
+		else
+			password = null;
+		m_accountBean.update(((JPlopSession)Session.get()).getAccount(), model.getLogin(), password);
 
-		setResponsePage(AccountPage.class);
+		setResponsePage(BoardPage.class);
 	}
 }
