@@ -31,6 +31,8 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	 */
 	@Override
 	protected void init() {
+		super.init();
+		
         // Security settings
         getApplicationSettings().setAccessDeniedPage(LogonPage.class);
         getSecuritySettings().setAuthorizationStrategy(IAuthorizationStrategy.ALLOW_ALL);

@@ -17,7 +17,7 @@ import tifauv.jplop.web.components.register.RegisterPage;
 
 /**
  * This is the header panel.
- * Is displays the board's name and title and the main navigation links.
+ * It displays the board's name and title and the main navigation links.
  *
  * @author Olivier Serve <tifauv@gmail.com>
  *
