@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import org.apache.wicket.Request;
 import org.apache.wicket.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.injection.web.InjectorHolder;
 
 import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.entity.Account;
@@ -36,9 +37,13 @@ public final class JPlopSession extends AuthenticatedWebSession {
 	// CONSTRUCTORS \\
 	/**
 	 * Default constructor.
+	 * 
+	 * @param p_request
+	 *            the initialization request
 	 */
 	public JPlopSession(Request p_request) {
 		super(p_request);
+		InjectorHolder.getInjector().inject(this);
 	}
 	
 	
