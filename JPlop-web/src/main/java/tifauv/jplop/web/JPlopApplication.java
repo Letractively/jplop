@@ -4,7 +4,9 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.authentication.AuthenticatedWebApplication;
-import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.authentication.AuthenticatedWebSession;
+import org.apache.wicket.authentication.pages.SignInPage;
+import org.apache.wicket.markup.html.WebPage;
 import org.wicketstuff.javaee.injection.JavaEEComponentInjector;
 
 import tifauv.jplop.web.components.about.AboutPage;
@@ -33,10 +35,6 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	protected void init() {
 		super.init();
 		
-        // Security settings
-        getApplicationSettings().setAccessDeniedPage(LogonPage.class);
-        getSecuritySettings().setAuthorizationStrategy(IAuthorizationStrategy.ALLOW_ALL);
-		
 		// Manage @EJB injection
 		addComponentInstantiationListener(new JavaEEComponentInjector(this));
 		
@@ -58,7 +56,7 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	 * Gives the Board page as home page.
 	 */
 	@Override
-	public Class<BoardPage> getHomePage() {
+	public Class<? extends WebPage> getHomePage() {
 		return BoardPage.class;
 	}
 	
@@ -67,7 +65,7 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	 * Gives the Logon page class.
 	 */
 	@Override
-	public Class<LogonPage> getSignInPageClass() {
+	public Class<? extends SignInPage> getSignInPageClass() {
 		return LogonPage.class;
 	}
 	
@@ -76,7 +74,7 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	 * Gives the session class.
 	 */
 	@Override
-	public Class<JPlopSession> getWebSessionClass() {
+	public Class<? extends AuthenticatedWebSession> getWebSessionClass() {
 		return JPlopSession.class;
 	}
 	
