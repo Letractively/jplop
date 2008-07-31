@@ -5,6 +5,7 @@ package tifauv.jplop.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,6 +79,10 @@ public class Account implements Serializable {
 	@JoinColumn(name="account_id")
 	private List<Post> m_posts;
 	
+	/** The user's roles. */
+	@OneToMany
+	private Set<Role> m_roles;
+	
 	
 	// GETTERS \\
 	/**
@@ -112,6 +117,27 @@ public class Account implements Serializable {
 	}
 	
 	
+	/**
+	 * Gives all the user's roles.
+	 */
+	public Set<Role> getRoles() {
+		return m_roles;
+	}
+	
+	
+	/**
+	 * Tells whether the user has the given role.
+	 * 
+	 * @param p_role
+	 *            the role to check
+	 * 
+	 * @return <tt>true</tt> iff the user has the given role
+	 */
+	public boolean hasRole(Role p_role) {
+		return getRoles().contains(p_role);
+	}
+	
+	
 	// SETTERS \\
 	/**
 	 * Sets the user's login.
@@ -130,6 +156,28 @@ public class Account implements Serializable {
 	
 	
 	// METHODS \\
+	/**
+	 * Adds a role to the user.
+	 * 
+	 * @param p_role
+	 *            the role to add
+	 */
+	public void addRole(Role p_role) {
+		getRoles().add(p_role);
+	}
+	
+	
+	/**
+	 * Removes a role from the user.
+	 * 
+	 * @param p_role
+	 *            the role to remove
+	 */
+	public void removeRole(Role p_role) {
+		getRoles().remove(p_role);
+	}
+	
+	
 	/**
 	 * Validates the data before storing the entity.
 	 * We just check that the login is not null or empty.
