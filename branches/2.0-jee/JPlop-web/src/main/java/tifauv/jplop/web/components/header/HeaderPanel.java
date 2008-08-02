@@ -52,8 +52,8 @@ public class HeaderPanel extends Panel {
 		// Links
 		add(new BookmarkablePageLink("board",    BoardPage.class));
 		add(new BookmarkablePageLink("config",   ConfigPage.class));
-		add(new BookmarkablePageLink("register", RegisterPage.class));
-		add(new BookmarkablePageLink("logon",    LogonPage.class) {
+		add(new BookmarkablePageLink("signup",   RegisterPage.class));
+		add(new BookmarkablePageLink("signin",   LogonPage.class) {
 			private static final long serialVersionUID = -1652492751770135649L;
 
 			@Override
@@ -61,7 +61,7 @@ public class HeaderPanel extends Panel {
 				return !((JPlopSession)getSession()).isSignedIn();
 			}});
 		add(new BookmarkablePageLink("account",  AccountPage.class));
-		add(new BookmarkablePageLink("logout",   LogoutPage.class) {
+		add(new BookmarkablePageLink("signout",  LogoutPage.class) {
 			private static final long serialVersionUID = -3491536600221055012L;
 
 			@Override

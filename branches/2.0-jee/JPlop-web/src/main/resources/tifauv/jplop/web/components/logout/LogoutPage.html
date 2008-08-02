@@ -3,11 +3,28 @@
 	<head>
 		<title>JPlop</title>
 		<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+		<script type="text/javascript">
+			var s_time = 0;
+			function countdown() {
+				document.getElementById("timer").value = s_time;
+				s_time = s_time - 1;
+				if (s_time >= 0)
+					var t = setTimeout("countdown()", 1000);
+				else {
+					document.location = "/jplop/";
+				}
+			}
+			function startCountdown(p_time) {
+				s_time = p_time;
+				countdown();
+			}
+		</script>
 	</head>
 	<body>
 		<div id="header" wicket:id="header"/>
 		
-		<h2>Logout</h2>
+		<div class="message">You are now logged out. You will be redirected in <form><input type="text" id="timer"/></form> seconds.</div>
+		<script type="text/javascript">startCountdown(3);</script>
 		
 		<div id="footer" wicket:id="footer"/>
 	</body>

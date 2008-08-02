@@ -46,9 +46,9 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 		mountBookmarkablePage("/account",  AccountPage.class);
 		mountBookmarkablePage("/board",    BoardPage.class);
 		mountBookmarkablePage("/config",   ConfigPage.class);
-		mountBookmarkablePage("/logon",    LogonPage.class);
-		mountBookmarkablePage("/logout",   LogoutPage.class);
-		mountBookmarkablePage("/register", RegisterPage.class);
+		mountBookmarkablePage("/signup",   RegisterPage.class);
+		mountBookmarkablePage("/signin",   LogonPage.class);
+		mountBookmarkablePage("/signout",  LogoutPage.class);
 	}
 	
 	

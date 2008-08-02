@@ -9,6 +9,7 @@ import org.apache.wicket.injection.web.InjectorHolder;
 
 import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.entity.Account;
+import tifauv.jplop.entity.Role;
 import tifauv.jplop.utils.PasswordUtils;
 
 /**
@@ -61,8 +62,12 @@ public final class JPlopSession extends AuthenticatedWebSession {
 	 */
 	@Override
 	public Roles getRoles() {
-		if (isSignedIn())
-			return new Roles("User");
+		if (isSignedIn()) {
+			Roles roles = new Roles();
+			for (Role role : getAccount().getRoles())
+				roles.add(role.getName());
+			return roles;
+		}
         return null;
 	}
 	
