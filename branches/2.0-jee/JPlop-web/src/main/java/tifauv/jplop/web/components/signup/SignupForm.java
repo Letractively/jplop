@@ -31,13 +31,13 @@ public class SignupForm extends Form {
 	/** The serialization id. */
 	private static final long serialVersionUID = 2502959180024187180L;
 
-	
+
 	// FIELDS \\
 	/** The Accounts manager bean. */
 	@EJB(name="ejb/stateless/Account")
 	private AccountLocal m_accountBean;
-	
-	
+
+
 	// CONSTRUCTORS \\
 	/**
 	 * Default constructor.
@@ -48,8 +48,8 @@ public class SignupForm extends Form {
 		add(new PasswordTextField("password"));
 		add(new PasswordTextField("confirm"));
 	}
-	
-	
+
+
 	// METHODS \\
 	/**
 	 * Called when the form is submitted.
@@ -58,9 +58,9 @@ public class SignupForm extends Form {
 	public void onSubmit() {
 		AccountModel model = (AccountModel)getModel().getObject();
 		model.validate();
-		
+
 		Account user = m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
-		((JPlopSession)Session.get()).setAccount(user);
+		((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
 
 		setResponsePage(AccountPage.class);
 	}
