@@ -9,8 +9,10 @@ import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import tifauv.jplop.exceptions.ValidationException;
 import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.entity.Account;
 import tifauv.jplop.utils.PasswordUtils;
@@ -44,9 +46,9 @@ public class SignupForm extends Form {
 	 */
 	public SignupForm(String p_name, AccountModel p_account) {
 		super(p_name, new CompoundPropertyModel(p_account));
-		add(new TextField("login"));
-		add(new PasswordTextField("password"));
-		add(new PasswordTextField("confirm"));
+		add(new TextField("login").setRequired(true));
+		add(new PasswordTextField("password").setRequired(true));
+		add(new PasswordTextField("confirm").setRequired(true));
 	}
 
 
@@ -56,12 +58,21 @@ public class SignupForm extends Form {
 	 */
 	@Override
 	public void onSubmit() {
-		AccountModel model = (AccountModel)getModel().getObject();
-		model.validate();
+		Class<? extends WebPage> responsePage = null;
 
-		Account user = m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
-		((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
+		try {
+			AccountModel model = (AccountModel)getModel().getObject();
+			model.validate();
 
-		setResponsePage(AccountPage.class);
+			Account user = m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
+			((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
+			responsePage = AccountPage.class;
+		} catch (ValidationException e) {
+			// Bad data : add feedback message
+		} catch (EJBException e) {
+			// Couldn't create the user
+		}
+
+		setResponsePage(null);
 	}
 }
