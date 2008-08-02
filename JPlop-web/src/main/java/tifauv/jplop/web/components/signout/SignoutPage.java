@@ -1,7 +1,7 @@
 /**
  * 27 juil. 08
  */
-package tifauv.jplop.web.components.logout;
+package tifauv.jplop.web.components.signout;
 
 import org.apache.wicket.authentication.pages.SignOutPage;
 
@@ -16,13 +16,13 @@ import tifauv.jplop.web.components.header.HeaderPanel;
  *
  * @version 1.0
  */
-public class LogoutPage extends SignOutPage {
+public class SignoutPage extends SignOutPage {
 
 	// CONSTRUCTORS \\
 	/**
 	 * Default constructor.
 	 */
-	public LogoutPage() {
+	public SignoutPage() {
 		add(new HeaderPanel("header"));
 		add(new FooterPanel("footer"));
 	}
