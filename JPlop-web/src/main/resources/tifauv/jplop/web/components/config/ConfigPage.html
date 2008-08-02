@@ -2,12 +2,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en">
 	<head>
 		<title>JPlop</title>
-		<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+		<link rel="stylesheet" type="text/css" href="styles/config.css"/>
 	</head>
 	<body>
 		<div id="header" wicket:id="header"/>
 		
-		<h2>Configuration</h2>
+		<h2>Configuration des coincoins</h2>
+		<div class="config">
+			<h3>Coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
+			<p>L'URL d'auto-configuration est <a href="discover"><span wicket:id="url-discover">http://localhost:8080/jplop/discover</span></a>.</p>
+			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
+			<pre class="cc-config">
+&lt;site name="<span wicket:id="site">JPlop</span>" title="<span wicket:id="title">JPlop</span>" baseurl="<span wicket:id="baseurl">http://localhost:8080/jplop</span>" version="1.0"&gt;
+	&lt;account&gt;
+		&lt;login method="post" path="/logon"&gt;
+			&lt;field name="login"&gt;$l&lt;/field&gt;
+			&lt;field name="password"&gt;$p&lt;/field&gt;
+		&lt;/login&gt;
+		&lt;logout method="get" path="/logout"/&gt;
+	&lt;/account&gt;
+	&lt;board name="board" title="Tribune"&gt;
+		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
+		&lt;post method="post" path="/post" anonymous="true" max_length="TODO"&gt;
+			&lt;field name="message"&gt;$m&lt;/field&gt;
+		&lt;/post&gt;
+	&lt;/board&gt;
+&lt;/site&gt;</pre>
+		</div>
+		
+		<div class="config">
+			<h3><a href="http://hules.free.fr/wmcoincoin" title="Le VRAI coincoin">wmcc</a></h3>
+			<p>Ajoutez les lignes suivantes dans le fichier <span class="file">.wmcoincoin/options</span> de votre dossier personnel&nbsp;:</p>
+			<pre class="cc-config">
+board_site:                "<span wicket:id="config-site">JPlop</span>"
+.backend_flavour:          2
+			<wicket:enclosure>
+.palmipede.userlogin:      <span wicket:id="config-login">login</span>
+			</wicket:enclosure>
+.backend.url:              <span wicket:id="url-backend">http://localhost:8080/jplop</span>/backend
+.post.url:                 <span wicket:id="url-post">http://localhost:8080/jplop</span>/post
+.tribune.delay:            60
+.palmipede.msg_max_length: <span wicket:id="config-maxlength">512</span></pre>
+			<wicket:enclosure child="session-id">
+			<p>Ajoutez également la ligne suivante dans le fichier <span class="file">.wmcoincoin/options.auth</span> de votre dossier personnel&nbsp;:</p>
+			<pre class="cc-config">
+"<span wicket:id="config-site2">JPlop</span>" cookie: "JSESSIONID=<span wicket:id="session-id">DEADBEEF</span>"</pre>
+			</wicket:enclosure>
+		</div>
+		
+		<div class="config">
+			<h3><a href="http://chrisix.free.fr/dotclear/" title="Le coincoin pythonneux">pycc</a></h3>
+			<p>Le fichier de configuration d'une tribune est trop complexe, j'abandonne.</p>
+		</div>
 		
 		<div id="footer" wicket:id="footer"/>
 	</body>

@@ -5,6 +5,7 @@ package tifauv.jplop.web.components.signup;
 
 import javax.ejb.EJB;
 
+import javax.ejb.EJBException;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -58,7 +59,8 @@ public class SignupForm extends Form {
 	 */
 	@Override
 	public void onSubmit() {
-		Class<? extends WebPage> responsePage = null;
+		// Default return page is the signup form page
+		Class<? extends WebPage> responsePage = SignupPage.class;
 
 		try {
 			AccountModel model = (AccountModel)getModel().getObject();
@@ -68,11 +70,13 @@ public class SignupForm extends Form {
 			((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
 			responsePage = AccountPage.class;
 		} catch (ValidationException e) {
-			// Bad data : add feedback message
+			// Bad data
+			error(e.getMessage());
 		} catch (EJBException e) {
 			// Couldn't create the user
+			error(e.getCause().getMessage());
 		}
 
-		setResponsePage(null);
+		setResponsePage(responsePage);
 	}
 }
