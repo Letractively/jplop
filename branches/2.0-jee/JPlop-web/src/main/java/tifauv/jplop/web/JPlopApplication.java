@@ -13,9 +13,9 @@ import tifauv.jplop.web.components.about.AboutPage;
 import tifauv.jplop.web.components.account.AccountPage;
 import tifauv.jplop.web.components.board.BoardPage;
 import tifauv.jplop.web.components.config.ConfigPage;
-import tifauv.jplop.web.components.logon.LogonPage;
-import tifauv.jplop.web.components.logout.LogoutPage;
-import tifauv.jplop.web.components.register.RegisterPage;
+import tifauv.jplop.web.components.signin.SigninPage;
+import tifauv.jplop.web.components.signout.SignoutPage;
+import tifauv.jplop.web.components.signup.SignupPage;
 
 
 /**
@@ -46,9 +46,9 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 		mountBookmarkablePage("/account",  AccountPage.class);
 		mountBookmarkablePage("/board",    BoardPage.class);
 		mountBookmarkablePage("/config",   ConfigPage.class);
-		mountBookmarkablePage("/signup",   RegisterPage.class);
-		mountBookmarkablePage("/signin",   LogonPage.class);
-		mountBookmarkablePage("/signout",  LogoutPage.class);
+		mountBookmarkablePage("/signup",   SignupPage.class);
+		mountBookmarkablePage("/signin",   SigninPage.class);
+		mountBookmarkablePage("/signout",  SignoutPage.class);
 	}
 	
 	
@@ -66,7 +66,7 @@ public class JPlopApplication extends AuthenticatedWebApplication {
 	 */
 	@Override
 	public Class<? extends SignInPage> getSignInPageClass() {
-		return LogonPage.class;
+		return SigninPage.class;
 	}
 	
 	

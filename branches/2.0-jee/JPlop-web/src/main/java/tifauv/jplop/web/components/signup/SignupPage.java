@@ -1,7 +1,7 @@
 /**
  * 28 juil. 08
  */
-package tifauv.jplop.web.components.register;
+package tifauv.jplop.web.components.signup;
 
 import org.apache.wicket.markup.html.WebPage;
 
@@ -16,17 +16,17 @@ import tifauv.jplop.web.models.AccountModel;
  *
  * @version 1.0
  */
-public class RegisterPage extends WebPage {
+public class SignupPage extends WebPage {
 
 	// CONSTRUCTORS \\
 	/**
 	 * Default constructor.
 	 */
-	public RegisterPage() {
+	public SignupPage() {
 		add(new HeaderPanel("header"));
 		
 		// The form
-		add(new RegisterForm("register", new AccountModel()));
+		add(new SignupForm("register", new AccountModel()));
 		
 		add(new FooterPanel("footer"));
 	}

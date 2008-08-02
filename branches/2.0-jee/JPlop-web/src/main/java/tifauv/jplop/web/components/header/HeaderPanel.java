@@ -11,9 +11,9 @@ import tifauv.jplop.web.JPlopSession;
 import tifauv.jplop.web.components.account.AccountPage;
 import tifauv.jplop.web.components.board.BoardPage;
 import tifauv.jplop.web.components.config.ConfigPage;
-import tifauv.jplop.web.components.logon.LogonPage;
-import tifauv.jplop.web.components.logout.LogoutPage;
-import tifauv.jplop.web.components.register.RegisterPage;
+import tifauv.jplop.web.components.signin.SigninPage;
+import tifauv.jplop.web.components.signout.SignoutPage;
+import tifauv.jplop.web.components.signup.SignupPage;
 
 /**
  * This is the header panel.
@@ -52,8 +52,8 @@ public class HeaderPanel extends Panel {
 		// Links
 		add(new BookmarkablePageLink("board",    BoardPage.class));
 		add(new BookmarkablePageLink("config",   ConfigPage.class));
-		add(new BookmarkablePageLink("signup",   RegisterPage.class));
-		add(new BookmarkablePageLink("signin",   LogonPage.class) {
+		add(new BookmarkablePageLink("signup",   SignupPage.class));
+		add(new BookmarkablePageLink("signin",   SigninPage.class) {
 			private static final long serialVersionUID = -1652492751770135649L;
 
 			@Override
@@ -61,7 +61,7 @@ public class HeaderPanel extends Panel {
 				return !((JPlopSession)getSession()).isSignedIn();
 			}});
 		add(new BookmarkablePageLink("account",  AccountPage.class));
-		add(new BookmarkablePageLink("signout",  LogoutPage.class) {
+		add(new BookmarkablePageLink("signout",  SignoutPage.class) {
 			private static final long serialVersionUID = -3491536600221055012L;
 
 			@Override

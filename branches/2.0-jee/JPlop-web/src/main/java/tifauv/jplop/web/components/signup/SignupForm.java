@@ -1,7 +1,7 @@
 /**
  * 28 juil. 08
  */
-package tifauv.jplop.web.components.register;
+package tifauv.jplop.web.components.signup;
 
 import javax.ejb.EJB;
 
@@ -25,7 +25,7 @@ import tifauv.jplop.web.models.AccountModel;
  *
  * @version 1.0
  */
-public class RegisterForm extends Form {
+public class SignupForm extends Form {
 
 	// CONSTANTS \\
 	/** The serialization id. */
@@ -42,7 +42,7 @@ public class RegisterForm extends Form {
 	/**
 	 * Default constructor.
 	 */
-	public RegisterForm(String p_name, AccountModel p_account) {
+	public SignupForm(String p_name, AccountModel p_account) {
 		super(p_name, new CompoundPropertyModel(p_account));
 		add(new TextField("login"));
 		add(new PasswordTextField("password"));
