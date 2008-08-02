@@ -3,6 +3,7 @@
  */
 package tifauv.jplop.web.components.signup;
 
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.WebPage;
 
 import tifauv.jplop.web.components.footer.FooterPanel;
@@ -24,10 +25,10 @@ public class SignupPage extends WebPage {
 	 */
 	public SignupPage() {
 		add(new HeaderPanel("header"));
-		
-		// The form
-		add(new SignupForm("register", new AccountModel()));
-		
+
+		add(new FeedbackPanel("feedback"));
+		add(new SignupForm("signup", new AccountModel()));
+
 		add(new FooterPanel("footer"));
 	}
 }
