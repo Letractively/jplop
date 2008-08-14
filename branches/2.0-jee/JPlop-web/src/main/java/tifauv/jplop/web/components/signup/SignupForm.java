@@ -11,8 +11,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import org.apache.wicket.model.StringResourceModel;
 import tifauv.jplop.exceptions.ValidationException;
 import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.entity.Account;
@@ -47,8 +50,15 @@ public class SignupForm extends Form {
 	 */
 	public SignupForm(String p_name, AccountModel p_account) {
 		super(p_name, new CompoundPropertyModel(p_account));
+		add(new FeedbackPanel("signup-feedback"));
+
+		add(new Label("login-label", new StringResourceModel("signup.login.label", null)));
 		add(new TextField("login").setRequired(true));
+		
+		add(new Label("password-label", new StringResourceModel("signup.password.label", null)));
 		add(new PasswordTextField("password").setRequired(true));
+
+		add(new Label("confirm-label", new StringResourceModel("signup.confirm.label", null)));
 		add(new PasswordTextField("confirm").setRequired(true));
 	}
 
@@ -64,17 +74,24 @@ public class SignupForm extends Form {
 
 		try {
 			AccountModel model = (AccountModel)getModel().getObject();
+			
+			// Check the data validity (password == confirm)
 			model.validate();
 
-			Account user = m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
+			// Create the account
+			m_accountBean.createUser(new Account(), model.getLogin(), PasswordUtils.sha256B64(model.getPassword()));
+			
+			// Auto-login
 			((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
+			
+			// Next : my account
 			responsePage = AccountPage.class;
 		} catch (ValidationException e) {
 			// Bad data
-			error(e.getMessage());
+			error("Invalid data : " + e.getMessage());
 		} catch (EJBException e) {
 			// Couldn't create the user
-			error(e.getCause().getMessage());
+			error("signup.creation.error");
 		}
 
 		setResponsePage(responsePage);

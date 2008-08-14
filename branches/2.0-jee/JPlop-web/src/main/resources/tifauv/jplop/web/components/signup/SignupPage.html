@@ -7,15 +7,15 @@
 	<body>
 		<div id="header" wicket:id="header"/>
 
-		<h2>Nouveau compte</h2>
-		<div wicket:id="feedback">feedback</div>
-		<form wicket:id="signup">
+		<h2 wicket:id="signup-title">New account</h2>
+		<form wicket:id="signup-form">
+			<div wicket:id="signup-feedback">feedback</div>
 			<div>
-				<label for="login">Pseudo</label> : <input type="text" id="login" wicket:id="login" value=""/>
+				<label wicket:id="login-label" for="login">Login:</label> <input type="text" id="login" wicket:id="login" value=""/>
 				<br/>
-				<label for="password">Mot de passe</label> : <input type="password" id="password" wicket:id="password" value=""/>
+				<label wicket:id="password-label" for="password">Password:</label> <input type="password" id="password" wicket:id="password" value=""/>
 				<br/>
-				<label for="confirm">Confirmation</label> : <input type="password" id="confirm" wicket:id="confirm" value=""/>
+				<label wicket:id="confirm-label" for="confirm">Confirm:</label> <input type="password" id="confirm" wicket:id="confirm" value=""/>
 				<br/>
 				<input type="submit"/>
 			</div>

@@ -3,9 +3,11 @@
  */
 package tifauv.jplop.web.components.footer;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import org.apache.wicket.model.StringResourceModel;
 import tifauv.jplop.web.components.about.AboutPage;
 
 /**
@@ -31,6 +33,9 @@ public class FooterPanel extends Panel {
 	 */
 	public FooterPanel(String p_id) {
 		super(p_id);
-		add(new BookmarkablePageLink("about", AboutPage.class));
+		
+		BookmarkablePageLink aboutLink = new BookmarkablePageLink("about", AboutPage.class);
+		aboutLink.add(new Label("about-label", new StringResourceModel("footer.about.label", this, null)));
+		add(aboutLink);
 	}
 }
