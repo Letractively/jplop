@@ -67,7 +67,7 @@ public class Account implements Serializable {
 	private int m_id;
 	
 	/** The user login. */
-	@Column(name="login", nullable=false)
+	@Column(name="login", nullable=false, unique=true)
 	private String m_login;
 	
 	/** The user password. */

@@ -6,19 +6,19 @@
 				<span wicket:id="name"/> - <span wicket:id="title"/>
 			</h1>
 			<div class="links">
-				<a wicket:id="board"    title="Je veux ploper !">Tribune</a>
+				<a wicket:id="board"><span wicket:id="board-label">Board</span></a>
 				::
-				<a wicket:id="config"   title="Configuration pour les coincoins">Coincoins</a>
+				<a wicket:id="config"><span wicket:id="config-label">Clients configuration</span></a>
 				::
 				<wicket:enclosure child="signin">
-					<a wicket:id="signup" title="Je veux un compte">Cr&eacute;er un compte</a>
+					<a wicket:id="signup"><span wicket:id="signup-label">Create my account</span></a>
 					::
-					<a wicket:id="signin"    title="Authentifiez-vous">Entrer</a>
+					<a wicket:id="signin"><span wicket:id="signin-label">Sign in</span></a>
 				</wicket:enclosure>
 				<wicket:enclosure child="signout">
-					<a wicket:id="account"  title="Mon compte">Mon compte</a>
+					<a wicket:id="account"><span wicket:id="account-label">My account</span></a>
 					::
-					<a wicket:id="signout"   title="Au revoir !">Sortir</a>
+					<a wicket:id="signout"><span wicket:id="signout-label">Sign out</span></a>
 				</wicket:enclosure>
 			</div>
 		</wicket:panel>
