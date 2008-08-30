@@ -10,11 +10,9 @@ import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import tifauv.jplop.exceptions.ValidationException;
 import tifauv.jplop.ejb.account.AccountLocal;
@@ -22,7 +20,7 @@ import tifauv.jplop.entity.Account;
 import tifauv.jplop.utils.PasswordUtils;
 import tifauv.jplop.web.JPlopSession;
 import tifauv.jplop.web.components.account.AccountPage;
-import tifauv.jplop.web.models.AccountModel;
+import tifauv.jplop.web.models.UserAccount;
 
 /**
  * This is the account registration form.
@@ -48,9 +46,8 @@ public class SignupForm extends Form {
 	/**
 	 * Default constructor.
 	 */
-	public SignupForm(String p_name, AccountModel p_account) {
-		super(p_name, new CompoundPropertyModel(p_account));
-		add(new FeedbackPanel("signup-feedback"));
+	public SignupForm(String p_name, IModel p_model) {
+		super(p_name, p_model);
 
 		add(new Label("login-label", new StringResourceModel("signup.login.label", null)));
 		add(new TextField("login").setRequired(true));
@@ -69,11 +66,8 @@ public class SignupForm extends Form {
 	 */
 	@Override
 	public void onSubmit() {
-		// Default return page is the signup form page
-		Class<? extends WebPage> responsePage = SignupPage.class;
-
 		try {
-			AccountModel model = (AccountModel)getModel().getObject();
+			UserAccount model = (UserAccount)getModelObject();
 			
 			// Check the data validity (password == confirm)
 			model.validate();
@@ -85,15 +79,13 @@ public class SignupForm extends Form {
 			((JPlopSession)Session.get()).signIn(model.getLogin(), model.getPassword());
 			
 			// Next : my account
-			responsePage = AccountPage.class;
+			setResponsePage(AccountPage.class);
 		} catch (ValidationException e) {
 			// Bad data
-			error("Invalid data : " + e.getMessage());
+			error(new StringResourceModel("signup.validation.error", getWebPage(), null).getString());
 		} catch (EJBException e) {
 			// Couldn't create the user
-			error("signup.creation.error");
+			error(new StringResourceModel("signup.creation.error", getWebPage(), null).getString());
 		}
-
-		setResponsePage(responsePage);
 	}
 }

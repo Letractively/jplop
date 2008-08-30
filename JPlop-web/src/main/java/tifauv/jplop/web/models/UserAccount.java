@@ -15,7 +15,7 @@ import tifauv.jplop.exceptions.ValidationException;
  *
  * @version 1.0
  */
-public final class AccountModel implements Serializable {
+public final class UserAccount implements Serializable {
 
 	// CONSTANTS \\
 	/** The serialization id. */
