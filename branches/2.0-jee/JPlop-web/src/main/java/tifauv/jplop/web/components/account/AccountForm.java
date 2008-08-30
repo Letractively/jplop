@@ -15,7 +15,7 @@ import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.utils.PasswordUtils;
 import tifauv.jplop.web.JPlopSession;
 import tifauv.jplop.web.components.board.BoardPage;
-import tifauv.jplop.web.models.AccountModel;
+import tifauv.jplop.web.models.UserAccount;
 
 /**
  * This is the account edition form.
@@ -41,7 +41,7 @@ public class AccountForm extends Form {
 	/**
 	 * Default constructor.
 	 */
-	public AccountForm(String p_name, AccountModel p_account) {
+	public AccountForm(String p_name, UserAccount p_account) {
 		super(p_name, new CompoundPropertyModel(p_account));
 		add(new TextField("login"));
 		add(new PasswordTextField("password"));
@@ -55,7 +55,7 @@ public class AccountForm extends Form {
 	 */
 	@Override
 	public void onSubmit() {
-		AccountModel model = (AccountModel)getModel().getObject();
+		UserAccount model = (UserAccount)getModel().getObject();
 		model.validate();
 		
 		// Manage the password special case

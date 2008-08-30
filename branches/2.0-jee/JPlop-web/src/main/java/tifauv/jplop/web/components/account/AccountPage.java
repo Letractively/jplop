@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.WebPage;
 import tifauv.jplop.web.JPlopSession;
 import tifauv.jplop.web.components.footer.FooterPanel;
 import tifauv.jplop.web.components.header.HeaderPanel;
-import tifauv.jplop.web.models.AccountModel;
+import tifauv.jplop.web.models.UserAccount;
 
 /**
  * This page displays the user's account.
@@ -27,7 +27,7 @@ public class AccountPage extends WebPage {
 		add(new HeaderPanel("header"));
 
 		// The form
-		AccountModel model = new AccountModel();
+		UserAccount model = new UserAccount();
 		model.setLogin(((JPlopSession)getSession()).getAccount().getLogin());
 		add(new AccountForm("editAccount", model));
 		
