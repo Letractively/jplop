@@ -34,8 +34,6 @@ public class FooterPanel extends Panel {
 	public FooterPanel(String p_id) {
 		super(p_id);
 		
-		BookmarkablePageLink aboutLink = new BookmarkablePageLink("about", AboutPage.class);
-		aboutLink.add(new Label("about-label", new StringResourceModel("footer.about.label", this, null)));
-		add(aboutLink);
+		add(new BookmarkablePageLink("about", AboutPage.class));
 	}
 }

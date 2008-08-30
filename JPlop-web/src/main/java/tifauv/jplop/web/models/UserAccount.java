@@ -31,6 +31,9 @@ public final class UserAccount implements Serializable {
 
 	/** The password confirmation. */
 	private String m_confirm;
+	
+	/** The user profile. */
+	private UserProfile m_profile;
 
 
 	// GETTERS \\
@@ -46,6 +49,13 @@ public final class UserAccount implements Serializable {
 
 	public String getConfirm() {
 		return m_confirm;
+	}
+	
+	
+	public UserProfile getProfile() {
+		if (m_profile == null)
+			m_profile = new UserProfile();
+		return m_profile;
 	}
 
 
