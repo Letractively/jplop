@@ -6,11 +6,13 @@ package tifauv.jplop.web.components.account;
 import javax.ejb.EJB;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.CompoundPropertyModel;
 
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 import tifauv.jplop.ejb.account.AccountLocal;
 import tifauv.jplop.utils.PasswordUtils;
 import tifauv.jplop.web.JPlopSession;
@@ -24,7 +26,7 @@ import tifauv.jplop.web.models.UserAccount;
  *
  * @version 1.0
  */
-public class AccountForm extends Form {
+public class EditAccountForm extends Form {
 
 	// CONSTANTS \\
 	/** The serialization id. */
@@ -41,11 +43,26 @@ public class AccountForm extends Form {
 	/**
 	 * Default constructor.
 	 */
-	public AccountForm(String p_name, UserAccount p_account) {
-		super(p_name, new CompoundPropertyModel(p_account));
-		add(new TextField("login"));
+	public EditAccountForm(String p_name, IModel p_model) {
+		super(p_name, p_model);
+		
+		/* The account part */
+		add(new Label("account-title", new StringResourceModel("account.edit.title", null)));
+
+		add(new Label("login-label", new StringResourceModel("account.edit.login.label", null)));
+		add(new TextField("login").setRequired(true));
+		
+		add(new Label("password-label", new StringResourceModel("account.edit.password.label", null)));
 		add(new PasswordTextField("password"));
+
+		add(new Label("confirm-label", new StringResourceModel("account.edit.confirm.label", null)));
 		add(new PasswordTextField("confirm"));
+		
+		/* The profile part. */
+		add(new Label("profile-title", new StringResourceModel("profile.edit.title", null)));
+
+		add(new Label("email-label", new StringResourceModel("profile.edit.email.label", null)));
+		add(new TextField("profile.email"));
 	}
 	
 	

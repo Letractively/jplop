@@ -30,7 +30,7 @@ public class SignupPage extends WebPage {
 	public SignupPage() {
 		add(new HeaderPanel("header"));
 
-		add(new Label("title", new StringResourceModel("signup.title", this, null)));
+		add(new Label("title", new StringResourceModel("account.signup.title", this, null)));
 		add(new FeedbackPanel("feedback"));
 		IModel model = new CompoundPropertyModel( new UserAccount() );
 		add(new SignupForm("signup-form", model));

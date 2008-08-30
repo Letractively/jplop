@@ -7,18 +7,32 @@
 	<body>
 		<div id="header" wicket:id="header"/>
 		
-		<h2>Mon compte</h2>
+		<h2 wicket:id="page-title">My account</h2>
 		<form wicket:id="editAccount">
+			<fieldset>
+				<legend wicket:id="account-title">Account</legend>
+				<label wicket:id="login-label"  for="login">Login:</label> <input type="text" id="login" wicket:id="login" value=""/>
+				<br/>
+				<label wicket:id="password-label"  for="password">Password:</label> <input type="password" id="password" wicket:id="password" value=""/>
+				<br/>
+				<label wicket:id="confirm-label"  for="confirm">Confirmation:</label> <input type="password" id="confirm" wicket:id="confirm" value=""/>
+			</fieldset>
+			<fieldset>
+				<legend wicket:id="profile-title">Profile</legend>
+				<label wicket:id="email-label"  for="email">Email:</label> <input type="text" id="email" wicket:id="profile.email" value=""/>
+			</fieldset>
 			<div>
-				<label for="login">Pseudo</label> : <input type="text" id="login" wicket:id="login" value=""/>
-				<br/>
-				<label for="password">Mot de passe</label> : <input type="password" id="password" wicket:id="password" value=""/>
-				<br/>
-				<label for="confirm">Confirmation</label> : <input type="password" id="confirm" wicket:id="confirm" value=""/>
-				<br/>
 				<input type="submit"/>
 			</div>
 		</form>
+		
+		<h3 wicket:id="close-title">Close my account</h3>
+		<div>
+			<p wicket:id="close-message">Your account will remain.</p>
+			<form wicket:id="closeAccount">
+				<input type="submit"/>
+			</form>
+		</div>
 		
 		<div id="footer" wicket:id="footer"/>
 	</body>

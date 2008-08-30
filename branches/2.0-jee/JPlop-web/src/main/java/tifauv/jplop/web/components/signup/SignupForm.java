@@ -49,13 +49,13 @@ public class SignupForm extends Form {
 	public SignupForm(String p_name, IModel p_model) {
 		super(p_name, p_model);
 
-		add(new Label("login-label", new StringResourceModel("signup.login.label", null)));
+		add(new Label("login-label", new StringResourceModel("account.signup.login.label", null)));
 		add(new TextField("login").setRequired(true));
 		
-		add(new Label("password-label", new StringResourceModel("signup.password.label", null)));
+		add(new Label("password-label", new StringResourceModel("account.signup.password.label", null)));
 		add(new PasswordTextField("password").setRequired(true));
 
-		add(new Label("confirm-label", new StringResourceModel("signup.confirm.label", null)));
+		add(new Label("confirm-label", new StringResourceModel("account.signup.confirm.label", null)));
 		add(new PasswordTextField("confirm").setRequired(true));
 	}
 
@@ -82,10 +82,10 @@ public class SignupForm extends Form {
 			setResponsePage(AccountPage.class);
 		} catch (ValidationException e) {
 			// Bad data
-			error(new StringResourceModel("signup.validation.error", getWebPage(), null).getString());
+			error(new StringResourceModel("account.signup.validation.error", getWebPage(), null).getString());
 		} catch (EJBException e) {
 			// Couldn't create the user
-			error(new StringResourceModel("signup.creation.error", getWebPage(), null).getString());
+			error(new StringResourceModel("account.signup.creation.error", getWebPage(), null).getString());
 		}
 	}
 }
