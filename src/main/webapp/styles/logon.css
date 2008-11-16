@@ -1,0 +1,60 @@
+@import url('common.css');
+
+/***** The page title *****/
+H2 {
+	text-align: center;
+	background-color: #0c3762;
+	color: #ffffff;
+	font-size: medium;
+	font-weight: bold;
+	width: 25em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0;
+	-moz-border-radius: 1em 1em 0 0;
+} 
+
+/***** The logon form *****/
+#logonBox {
+	text-align: center;
+	width: 25em;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #336698;
+	color: #ffffff;
+	border: 0;
+	display: table;
+}
+
+#logonBox .field {
+	padding-left: 0.1em;
+	padding-right: 0.1em;
+	padding-top: 0.1em;
+	padding-bottom: 0;
+	display: table-row;
+}
+
+#logonBox .field LABEL {
+/*	display: table-cell;*/
+	text-align: right;
+	width: 50%;
+}
+
+#logonBox .action {
+	display: table-cell;
+	padding-left: 0.1em;
+	padding-right: 0.1em;
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;
+}
+
+#logonBox INPUT {
+	background-color: #b2cfed;
+	color: #0c3762;
+	border: 0;
+}
+
+#logonBox INPUT[type="text"], #logonBox INPUT[type="password"] {
+	background-color: #ffffff;
+	border: 1px solid #b2cfed;
+}

@@ -34,6 +34,9 @@ public final class CommonConstants {
 
 	/** The name of the session attribute that contains the authenticated subject. */
 	public static final String USER_SESSION_ATTR = "subject";
+
+	/** The name of the session attribute that contains the user's nickname. */
+	public static final String NICK_SESSION_ATTR = "nick";
 	
 	/** The name of the request attribute that contains an error message. */
 	public static final String ERROR_REQUEST_ATTR = "errorMsg";

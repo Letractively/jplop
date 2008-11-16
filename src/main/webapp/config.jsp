@@ -31,12 +31,12 @@
 		&lt;/login&gt;
 		&lt;logout method="get" path="/logout"/&gt;
 	&lt;/account&gt;
-	&lt;board name="board" title="Tribune"&gt;
+	&lt;module name="board" title="Tribune" type="application/board+xml"&gt;
 		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
 		&lt;post method="post" path="/post" anonymous="true" max_length="<jsp:getProperty name="backend" property="maxPostLength"/>"&gt;
 			&lt;field name="<%= CommonConstants.MESSAGE_PARAM %>"&gt;$m&lt;/field&gt;
 		&lt;/post&gt;
-	&lt;/board&gt;
+	&lt;/module&gt;
 &lt;/site&gt;</pre>
 		</div>
 		

@@ -27,18 +27,24 @@
 		<form method="post" action="post" onsubmit="javascript: return !sendMessage('post');">
 			<div id="postForm">
 				<div id="toolbar">
-					<input type="button" onclick="javascript: addTagToMessage('b');"  value="Gras"     accesskey="g" />
-					<input type="button" onclick="javascript: addTagToMessage('i');"  value="Italique" accesskey="i" />
-					<input type="button" onclick="javascript: addTagToMessage('u');"  value="Souligné" accesskey="s" />
-					<input type="button" onclick="javascript: addTagToMessage('s');"  value="Barré"    accesskey="b" />
-					<input type="button" onclick="javascript: addTagToMessage('tt');" value="TeleType" accesskey="t" />
+					<input id="bold" type="button" onclick="javascript: addTagToMessage('b');"  value="Gras"     accesskey="g" />
+					<input id="italic" type="button" onclick="javascript: addTagToMessage('i');"  value="Italique" accesskey="i" />
+					<input id="underline" type="button" onclick="javascript: addTagToMessage('u');"  value="Souligné" accesskey="s" />
+					<input id="strike" type="button" onclick="javascript: addTagToMessage('s');"  value="Barré"    accesskey="b" />
+					<input id="teletype" type="button" onclick="javascript: addTagToMessage('tt');" value="TeleType" accesskey="t" />
 				</div>
 				<div id="edition">
-					<input type="reset" value="" />
+					<input type="reset" value="" title="Efface le texte" />
 					<input type="text"  id="message" name="<%= CommonConstants.MESSAGE_PARAM %>" maxlength="512" accesskey="m" />
 					<input type="submit" />
 					<input type="button" id="reloadBtn" onclick="javascript: reloadBackend();" value="Reload" accesskey="r" />
 					<img id="reloadIndicator" src="images/reloading.gif" alt="Reloading..."/>
+				</div>
+				<div id="paramsBox">
+					<input type="button" onclick="javascript: toggleVisibility('params', this, 'Paramètres');" value="Paramètres >>" accesskey="p" />
+					<ul id="params">
+						<li title="/nick &lt;nickname&gt; pour modifier la valeur">Nick&nbsp;: <%= session.getAttribute(CommonConstants.NICK_SESSION_ATTR) %></li>
+					</ul>
 				</div>
 			</div>
 		</form>

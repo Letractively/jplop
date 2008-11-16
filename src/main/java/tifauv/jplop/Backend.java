@@ -217,13 +217,13 @@ public final class Backend {
 		buffer.append("</login>");
 		buffer.append("<logout method=\"get\" path=\"/logout\"/>");
 		buffer.append("</account>");
-		buffer.append("<board name=\"board\" title=\"Tribune\">");
+		buffer.append("<module name=\"board\" title=\"Tribune\" type=\"application/board+xml\">");
 		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
 		buffer.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")
 			.append(getMaxPostLength()).append("\">");
 		buffer.append("<field name=\"").append(CommonConstants.MESSAGE_PARAM).append("\">$m</field>");
 		buffer.append("</post>");
-		buffer.append("</board>");
+		buffer.append("</module>");
 		buffer.append("</site>");
 		return buffer.toString();
 	}
@@ -445,6 +445,6 @@ public final class Backend {
 	 * @return the id of the new post
 	 */
 	public synchronized long addMessage(String p_info, String p_message, String p_login) {
-		return m_history.addMessage(p_info, p_message, p_login);
+		return getHistory().addMessage(p_info, p_message, p_login);
 	}
 }
