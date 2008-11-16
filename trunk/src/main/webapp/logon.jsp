@@ -12,7 +12,7 @@
 		<title><jsp:getProperty name="backend" property="name"/>::Logon</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta http-equiv="Author"       content="Tifauv'"/>
-		<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+		<link rel="stylesheet" type="text/css" href="styles/logon.css"/>
 		<script type="text/javascript" src="scripts/utils.js"></script>
 		<script type="text/javascript" src="scripts/logon.js"></script>
 	</head>
@@ -29,16 +29,22 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.subject}">
 		<div class="message error">Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;.
-		<a href="index.jsp">Retour &agrave; l'accueil</a></div>
+		<a href="board.jsp">Retour &agrave; l'accueil</a></div>
 	</c:when>
 	<c:otherwise>
 		<form method="post" action="logon">
-			<div>
-				<label for="username">Login&nbsp;:</label>
-				<input type="text" id="username" name="<%= CommonConstants.LOGIN_PARAM %>"/>
-				<label for="password">Mot de passe&nbsp;:</label>
-				<input type="password" id="password" name="<%= CommonConstants.PASSWORD_PARAM %>"/>
-				<input type="submit"/>
+			<div id="logonBox">
+				<div class="field">
+					<label for="username">Pseudo&nbsp;:</label>
+					<input type="text" id="username" name="<%= CommonConstants.LOGIN_PARAM %>"/>
+				</div>
+				<div class="field">
+					<label for="password">Mot de passe&nbsp;:</label>
+					<input type="password" id="password" name="<%= CommonConstants.PASSWORD_PARAM %>"/>
+				</div>
+				<div class="action">
+					<input type="submit" value="Entrer"/>
+				</div>
 			</div>
 		</form>
 	</c:otherwise>

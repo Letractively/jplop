@@ -29,7 +29,7 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.subject}">
 		<div class="message error">Vous &ecirc;tes d&eacute;j&agrave; authentifi&eacute;.
-		<a href="index.jsp">Retour &agrave; l'accueil</a></div>
+		<a href="board.jsp">Retour &agrave; l'accueil</a></div>
 	</c:when>
 	<c:otherwise>
 		<form method="post" action="register">

@@ -37,6 +37,32 @@ function addTagToMessage(p_tagName) {
 
 
 /**
+ * Displays or hides a block, and updates the toggle button.
+ *
+ * @param p_id
+ *            the id of the block to display/hide
+ * @param p_button
+ *            the toggle button to update
+ * @param p_caption
+ *            the 'normal' button caption
+ */
+function toggleVisibility(p_id, p_button, p_caption) {
+	var target = window.document.getElementById(p_id);
+	
+	// If hidden, display
+	if (!target.style.display || target.style.display == 'none') {
+		target.style.display = 'block';
+		p_button.value = p_caption + ' <<';
+	}
+	// Else, hide
+	else {
+		target.style.display = 'none';
+		p_button.value = p_caption + ' >>';
+	}
+}
+
+
+/**
  * Sends the value of the #message input field to the given
  * URL.
  *
@@ -63,8 +89,12 @@ function sendMessage(p_url) {
 function handlePostResponse(p_request) {
 	// If request is complete...
 	if (p_request.readyState == 4) {
+		// And the status is 200 (OK)
+		if (p_request.status == 200) {
+			document.getElementById('message').select();
+		}
 		// And the status is 201 (CREATED)
-		if (p_request.status == 201) {
+		else if (p_request.status == 201) {
 			reloadBackend();
 			document.getElementById('message').select();
 		}

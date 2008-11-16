@@ -49,6 +49,9 @@ public final class UserBase implements Persistable {
 	/** The user name attribute. */
 	public static final String USER_NAME_ATTR = "username";
 	
+	/** The nickname attribute. */
+	public static final String USER_NICK_ATTR = "nick";
+	
 	/** The user password attribute. */
 	public static final String USER_PSW_ATTR = "password";
 	
@@ -205,6 +208,8 @@ public final class UserBase implements Persistable {
 				try {
 					User user = new User();
 					user.setLogin(userEl.getAttribute(USER_NAME_ATTR));
+					if (userEl.hasAttribute(USER_NICK_ATTR))
+						user.setNick(userEl.getAttribute(USER_NICK_ATTR));
 					user.setPassword(userEl.getAttribute(USER_PSW_ATTR));
 					user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
 					user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
@@ -275,12 +280,15 @@ public final class UserBase implements Persistable {
 		for (String role : m_roles)
 			buffer.append("<").append(ROLE_TAG).append(" ")
 				.append(ROLE_NAME_ATTR).append("=\"").append(role).append("\"/>");
-		for (User user : m_users.values())
+		for (User user : m_users.values()) {
 			buffer.append("<").append(USER_TAG).append(" ")
-				.append(USER_NAME_ATTR).append("=\"").append(user.getLogin()).append("\" ")
-				.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\" ")
+				.append(USER_NAME_ATTR).append("=\"").append(user.getLogin()).append("\" ");
+			if (user.getNick() != null)
+				buffer.append(USER_NICK_ATTR).append("=\"").append(user.getNick()).append("\" ");
+			buffer.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\" ")
 				.append(USER_PSW_ATTR).append("=\"").append(user.getPassword()).append("\" ")
 				.append(USER_ROLES_ATTR).append("=\"").append(user.getRoles()).append("\"/>");
+		}
 		buffer.append("</").append(USERS_TAG).append(">");
 		
 		FileOutputStream output = null;

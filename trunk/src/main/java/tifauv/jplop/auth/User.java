@@ -25,6 +25,9 @@ public final class User {
 	/** The user's login. */
 	private String m_login;
 	
+	/** The user's nickname. */
+	private String m_nick;
+	
 	/** The user's email address. */
 	private String m_email;
 	
@@ -53,6 +56,15 @@ public final class User {
 		return m_login;
 	}
 
+	
+	/**
+	 * Gives the user's nickname.
+	 * @return
+	 */
+	public String getNick() {
+		return m_nick;
+	}
+	
 	
 	/**
 	 * Gives the user's email address.
@@ -96,6 +108,15 @@ public final class User {
 		m_login = p_login;
 	}
 
+	
+	/**
+	 * @param p_nick
+	 *            the user's nickname
+	 */
+	public void setNick(String p_nick) {
+		m_nick = p_nick;
+	}
+	
 	
 	/**
 	 * @param p_email

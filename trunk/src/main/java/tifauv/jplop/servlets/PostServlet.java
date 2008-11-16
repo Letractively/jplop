@@ -75,19 +75,51 @@ public final class PostServlet extends HttpServlet {
 
 		// Get the login of the logged user if any
 		String login = null;
+		String userAgent = p_request.getHeader(CommonConstants.USER_AGENT_HDR);
 		User currentUser = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (currentUser != null) {
 			login = currentUser.getLogin();
-			currentUser = null;
+			if (currentUser.getNick() != null)
+				userAgent = currentUser.getNick();
 			m_logger.info("Message is '" + message + "' from '" + login + "'.");
 		}
-		else
-			m_logger.info("Message is '" + message + "' from an anonymous coward.");
+		else {
+			String nick = (String)p_request.getSession().getAttribute(CommonConstants.NICK_SESSION_ATTR);
+			if (nick != null) {
+				userAgent = nick;
+				m_logger.info("Message is '" + message + "' from an anonymous [" + nick + "].");
+			}
+			else
+				m_logger.info("Message is '" + message + "' from an anonymous coward.");
+		}
+		
+		// Check if the message is a known command
+		boolean addMessage = true;
+		if (message.length() > 1 && message.charAt(0) == '/') {
+			if (message.startsWith("/nick ")) {
+				String nick = message.substring("/nick ".length());
+				if (currentUser != null)
+					currentUser.setNick(nick);
+				else
+					p_request.getSession().setAttribute(CommonConstants.NICK_SESSION_ATTR, nick);
+				
+				addMessage = false;
+			}
+			else if (message.startsWith("/anonymous ")) {
+				userAgent = "[Anonymous Coward]";
+				message = message.substring("/anonymous ".length());
+				login = null;
+			}
+		}
 		
 		// Add the message
-		String userAgent = p_request.getHeader(CommonConstants.USER_AGENT_HDR);
-		long id = Backend.getInstance().addMessage(userAgent, message, login);
-		p_response.setStatus(HttpServletResponse.SC_CREATED);
-		p_response.addHeader(CommonConstants.POSTID_HDR, Long.toString(id));
+		if (addMessage) {
+			long id = Backend.getInstance().addMessage(userAgent, message, login);
+			p_response.addHeader(CommonConstants.POSTID_HDR, Long.toString(id));
+			p_response.setStatus(HttpServletResponse.SC_CREATED);
+		}
+		// Otherwise, it was a command
+		else
+			p_response.setStatus(HttpServletResponse.SC_OK);
 	}
 }
