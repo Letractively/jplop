@@ -80,8 +80,10 @@ function sendMessage(p_url) {
 
 
 /**
- * Handles the response. In case of success (readyState == 4 and status == 201),
- * selects the input's text and calls reloadBackend();
+ * Handles the post response. In case of success (readyState == 4 and status == 201),
+ * selects the input's text and calls reloadBackend().
+ * If the message was a command (status == 200), clears the input's text and call
+ * updateSettings().
  *
  * @param p_request
  *            the request to get its status
@@ -91,6 +93,7 @@ function handlePostResponse(p_request) {
 	if (p_request.readyState == 4) {
 		// And the status is 200 (OK)
 		if (p_request.status == 200) {
+			updateSettings();
 			document.getElementById('message').select();
 		}
 		// And the status is 201 (CREATED)
@@ -133,6 +136,46 @@ function reloadBackend() {
 
 
 /**
+ * Updates the user's settings display.
+ */
+function updateSettings() {
+	return httpGet('my-settings',handleSettingsResponse);
+}
+
+
+/**
+ * Handles the updateSettings response. In case of success (readyState == 4 and status == 200),
+ * update the displayed user settings.
+ *
+ * @param p_request
+ *            the request to get its status
+ */
+function handleSettingsResponse(p_request) {
+	// If request is complete...
+	if (p_request.readyState == 4) {
+		// And the status is 200 (OK)
+		if (p_request.status == 200) {
+			// Get the display list <UL>
+			var paramsList = document.getElementById('params');
+			
+			// Remove its children
+			while (paramsList.firstChild != null)
+				paramsList.removeChild(paramsList.firstChild);
+			
+			var params = p_request.responseXML.getElementsByTagName('param');
+			if (params.length > 0) {
+				for (var i=0; i<params.length; ++i) {
+					var param = document.createElement('li');
+					param.textContent = params.item(i).getAttribute('name') + ' : ' + params.item(i).textContent;
+					paramsList.appendChild(param);
+				}
+			}
+		}
+	}
+}
+
+
+/**
  * Executes an XPath search on the document.
  *
  * @param p_xpath
@@ -152,6 +195,9 @@ function searchItems(p_xpath) {
  * Initialization function.
  */
 function initBoard() {
+	// Update the user's settings
+	updateSettings();
+
 	// Set the focus on the message input
 	document.getElementById('message').focus();
 	scrollToBottom(document.getElementById('board'));

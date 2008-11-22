@@ -6,8 +6,11 @@ package tifauv.jplop;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
+import tifauv.jplop.auth.User;
 import tifauv.jplop.auth.UserBase;
 import tifauv.jplop.board.History;
 import tifauv.jplop.board.Post;
@@ -204,27 +207,67 @@ public final class Backend {
 	 * Gives the board's configuration for compliant coincoins.
 	 */
 	public String getBoardConfig() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\"?>");
-		buffer.append("<site name=\"").append(getName())
-			.append("\" title=\"").append(getFullName())
-			.append("\" baseurl=\"").append(getURL())
-			.append("\" version=\"1.0\">");
-		buffer.append("<account>");
-		buffer.append("<login method=\"post\" path=\"/logon\">");
-		buffer.append("<field name=\"").append(CommonConstants.LOGIN_PARAM).append("\">$l</field>");
-		buffer.append("<field name=\"").append(CommonConstants.PASSWORD_PARAM).append("\">$p</field>");
-		buffer.append("</login>");
-		buffer.append("<logout method=\"get\" path=\"/logout\"/>");
-		buffer.append("</account>");
-		buffer.append("<module name=\"board\" title=\"Tribune\" type=\"application/board+xml\">");
-		buffer.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>");
-		buffer.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")
-			.append(getMaxPostLength()).append("\">");
-		buffer.append("<field name=\"").append(CommonConstants.MESSAGE_PARAM).append("\">$m</field>");
-		buffer.append("</post>");
-		buffer.append("</module>");
-		buffer.append("</site>");
+		StringBuffer buffer = new StringBuffer(473
+				+ getName().length()
+				+ getFullName().length()
+				+ getURL().length()
+				+ CommonConstants.LOGIN_PARAM.length()
+				+ CommonConstants.PASSWORD_PARAM.length()
+				+ CommonConstants.MESSAGE_PARAM.length());
+		buffer.append("<?xml version=\"1.0\"?>")
+		.append("<site name=\"").append(getName())
+		.append("\" title=\"").append(getFullName())
+		.append("\" baseurl=\"").append(getURL())
+		.append("\" version=\"1.1\">")
+		.append("<account>")
+		.append("<login method=\"post\" path=\"/logon\">")
+		.append("<field name=\"").append(CommonConstants.LOGIN_PARAM).append("\">$l</field>")
+		.append("<field name=\"").append(CommonConstants.PASSWORD_PARAM).append("\">$p</field>")
+		.append("</login>")
+		.append("<logout method=\"get\" path=\"/logout\"/>")
+		.append("</account>")
+		.append("<module name=\"board\" title=\"Tribune\" type=\"application/board+xml\">")
+		.append("<backend path=\"/backend\" public=\"true\" tags_encoded=\"false\" refresh=\"30\"/>")
+		.append("<post method=\"post\" path=\"/post\" anonymous=\"true\" max_length=\"")
+		.append(getMaxPostLength()).append("\">")
+		.append("<field name=\"").append(CommonConstants.MESSAGE_PARAM).append("\">$m</field>")
+		.append("</post>")
+		.append("</module>")
+		.append("</site>");
+		return buffer.toString();
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getSettings(HttpServletRequest p_request) {
+		StringBuffer buffer = new StringBuffer(473
+				+ getName().length()
+				+ getFullName().length()
+				+ getURL().length()
+				+ CommonConstants.LOGIN_PARAM.length()
+				+ CommonConstants.PASSWORD_PARAM.length()
+				+ CommonConstants.MESSAGE_PARAM.length());
+		buffer.append("<?xml version=\"1.0\"?>")
+		.append("<settings version=\"1.0\">");
+
+		// Add the login
+		User user = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
+		if (user != null)
+			buffer.append("<param name=\"Login\">").append(user.getLogin()).append("</param>");
+		
+		// Add the nick
+		String nick = (String)p_request.getSession().getAttribute(CommonConstants.NICK_SESSION_ATTR);
+		if (nick != null)
+			buffer.append("<param name=\"Nick\">").append(nick).append("</param>");
+		
+		// Add the user agent
+		buffer.append("<param name=\"User-Agent\">")
+		.append(p_request.getHeader(CommonConstants.USER_AGENT_HDR))
+		.append("</param>");
+		buffer.append("</settings>");
 		return buffer.toString();
 	}
 	

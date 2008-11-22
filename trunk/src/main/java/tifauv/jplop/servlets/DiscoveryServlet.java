@@ -31,7 +31,7 @@ import tifauv.jplop.Backend;
 	 * @param p_response
 	 *            the HTTP response
 	 * 
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see Backend#getBoardConfig()
 	 */
 	@Override
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)

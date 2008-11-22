@@ -42,9 +42,7 @@
 				</div>
 				<div id="paramsBox">
 					<input type="button" onclick="javascript: toggleVisibility('params', this, 'Paramètres');" value="Paramètres >>" accesskey="p" />
-					<ul id="params">
-						<li title="/nick &lt;nickname&gt; pour modifier la valeur">Nick&nbsp;: <%= session.getAttribute(CommonConstants.NICK_SESSION_ATTR) %></li>
-					</ul>
+					<ul id="params"/>
 				</div>
 			</div>
 		</form>
