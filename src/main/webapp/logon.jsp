@@ -12,7 +12,7 @@
 		<title><jsp:getProperty name="backend" property="name"/>::Logon</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta http-equiv="Author"       content="Tifauv'"/>
-		<link rel="stylesheet" type="text/css" href="styles/logon.css"/>
+		<link rel="stylesheet" type="text/css" href="styles/form.css"/>
 		<script type="text/javascript" src="scripts/utils.js"></script>
 		<script type="text/javascript" src="scripts/logon.js"></script>
 	</head>
@@ -33,7 +33,7 @@
 	</c:when>
 	<c:otherwise>
 		<form method="post" action="logon">
-			<div id="logonBox">
+			<div class="formBox">
 				<div class="field">
 					<label for="username">Pseudo&nbsp;:</label>
 					<input type="text" id="username" name="<%= CommonConstants.LOGIN_PARAM %>"/>
