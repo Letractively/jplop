@@ -12,7 +12,7 @@
 		<title><jsp:getProperty name="backend" property="name"/>::Nouveau compte</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta http-equiv="Author"       content="Tifauv'"/>
-		<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+		<link rel="stylesheet" type="text/css" href="styles/form.css"/>
 		<script type="text/javascript" src="scripts/utils.js"></script>
 		<script type="text/javascript" src="scripts/register.js"></script>
 	</head>
@@ -33,14 +33,22 @@
 	</c:when>
 	<c:otherwise>
 		<form method="post" action="register">
-			<div>
-				<label for="username">Login&nbsp;:</label>
-				<input type="text" id="username" name="<%= CommonConstants.LOGIN_PARAM %>"/>
-				<label for="password">Mot de passe&nbsp;:</label>
-				<input type="password" id="password" name="<%= CommonConstants.PASSWORD_PARAM %>"/>
-				<label for="password-confirm">Confirmation du mot de passe&nbsp;:</label>
-				<input type="password" id="password-confirm" name="<%= CommonConstants.PASSWORD_CONFIRM_PARAM %>"/>
-				<input type="submit"/>
+			<div class="formBox">
+				<div class="field">
+					<label for="username">Login&nbsp;:</label>
+					<input type="text" id="username" name="<%= CommonConstants.LOGIN_PARAM %>"/>
+				</div>
+				<div class="field">
+					<label for="password">Mot de passe&nbsp;:</label>
+					<input type="password" id="password" name="<%= CommonConstants.PASSWORD_PARAM %>"/>
+				</div>
+				<div class="field">
+					<label for="password-confirm">Confirmation&nbsp;:</label>
+					<input type="password" id="password-confirm" name="<%= CommonConstants.PASSWORD_CONFIRM_PARAM %>"/>
+				</div>
+				<div class="action">
+					<input type="submit"/>
+				</div>
 			</div>
 		</form>
 	</c:otherwise>

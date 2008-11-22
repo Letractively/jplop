@@ -14,8 +14,8 @@ H2 {
 	-moz-border-radius: 1em 1em 0 0;
 } 
 
-/***** The logon form *****/
-#logonBox {
+/***** The form *****/
+.formBox {
 	text-align: center;
 	width: 25em;
 	margin-left: auto;
@@ -26,7 +26,7 @@ H2 {
 	display: table;
 }
 
-#logonBox .field {
+.formBox .field {
 	padding-left: 0.1em;
 	padding-right: 0.1em;
 	padding-top: 0.1em;
@@ -34,13 +34,13 @@ H2 {
 	display: table-row;
 }
 
-#logonBox .field LABEL {
+.formBox .field LABEL {
 /*	display: table-cell;*/
 	text-align: right;
 	width: 50%;
 }
 
-#logonBox .action {
+.formBox .action {
 	display: table-cell;
 	padding-left: 0.1em;
 	padding-right: 0.1em;
@@ -48,13 +48,13 @@ H2 {
 	padding-bottom: 0.1em;
 }
 
-#logonBox INPUT {
+.formBox INPUT {
 	background-color: #b2cfed;
 	color: #0c3762;
 	border: 0;
 }
 
-#logonBox INPUT[type="text"], #logonBox INPUT[type="password"] {
+.formBox INPUT[type="text"], .formBox INPUT[type="password"] {
 	background-color: #ffffff;
 	border: 1px solid #b2cfed;
 }
