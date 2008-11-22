@@ -18,7 +18,7 @@ import junit.framework.TestCase;
  * @author Olivier Serve <tifauv@gmail.com>
  */
 public class HistoryTest extends TestCase {
-
+	
 	/**
 	 * Test method for {@link tifauv.jplop.board.History#History(java.lang.String)}.
 	 */
@@ -29,6 +29,8 @@ public class HistoryTest extends TestCase {
 		// Check without url
 		History history = new History(null);
 		assertNull(history.getURL());
+		assertEquals(History.FILE_NAME, history.getFilename());
+		assertNotNull(history.getLastModified());
 		assertEquals(0, history.size());
 		assertEquals(History.DEFAULT_SIZE, history.maxSize());
 		assertTrue(history.isEmpty());
@@ -36,6 +38,8 @@ public class HistoryTest extends TestCase {
 		// Check with an url
 		history = new History("http://www.example.com/app");
 		assertEquals("http://www.example.com/app", history.getURL());
+		assertEquals(History.FILE_NAME, history.getFilename());
+		assertNotNull(history.getLastModified());
 		assertEquals(0, history.size());
 		assertEquals(History.DEFAULT_SIZE, history.maxSize());
 		assertTrue(history.isEmpty());
@@ -75,5 +79,91 @@ public class HistoryTest extends TestCase {
 		
 		// reset the original value
 		TimeZone.setDefault(tz);
+	}
+	
+	
+	public void testAddMessage() {
+		System.setProperty("log4j.defaultInitOverride", "true");
+		BasicConfigurator.configure();
+		History history = new History(null);
+
+		// Empty
+		assertEquals(0, history.size());
+		assertTrue(history.isEmpty());
+
+		// Add one message
+		assertEquals(0, history.addMessage("info", "message", "login"));
+		assertEquals(1, history.size());
+		assertFalse(history.isEmpty());
+	}
+	
+	
+	public void testIsModifiedSince() {
+		System.setProperty("log4j.defaultInitOverride", "true");
+		BasicConfigurator.configure();
+		History history = new History(null);
+
+		// Empty
+		String lastModified = history.getLastModified();
+		
+		// isModifiedSince should always return true if the parameter is badly formatted
+		assertTrue(history.isModifiedSince(null));
+		assertTrue(history.isModifiedSince("pikaron"));
+		
+		// Sleep at least 1 second as it is the LastModified resolution
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// Don't bother, however it can make the next test fail
+		}
+
+		// Add one message
+		assertEquals(0, history.addMessage("info", "message", "login"));
+		assertTrue(history.isModifiedSince(lastModified));
+	}
+	
+	
+	public void testTruncate() {
+		System.setProperty("log4j.defaultInitOverride", "true");
+		BasicConfigurator.configure();
+		History history = new History(null, 1);
+
+		// Empty
+		assertEquals(0, history.size());
+		assertEquals(1, history.maxSize());
+		String lastModified = history.getLastModified();
+		
+		// Sleep at least 1 second as it is the LastModified resolution
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// Don't bother, however it can make the next test fail
+		}
+
+		// Add one message
+		assertEquals(0, history.addMessage("info", "message 1", "login"));
+		assertEquals(1, history.size());
+		assertTrue(history.isModifiedSince(lastModified));
+		
+		// Sleep at least 1 second as it is the LastModified resolution
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// Don't bother, however it can make the next test fail
+		}
+
+		// Add another message, the size should still be one
+		assertEquals(1, history.addMessage("info", "message 2", "login"));
+		assertEquals(1, history.size());
+		assertTrue(history.isModifiedSince(lastModified));
+	}
+	
+	
+	public void testToString() {
+		System.setProperty("log4j.defaultInitOverride", "true");
+		BasicConfigurator.configure();
+		History history = new History(null);
+
+		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"null\" timezone=\"UTC+0100\">\n</board>", history.toString());
 	}
 }
