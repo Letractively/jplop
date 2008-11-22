@@ -114,15 +114,6 @@ function initBackend() {
 			};
 		addEvent(item, 'mouseout', unhighlightFn);
 	}
-    
-	// Special highlight for 'my' messages
-	/*items = searchItems("//*[@class='login']");
-	for (var i=0; i<items.snapshotLength; ++i) {
-		var item = items.snapshotItem(i);
-		if (item.innerHTML == GLogin) {
-			item.className = 'login my';
-		}
-	}*/
 }
 
 
