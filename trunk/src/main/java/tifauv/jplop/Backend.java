@@ -259,9 +259,13 @@ public final class Backend {
 			buffer.append("<param name=\"Login\">").append(user.getLogin()).append("</param>");
 		
 		// Add the nick
-		String nick = (String)p_request.getSession().getAttribute(CommonConstants.NICK_SESSION_ATTR);
-		if (nick != null)
-			buffer.append("<param name=\"Nick\">").append(nick).append("</param>");
+		if (user != null && user.getNick() != null)
+			buffer.append("<param name=\"Nick\">").append(user.getNick()).append("</param>");
+		else {
+			String nick = (String)p_request.getSession().getAttribute(CommonConstants.NICK_SESSION_ATTR);
+			if (nick != null)
+				buffer.append("<param name=\"Nick\">").append(nick).append("</param>");
+		}
 		
 		// Add the user agent
 		buffer.append("<param name=\"User-Agent\">")

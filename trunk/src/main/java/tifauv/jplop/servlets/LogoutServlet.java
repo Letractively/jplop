@@ -53,7 +53,6 @@ public final class LogoutServlet extends HttpServlet {
 		User user = (User)p_request.getSession().getAttribute(CommonConstants.USER_SESSION_ATTR);
 		if (user != null) {
 			p_request.getSession().removeAttribute(CommonConstants.USER_SESSION_ATTR);
-			p_request.getSession().removeAttribute(CommonConstants.NICK_SESSION_ATTR);
 			m_logger.info("User '" + user.getLogin() + "' logged out.");
 		}
 		else
