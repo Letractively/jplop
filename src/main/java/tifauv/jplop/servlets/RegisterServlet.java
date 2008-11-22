@@ -154,6 +154,7 @@ public final class RegisterServlet extends HttpServlet {
 				
 				// Add the user
 				users.addUser(user);
+				p_request.getSession().removeAttribute(CommonConstants.NICK_SESSION_ATTR);
 				p_request.getSession().setAttribute(CommonConstants.USER_SESSION_ATTR, user);
 				p_response.setStatus(HttpServletResponse.SC_CREATED);
 				getServletContext().getRequestDispatcher(SUCCESS_PAGE).forward(p_request, p_response);

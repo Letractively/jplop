@@ -105,6 +105,7 @@ import tifauv.jplop.auth.UserBase;
 			m_logger.info("Logon request for user [" + username + "].");
 			Authenticator authn = new Authenticator(username, password);
 			if (authn.authenticate()) {
+				p_request.getSession().removeAttribute(CommonConstants.NICK_SESSION_ATTR);
 				p_request.getSession().setAttribute(CommonConstants.USER_SESSION_ATTR, authn.getUser());
 				getServletContext().getRequestDispatcher(SUCCESS_PAGE).forward(p_request, p_response);
 			}
