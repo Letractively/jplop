@@ -48,8 +48,8 @@ public final class BackendServlet extends HttpServlet {
 	throws IOException {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(CommonConstants.IF_MODIFIED_SINCE_HDR);
-		m_logger.info("If-Modified-Since : " + ifModifiedSince);
-		m_logger.info("Last-Modified : " + Backend.getInstance().getLastModified());
+		m_logger.debug("If-Modified-Since : " + ifModifiedSince);
+		m_logger.debug("Last-Modified : " + Backend.getInstance().getLastModified());
 		String text = Backend.getInstance().getText(ifModifiedSince);
 
 		p_response.setHeader(CommonConstants.PRAGMA_HDR, CommonConstants.NO_CACHE);
