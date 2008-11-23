@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="JPlop" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>JPlop</display-name>
+	
+	<servlet>
+		<description>
+		The initialization servlet</description>
+		<display-name>
+		Init servlet</display-name>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The servlet that gives the backend</description>
+		<display-name>
+		Backend servlet</display-name>
+		<servlet-name>BackendServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.BackendServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The servlet that receives the messages</description>
+		<display-name>
+		Post servlet</display-name>
+		<servlet-name>PostServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.PostServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The logon servlet</description>
+		<display-name>
+		Logon servlet</display-name>
+		<servlet-name>LogonServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.LogonServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		The account creation servlet</description>
+		<display-name>
+		Registration servlet</display-name>
+		<servlet-name>RegisterServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.RegisterServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<description>
+		This servlet gives the board's configuration</description>
+		<display-name>
+		Discovery servlet</display-name>
+		<servlet-name>DiscoveryServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.DiscoveryServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		This servlet gives the user's settings</description>
+		<display-name>
+		Settings servlet</display-name>
+		<servlet-name>SettingsServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.SettingsServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		The logout servlet</description>
+		<display-name>
+		LogoutServlet</display-name>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>
+		tifauv.jplop.servlets.LogoutServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>BackendServlet</servlet-name>
+		<url-pattern>/backend</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PostServlet</servlet-name>
+		<url-pattern>/post</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogonServlet</servlet-name>
+		<url-pattern>/logon</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DiscoveryServlet</servlet-name>
+		<url-pattern>/discover</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SettingsServlet</servlet-name>
+		<url-pattern>/my-settings</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>480</session-timeout>
+	</session-config>
+   
+	<welcome-file-list>
+		<welcome-file>board.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+</web-app>
