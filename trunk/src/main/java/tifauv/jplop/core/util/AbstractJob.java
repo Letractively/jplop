@@ -1,7 +1,7 @@
 /**
  * 19 nov. 2007
  */
-package tifauv.jplop.util;
+package tifauv.jplop.core.util;
 
 import org.apache.log4j.Logger;
 

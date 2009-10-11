@@ -1,14 +1,14 @@
 /**
  * 03 dec. 2007
  */
-package tifauv.jplop.servlets;
+package tifauv.jplop.web;
 
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.Backend;
-import tifauv.jplop.CommonConstants;
+import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.CommonConstants;
 
 /**
  * This servlet initializes and cleans JPlop.

@@ -3,7 +3,8 @@
  */
 package tifauv.jplop.persistence;
 
-import tifauv.jplop.persistence.DeserializeException;
+import tifauv.jplop.core.backend.file.persistence.DeserializeException;
+import tifauv.jplop.core.backend.file.persistence.tifauv;
 import junit.framework.TestCase;
 
 

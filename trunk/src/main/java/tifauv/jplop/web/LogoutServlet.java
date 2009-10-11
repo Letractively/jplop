@@ -1,4 +1,4 @@
-package tifauv.jplop.servlets;
+package tifauv.jplop.web;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.CommonConstants;
-import tifauv.jplop.auth.User;
+import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.auth.User;
 
 /**
  * Servlet implementation class for Servlet: LogoutServlet

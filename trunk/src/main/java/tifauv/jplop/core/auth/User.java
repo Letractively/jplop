@@ -1,7 +1,7 @@
 /**
  * 04 dec. 2007
  */
-package tifauv.jplop.auth;
+package tifauv.jplop.core.auth;
 
 import java.util.SortedSet;
 import java.util.TreeSet;

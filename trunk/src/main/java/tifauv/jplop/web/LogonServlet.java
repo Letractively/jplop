@@ -1,7 +1,7 @@
 /**
  * 03 dec. 2007
  */
-package tifauv.jplop.servlets;
+package tifauv.jplop.web;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.Backend;
-import tifauv.jplop.CommonConstants;
-import tifauv.jplop.auth.Authenticator;
-import tifauv.jplop.auth.User;
-import tifauv.jplop.auth.UserBase;
+import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.auth.Authenticator;
+import tifauv.jplop.core.auth.User;
+import tifauv.jplop.core.auth.UserBase;
 
 /**
  * Servlet implementation class for Servlet: LogonServlet

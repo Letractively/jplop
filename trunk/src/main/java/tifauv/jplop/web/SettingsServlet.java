@@ -1,7 +1,7 @@
 /**
  * 22 nov. 08
  */
-package tifauv.jplop.servlets;
+package tifauv.jplop.web;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tifauv.jplop.Backend;
+import tifauv.jplop.core.Backend;
 
 /**
  * This servlet gives the settings of the current user.
