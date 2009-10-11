@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.Main;
 
 /**
  * This servlet sends the backend.
@@ -49,22 +49,22 @@ public final class BackendServlet extends HttpServlet {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(CommonConstants.IF_MODIFIED_SINCE_HDR);
 		m_logger.debug("If-Modified-Since : " + ifModifiedSince);
-		m_logger.debug("Last-Modified : " + Backend.getInstance().getLastModified());
-		String text = Backend.getInstance().getText(ifModifiedSince);
+		m_logger.debug("Last-Modified : " + Main.get().getLastModified());
+		String text = Main.get().getText(ifModifiedSince);
 
 		p_response.setHeader(CommonConstants.PRAGMA_HDR, CommonConstants.NO_CACHE);
 		p_response.setHeader(CommonConstants.CACHE_CONTROL_HDR, CommonConstants.NO_CACHE);
 		
 		if (text == null) {
 			p_response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Backend.getInstance().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getLastModified());
 			p_response.setContentLength(0);
 		}
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
 			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setCharacterEncoding("UTF-8");
-			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Backend.getInstance().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getLastModified());
 			p_response.setContentLength(text.getBytes("UTF-8").length);
 			p_response.getWriter().write(text);
 		}

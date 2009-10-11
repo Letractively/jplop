@@ -1,15 +1,14 @@
 /**
  * Dec 14, 2007
  */
-package tifauv.jplop.board;
+package tifauv.jplop.core.board;
 
+import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.log4j.BasicConfigurator;
-
-import tifauv.jplop.core.board.History;
-
 import junit.framework.TestCase;
+
+import org.apache.log4j.BasicConfigurator;
 
 
 /**
@@ -162,10 +161,35 @@ public class HistoryTest extends TestCase {
 	
 	
 	public void testToString() {
+		Date now = new Date();
+		int offset = TimeZone.getDefault().getOffset(now.getTime());
+		String tz = "UTC";
+		if (offset != 0) {
+			// Add the sign
+			if (offset > 0)
+				tz += '+';
+			else {
+				tz += '-';
+				offset = -offset;
+			}
+
+			// Add the hours
+			int hours = offset / 3600000; // 1h = 60 m * 60 s * 1000 ms
+			if (hours < 10)
+				tz += '0';
+			tz += Integer.toString(hours);
+
+			// Add the minutes
+			int minutes = (offset % 3600000) / 60000; // 1m = 60s * 1000 ms
+			if (minutes < 10)
+				tz += '0';
+			tz += Integer.toString(minutes);
+		}
+		
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
 		History history = new History(null);
 
-		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"null\" timezone=\"UTC+0100\">\n</board>", history.toString());
+		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"null\" timezone=\"" + tz + "\">\n</board>", history.toString());
 	}
 }

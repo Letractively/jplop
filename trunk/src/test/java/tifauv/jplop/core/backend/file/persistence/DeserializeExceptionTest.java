@@ -1,11 +1,10 @@
 /**
  * Dec 14, 2007
  */
-package tifauv.jplop.persistence;
+package tifauv.jplop.core.backend.file.persistence;
 
-import tifauv.jplop.core.backend.file.persistence.DeserializeException;
-import tifauv.jplop.core.backend.file.persistence.tifauv;
 import junit.framework.TestCase;
+import tifauv.jplop.core.backend.file.persistence.DeserializeException;
 
 
 /**

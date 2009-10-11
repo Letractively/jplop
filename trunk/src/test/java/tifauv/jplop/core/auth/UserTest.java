@@ -1,7 +1,7 @@
 /**
  * Dec 14, 2007
  */
-package tifauv.jplop.auth;
+package tifauv.jplop.core.auth;
 
 import tifauv.jplop.core.auth.PasswordException;
 import tifauv.jplop.core.auth.User;

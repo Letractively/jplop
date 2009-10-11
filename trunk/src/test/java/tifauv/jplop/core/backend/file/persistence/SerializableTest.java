@@ -1,7 +1,7 @@
 /**
  * Mar 16, 2008
  */
-package tifauv.jplop.persistence;
+package tifauv.jplop.core.backend.file.persistence;
 
 import java.io.File;
 

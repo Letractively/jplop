@@ -2,7 +2,7 @@ package tifauv.jplop.core.auth;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.Main;
 
 public final class Authenticator {
 
@@ -67,7 +67,7 @@ public final class Authenticator {
 		}
 		
 		m_logger.debug("Authentication request for user [" + getUsername() + "].");
-		User user = Backend.getInstance().getUserBase().get(getUsername());
+		User user = Main.get().getUserBase().get(getUsername());
 		
 		// If the user doesn't exist, exit
 		if (user == null) {
