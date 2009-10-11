@@ -1,19 +1,22 @@
-package tifauv.jplop.persistence;
+/**
+ * Dec 11, 2007
+ */
+package tifauv.jplop.core.backend.file.persistence;
 
 
 /**
  * This exception wraps any non-runtime exception thrown when
- * deserializing a subclass of {@link tifauv.jplop.persistence.Persistent}.
+ * serializing a subclass of {@link tifauv.jplop.persistence.Persistent}.
  *
  * @version 1.0
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class DeserializeException extends Exception {
+public class SerializeException extends Exception {
 
 	// CONSTANTS \\
 	/** The serialization identifier. */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4408088046693855585L;
 
 
 	// CONSTRUCTORS \\
@@ -23,7 +26,7 @@ public class DeserializeException extends Exception {
 	 * @param p_message
 	 *            the error message
 	 */
-	public DeserializeException(String p_message) {
+	public SerializeException(String p_message) {
 		super(p_message);
 	}
 	
@@ -36,7 +39,7 @@ public class DeserializeException extends Exception {
 	 * @param p_cause
 	 *            the error cause
 	 */
-	public DeserializeException(String p_message, Throwable p_cause) {
+	public SerializeException(String p_message, Throwable p_cause) {
 		super(p_message, p_cause);
 	}
 }

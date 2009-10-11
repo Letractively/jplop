@@ -1,8 +1,8 @@
-package tifauv.jplop.auth;
+package tifauv.jplop.core.auth;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.Backend;
+import tifauv.jplop.core.Backend;
 
 public final class Authenticator {
 

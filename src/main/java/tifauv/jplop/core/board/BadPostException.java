@@ -1,7 +1,7 @@
 /**
  * 18 jan. 2008
  */
-package tifauv.jplop.board;
+package tifauv.jplop.core.board;
 
 
 /**

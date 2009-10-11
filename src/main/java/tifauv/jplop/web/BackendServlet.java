@@ -1,7 +1,7 @@
 /**
  * 19 oct. 2007
  */
-package tifauv.jplop.servlets;
+package tifauv.jplop.web;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.Backend;
-import tifauv.jplop.CommonConstants;
+import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.CommonConstants;
 
 /**
  * This servlet sends the backend.

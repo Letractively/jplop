@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.auth;
 
+import tifauv.jplop.core.auth.PasswordException;
+import tifauv.jplop.core.auth.tifauv;
 import junit.framework.TestCase;
 
 

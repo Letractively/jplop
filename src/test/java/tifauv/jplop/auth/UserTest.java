@@ -3,6 +3,8 @@
  */
 package tifauv.jplop.auth;
 
+import tifauv.jplop.core.auth.PasswordException;
+import tifauv.jplop.core.auth.User;
 import junit.framework.TestCase;
 
 
@@ -16,7 +18,7 @@ import junit.framework.TestCase;
 public class UserTest extends TestCase {
 
 	/**
-	 * Test method for {@link tifauv.jplop.auth.User#User()}.
+	 * Test method for {@link tifauv.jplop.core.auth.User#User()}.
 	 */
 	public void testUser() {
 		User user = new User();

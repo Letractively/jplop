@@ -1,4 +1,4 @@
-package tifauv.jplop.auth;
+package tifauv.jplop.core.auth;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,9 +17,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import tifauv.jplop.persistence.DeserializeException;
-import tifauv.jplop.persistence.Persistable;
-import tifauv.jplop.persistence.SerializeException;
+import tifauv.jplop.core.backend.file.persistence.DeserializeException;
+import tifauv.jplop.core.backend.file.persistence.Persistable;
+import tifauv.jplop.core.backend.file.persistence.SerializeException;
 
 /**
  * This is a list of users.

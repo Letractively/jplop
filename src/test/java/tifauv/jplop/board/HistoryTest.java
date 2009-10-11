@@ -7,6 +7,8 @@ import java.util.TimeZone;
 
 import org.apache.log4j.BasicConfigurator;
 
+import tifauv.jplop.core.board.History;
+
 import junit.framework.TestCase;
 
 
@@ -20,7 +22,7 @@ import junit.framework.TestCase;
 public class HistoryTest extends TestCase {
 	
 	/**
-	 * Test method for {@link tifauv.jplop.board.History#History(java.lang.String)}.
+	 * Test method for {@link tifauv.jplop.core.board.History#History(java.lang.String)}.
 	 */
 	public void testHistoryString() {
 		System.setProperty("log4j.defaultInitOverride", "true");

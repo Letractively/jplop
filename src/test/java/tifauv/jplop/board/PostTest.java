@@ -16,6 +16,9 @@ import junit.framework.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import tifauv.jplop.core.board.BadPostException;
+import tifauv.jplop.core.board.Post;
+
 
 /**
  * .
@@ -27,7 +30,7 @@ import org.w3c.dom.Element;
 public class PostTest extends TestCase {
 
 	/**
-	 * Test method for {@link tifauv.jplop.board.Post#Post(long, java.lang.String, java.lang.String, java.lang.String)}.
+	 * Test method for {@link tifauv.jplop.core.board.Post#Post(long, java.lang.String, java.lang.String, java.lang.String)}.
 	 */
 	public void testPostLongStringStringString() {
 		// First simple test
@@ -167,7 +170,7 @@ public class PostTest extends TestCase {
 	
 	
 	/**
-	 * Test method for {@link tifauv.jplop.board.Post#Post(org.w3c.dom.Element)}.
+	 * Test method for {@link tifauv.jplop.core.board.Post#Post(org.w3c.dom.Element)}.
 	 */
 	public void testPostElement() {
 		// Build the DocumentBuilder
@@ -320,7 +323,7 @@ public class PostTest extends TestCase {
 	}
 	
 	/**
-	 * Test method for {@link tifauv.jplop.board.Post#setMaxLength(int)}.
+	 * Test method for {@link tifauv.jplop.core.board.Post#setMaxLength(int)}.
 	 */
 	public void testSetMaxLength() {
 		// Check the setter and getter work

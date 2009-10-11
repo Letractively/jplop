@@ -1,7 +1,7 @@
 /**
  * 19 oct. 2007
  */
-package tifauv.jplop;
+package tifauv.jplop.core;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.auth.User;
-import tifauv.jplop.auth.UserBase;
-import tifauv.jplop.board.History;
-import tifauv.jplop.board.Post;
-import tifauv.jplop.persistence.DeserializeException;
-import tifauv.jplop.persistence.PersistenceManager;
+import tifauv.jplop.core.auth.User;
+import tifauv.jplop.core.auth.UserBase;
+import tifauv.jplop.core.backend.file.persistence.DeserializeException;
+import tifauv.jplop.core.backend.file.persistence.PersistenceManager;
+import tifauv.jplop.core.board.History;
+import tifauv.jplop.core.board.Post;
 
 
 /**

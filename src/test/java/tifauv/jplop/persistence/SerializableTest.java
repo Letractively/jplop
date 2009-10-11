@@ -11,6 +11,8 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.LogManager;
 
+import tifauv.jplop.core.backend.file.persistence.PersistenceManager;
+
 /**
  * .
  *

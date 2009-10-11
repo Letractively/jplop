@@ -3,6 +3,7 @@
  */
 package tifauv.jplop.board;
 
+import tifauv.jplop.core.board.BadPostException;
 import junit.framework.TestCase;
 
 
@@ -16,7 +17,7 @@ import junit.framework.TestCase;
 public class BadPostExceptionTest extends TestCase {
 
 	/**
-	 * Test method for {@link tifauv.jplop.board.BadPostException#BadPostException(java.lang.String)}.
+	 * Test method for {@link tifauv.jplop.core.board.BadPostException#BadPostException(java.lang.String)}.
 	 */
 	public void testBadPostExceptionString() {
 		// Check without message
@@ -30,7 +31,7 @@ public class BadPostExceptionTest extends TestCase {
 	
 	
 	/**
-	 * Test method for {@link tifauv.jplop.board.BadPostException#BadPostException(java.lang.String, java.lang.Throwable)}.
+	 * Test method for {@link tifauv.jplop.core.board.BadPostException#BadPostException(java.lang.String, java.lang.Throwable)}.
 	 */
 	public void testBadPostExceptionStringThrowable() {
 		// Check without message and cause

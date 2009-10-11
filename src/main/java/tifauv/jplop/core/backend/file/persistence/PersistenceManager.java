@@ -1,4 +1,4 @@
-package tifauv.jplop.persistence;
+package tifauv.jplop.core.backend.file.persistence;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.util.AbstractJob;
+import tifauv.jplop.core.util.AbstractJob;
 
 public class PersistenceManager {
 	
@@ -226,7 +226,7 @@ final class BackupJob extends AbstractJob {
 	/**
 	 * Default constructor sets the job's name.
 	 * 
-	 * @see tifauv.jplop.util.AbstractJob#AbstractJob(String)
+	 * @see tifauv.jplop.core.util.AbstractJob#AbstractJob(String)
 	 */
 	public BackupJob(PersistenceManager p_manager) {
 		super(JOB_NAME);
@@ -238,7 +238,7 @@ final class BackupJob extends AbstractJob {
 	/**
 	 * Calls {@link Backend#saveToDisk()}.
 	 * 
-	 * @see tifauv.jplop.util.AbstractJob#doWork()
+	 * @see tifauv.jplop.core.util.AbstractJob#doWork()
 	 */
 	@Override
 	protected void doWork() {
