@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.Main;
 import tifauv.jplop.core.auth.User;
 
 
@@ -114,7 +114,7 @@ public final class PostServlet extends HttpServlet {
 		
 		// Add the message
 		if (addMessage) {
-			long id = Backend.getInstance().addMessage(userAgent, message, login);
+			long id = Main.get().addMessage(userAgent, message, login);
 			p_response.addHeader(CommonConstants.POSTID_HDR, Long.toString(id));
 			p_response.setStatus(HttpServletResponse.SC_CREATED);
 		}

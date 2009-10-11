@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.Main;
 
 /**
  * This servlet initializes and cleans JPlop.
@@ -39,8 +39,8 @@ public final class InitServlet extends HttpServlet {
 		m_logger.info("====> \\_o< JPlop starting >o_/ <====");
 		try {
 			super.init();
-			Backend.create(getServletContext().getRealPath("/"));
-			getServletContext().setAttribute(CommonConstants.BACKEND_APPLICATION_ATTR, Backend.getInstance());
+			Main.create(getServletContext().getRealPath("/"));
+			getServletContext().setAttribute(CommonConstants.BACKEND_APPLICATION_ATTR, Main.get());
 		} catch (Exception e) {
 			m_logger.error("Cannot initialize the backend.", e);
 		}
@@ -53,7 +53,7 @@ public final class InitServlet extends HttpServlet {
 	@Override
 	public void destroy() {
 		getServletContext().removeAttribute(CommonConstants.BACKEND_APPLICATION_ATTR);
-		Backend.destroy();
+		Main.destroy();
 		m_logger.info("====> \\_x<~ JPlop stopped ~>x_/ <====");
 	}
 }

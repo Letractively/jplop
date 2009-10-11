@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.Main;
 
 /**
  * This servlet gives the settings of the current user.
@@ -44,7 +44,7 @@ public class SettingsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
 		// Build the response
-		String settings = Backend.getInstance().getSettings(p_request);
+		String settings = Main.get().getSettings(p_request);
 		
 		// Send the response
 		p_response.setStatus(HttpServletResponse.SC_OK);

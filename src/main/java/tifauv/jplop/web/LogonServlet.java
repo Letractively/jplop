@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.CommonConstants;
+import tifauv.jplop.core.Main;
 import tifauv.jplop.core.auth.Authenticator;
 import tifauv.jplop.core.auth.User;
 import tifauv.jplop.core.auth.UserBase;
@@ -78,7 +78,7 @@ import tifauv.jplop.core.auth.UserBase;
 			return;
 		}
 		
-		UserBase users = Backend.getInstance().getUserBase();
+		UserBase users = Main.get().getUserBase();
 		if (users != null) {
 			// Check the parameters are all there
 			String username = p_request.getParameter(CommonConstants.LOGIN_PARAM);

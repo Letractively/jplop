@@ -1,7 +1,7 @@
 /**
  * Dec 14, 2007
  */
-package tifauv.jplop.board;
+package tifauv.jplop.core.board;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -147,6 +147,7 @@ public final class UserBase implements Persistable {
 	public synchronized void addUser(User p_user) {
 		if (p_user == null) {
 			m_logger.warn("Tried to add a null user.");
+			return;
 		}
 		
 		if (!m_users.containsKey(p_user.getLogin())) {
