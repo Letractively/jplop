@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?><project>
-  <parent>
-    <artifactId>jplop</artifactId>
-    <groupId>tifauv</groupId>
-    <version>1.90-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>tifauv.jplop</groupId>
-  <artifactId>jplop-common</artifactId>
-  <name>JPlop common classes</name>
-  <version>1.90-SNAPSHOT</version>
-  <description>Some exceptions and utilities shared by the others JPlop modules.</description>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.3</version>
-    </dependency>
-  </dependencies>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>jplop</artifactId>
+		<groupId>tifauv</groupId>
+		<version>1.90-SNAPSHOT</version>
+	</parent>
+	<groupId>tifauv.jplop</groupId>
+	<artifactId>jplop-common</artifactId>
+	<packaging>jar</packaging>
+	<name>JPlop common classes</name>
+	<description>Some exceptions and utilities shared by the other JPlop modules.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.3</version>
+		</dependency>
+	</dependencies>
 </project>

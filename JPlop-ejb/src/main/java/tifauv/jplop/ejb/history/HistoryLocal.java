@@ -8,8 +8,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import tifauv.jplop.entity.Post;
 import tifauv.jplop.entity.Account;
+import tifauv.jplop.entity.board.Post;
+
 
 /**
  * This is the local interface that allows access to the history.

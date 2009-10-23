@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import tifauv.jplop.entity.board.Post;
 import tifauv.jplop.exceptions.ValidationException;
 
 /**
@@ -52,7 +53,7 @@ import tifauv.jplop.exceptions.ValidationException;
  * @version 1.0
  */
 @Entity
-public class Account implements Serializable {
+public final class Account implements Serializable {
 
 	// CONSTANTS \\
 	/** The serialization identifier. */

@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>tifauv.jplop</groupId>
-	<artifactId>jplop-entity</artifactId>
-	<version>1.90-SNAPSHOT</version>
-	<name>JPlop persistence entities</name>
-	<description>The persistence layer of JPlop</description>
-	<packaging>jar</packaging>
-	<!-- <url>http://maven.apache.org</url> -->
-
 	<parent>
 		<groupId>tifauv</groupId>
 		<artifactId>jplop</artifactId>
 		<version>1.90-SNAPSHOT</version>
 	</parent>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<groupId>tifauv.jplop</groupId>
+	<artifactId>jplop-entity</artifactId>
+	<name>JPlop persistence entities</name>
+	<description>The persistence layer of JPlop</description>
+	<packaging>jar</packaging>
+	<!-- <url>http://maven.apache.org</url> -->
 
 	<dependencies>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-common</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.persistence</groupId>
