@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>tifauv.jplop</groupId>
-	<artifactId>jplop-ejb</artifactId>
-	<version>1.90-SNAPSHOT</version>
-	<name>JPlop stateless ejbs</name>
-	<description>The stateless EJB layer of JPlop</description>
-	<packaging>ejb</packaging>
-	<!-- <url>http://maven.apache.org</url> -->
-
 	<parent>
 		<groupId>tifauv</groupId>
 		<artifactId>jplop</artifactId>
 		<version>1.90-SNAPSHOT</version>
 	</parent>
+	<groupId>tifauv.jplop</groupId>
+	<artifactId>jplop-ejb</artifactId>
+	<name>JPlop stateless ejbs</name>
+	<description>The stateless EJB layer of JPlop</description>
+	<packaging>ejb</packaging>
+	<!-- <url>http://maven.apache.org</url> -->
+
 
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
@@ -37,12 +29,12 @@
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-common</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-entity</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.persistence</groupId>

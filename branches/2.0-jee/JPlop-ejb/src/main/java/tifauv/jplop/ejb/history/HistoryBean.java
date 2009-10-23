@@ -11,8 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import tifauv.jplop.entity.Post;
 import tifauv.jplop.entity.Account;
+import tifauv.jplop.entity.board.Post;
 import tifauv.jplop.exceptions.ValidationException;
 
 /**
@@ -49,7 +49,7 @@ public class HistoryBean implements HistoryLocal {
 	 * 
 	 * @return the initialized post
 	 * 
-	 * @see tifauv.jplop.stateless.history.HistoryLocal#createPost(tifauv.jplop.entity.Post, java.util.Date, java.lang.String, java.lang.String, tifauv.jplop.entity.Account)
+	 * @see tifauv.jplop.stateless.history.HistoryLocal#creattifauv.jplop.entity.board.ntity.board.Post, java.util.Date, java.lang.String, java.lang.String, tifauv.jplop.entity.Account)
 	 */
 	@Override
 	public Post createPost(Post p_post, Date p_time, String p_info, String p_message, Account p_author) {

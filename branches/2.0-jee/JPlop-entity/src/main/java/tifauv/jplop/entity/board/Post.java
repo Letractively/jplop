@@ -1,7 +1,7 @@
 /**
  * 5 juil. 2008
  */
-package tifauv.jplop.entity;
+package tifauv.jplop.entity.board;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +17,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import tifauv.jplop.entity.board.Post;
+
+import tifauv.jplop.entity.Account;
 
 /**
  * 
@@ -48,7 +52,7 @@ import javax.persistence.TemporalType;
  * @author Olivier Serve <tifauv@gmail.com>
  */
 @Entity
-public class Post implements Serializable {
+public final class Post implements Serializable {
 
 	// CONSTANTS \\
 	/** The serialization id. */

@@ -23,7 +23,7 @@ import tifauv.jplop.exceptions.ValidationException;
  * @version 1.0
  */
 @Entity
-public class Role implements Serializable {
+public final class Role implements Serializable {
 	
 	// CONSTANTS \\
 	/** The serialization identifier. */

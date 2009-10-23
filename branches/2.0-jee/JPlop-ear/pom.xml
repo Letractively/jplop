@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>tifauv.jplop</groupId>
-	<artifactId>jplop-ear</artifactId>
-	<version>1.90-SNAPSHOT</version>
-	<name>JPlop application package</name>
-	<description>The application package of JPlop</description>
-	<packaging>ear</packaging>
-	<!-- <url>http://maven.apache.org</url> -->
-
 	<parent>
 		<groupId>tifauv</groupId>
 		<artifactId>jplop</artifactId>
 		<version>1.90-SNAPSHOT</version>
 	</parent>
+	<groupId>tifauv.jplop</groupId>
+	<artifactId>jplop-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>JPlop application package</name>
+	<description>The application package of JPlop</description>
+	<!-- <url>http://maven.apache.org</url> -->
+
 
 	<dependencies>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-common</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-entity</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-ejb</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>tifauv.jplop</groupId>
 			<artifactId>jplop-web</artifactId>
-			<version>1.90-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
 	</dependencies>
