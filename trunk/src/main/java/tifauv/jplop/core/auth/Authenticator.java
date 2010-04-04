@@ -22,67 +22,41 @@ public final class Authenticator {
 	
 	// CONSTRUCTORS \\
 	public Authenticator(String p_username, String p_password) {
-		setUsername(p_username);
-		setPassword(p_password);
+		m_username = p_username;
+		m_password = p_password;
 	}
 	
 	
 	// GETTERS \\
-	public String getUsername() {
-		return m_username;
-	}
-	
-	
-	private String getPassword() {
-		return m_password;
-	}
-	
-	
 	public User getUser() {
 		return m_user;
 	}
 	
 	
-	// SETTERS \\
-	private void setUsername(String p_username) {
-		m_username = p_username;
-	}
-	
-	
-	private void setPassword(String p_password) {
-		m_password = p_password;
-	}
-	
-	
-	private void setUser(User p_user) {
-		m_user = p_user;
-	}
-	
-	
 	// METHODS \\
 	public boolean authenticate() {
-		if (getUsername() == null) {
+		if (m_username == null) {
 			m_logger.error("Authentication failed because no username has been given.");
 			return false;
 		}
 		
-		m_logger.debug("Authentication request for user [" + getUsername() + "].");
-		User user = Main.get().getUserBase().get(getUsername());
+		m_logger.debug("Authentication request for user [" + m_username + "].");
+		User user = Main.get().getUserBase().get(m_username);
 		
 		// If the user doesn't exist, exit
 		if (user == null) {
-			m_logger.warn("Authentication failed: user [" + getUsername() + "] does not exist.");
+			m_logger.warn("Authentication failed: user [" + m_username + "] does not exist.");
 			return false;
 		}
 
 		// Else check the user's password
-		if (!user.checkPassword(getPassword())) {
-			m_logger.warn("Authentication failed: user [" + getUsername() + "] gave a bad password.");
+		if (!user.checkPassword(m_password)) {
+			m_logger.warn("Authentication failed: user [" + m_username + "] gave a bad password.");
 			return false;
 		}
-		m_logger.info("Authentication of user [" + getUsername() + "] succeeded.");
+		m_logger.info("Authentication of user [" + m_username + "] succeeded.");
 		
-		setUser(user);
+		m_user = user;
 		return true;
 	}
 }

@@ -1,5 +1,6 @@
 package tifauv.jplop.core;
 
+import tifauv.jplop.core.backend.Backend;
 import tifauv.jplop.core.backend.file.FileBackend;
 
 /**

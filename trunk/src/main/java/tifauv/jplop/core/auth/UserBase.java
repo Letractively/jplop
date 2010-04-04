@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,6 +107,16 @@ public final class UserBase implements Persistable {
 	 */
 	public String getDefaultRoles() {
 		return "";
+	}
+	
+	
+	public Collection<String> getRoles() {
+		return Collections.unmodifiableCollection(m_roles);
+	}
+	
+	
+	public Collection<User> getUsers() {
+		return Collections.unmodifiableCollection(m_users.values());
 	}
 	
 	

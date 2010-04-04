@@ -206,7 +206,7 @@ public final class History implements Persistable {
 	/**
 	 * Sets the next post identifier.
 	 */
-	private void setNextId(long p_id) {
+	public void setNextId(long p_id) {
 		m_idCounter = p_id;
 	}
 	
@@ -280,7 +280,7 @@ public final class History implements Persistable {
 	 * @see #setModified()
 	 * @see #truncate()
 	 */
-	private synchronized void addPost(Post p_post) {
+	public synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
 		m_logger.info("Post #" + p_post.getId() + " added.");
 		setModified();
