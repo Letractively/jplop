@@ -141,6 +141,11 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.wicket</groupId>
+    	<artifactId>wicket</artifactId>
+    	<version>1.4.4</version>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>

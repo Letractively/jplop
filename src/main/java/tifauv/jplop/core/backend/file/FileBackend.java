@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.CommonConstants;
 import tifauv.jplop.core.auth.User;
 import tifauv.jplop.core.auth.UserBase;
+import tifauv.jplop.core.backend.Backend;
 import tifauv.jplop.core.backend.file.persistence.DeserializeException;
 import tifauv.jplop.core.backend.file.persistence.PersistenceManager;
 import tifauv.jplop.core.board.History;
