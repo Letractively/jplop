@@ -19,6 +19,14 @@ import tifauv.jplop.core.storage.StorageDelegate;
  */
 public abstract class FileStorage<T> implements StorageDelegate<T> {
 
+	// CONSTANTS \\
+	/** The configuration key of the data directory. */
+	private static final String KEY_DATADIR = "jplop.datadir";
+	
+	/** The default data directory. */
+	public static final String DEFAULT_DATADIR = "${catalina.base}/jplop-data";
+
+	
 	// FIELDS \\
 	/** The logger. */
 	private final Logger m_logger = Logger.getLogger(FileStorage.class);
