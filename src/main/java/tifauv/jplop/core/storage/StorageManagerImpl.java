@@ -19,11 +19,8 @@ import tifauv.jplop.core.util.AbstractJob;
 public final class StorageManagerImpl implements StorageManager {
 	
 	// CONSTANTS \\
-	/** The default auto-save interval is every 5 minutes. */
-	public static final int DEFAULT_AUTOSAVE_INTERVAL = 5 * 60;
-	
 	/** The nma of the backup job. */
-	public static final String BACKUP_JOB_NAME = "Backup";
+	private static final String BACKUP_JOB_NAME = "Backup";
 	
 	
 	// FIELDS \\
@@ -32,6 +29,9 @@ public final class StorageManagerImpl implements StorageManager {
 	
 	/** The list of storage delegates. */
 	private final List<StorageDelegate<?>> m_delegates;
+	
+	/** The delegates factory. */
+	private StorageFactory m_factory;
 	
 	/** The backup job. */
 	private AbstractJob m_backupJob;
@@ -53,6 +53,15 @@ public final class StorageManagerImpl implements StorageManager {
 	@Override
 	public void setAutoSaveInterval(long p_seconds) {
 		m_backupJob.setFrequency(p_seconds * 1000);
+	}
+	
+	
+	/**
+	 * Sets the factory used to build the delegates.
+	 */
+	@Override
+	public void setStorageFactory(StorageFactory p_factory) {
+		m_factory = p_factory;
 	}
 
 	
@@ -83,23 +92,20 @@ public final class StorageManagerImpl implements StorageManager {
 
 	
 	@Override
-	public void attach(StorageDelegate<?> p_delegate) {
-		if (p_delegate == null)
-			throw new IllegalArgumentException("Null delegate given");
+	public void attach(Object p_object)
+	throws StorageException {
+		if (p_object == null)
+			throw new IllegalArgumentException("Cannot attach null");
+		
+		if (m_factory == null)
+			throw new StorageException("No storage factory defined");
+		
+		StorageDelegate<?> delegate = m_factory.createDelegate(p_object);
+		if (delegate == null)
+			throw new StorageException("The factory does not know how to build a delegate for " + p_object.getClass().getName());
 
 		synchronized (m_delegates) {
-			m_delegates.add(p_delegate);
-		}
-	}
-
-
-	@Override
-	public void detach(StorageDelegate<?> p_delegate) {
-		if (p_delegate == null)
-			throw new IllegalArgumentException("Null delegate given");
-
-		synchronized (m_delegates) {
-			m_delegates.remove(p_delegate);
+			m_delegates.add(delegate);
 		}
 	}
 	

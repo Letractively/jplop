@@ -1,4 +1,4 @@
-package tifauv.jplop.core.backend;
+package tifauv.jplop.core;
 
 import javax.servlet.http.HttpServletRequest;
 

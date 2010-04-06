@@ -1,7 +1,4 @@
-/**
- * 19 oct. 2007
- */
-package tifauv.jplop.core.backend.file;
+package tifauv.jplop.core;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -10,24 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import tifauv.jplop.core.Backend;
-import tifauv.jplop.core.CommonConstants;
 import tifauv.jplop.core.auth.User;
 import tifauv.jplop.core.auth.UserBase;
+import tifauv.jplop.core.backend.file.FileBackend;
 import tifauv.jplop.core.backend.file.persistence.DeserializeException;
 import tifauv.jplop.core.backend.file.persistence.PersistenceManager;
 import tifauv.jplop.core.board.History;
 import tifauv.jplop.core.board.Post;
+import tifauv.jplop.core.storage.StorageManager;
+import tifauv.jplop.core.storage.StorageManagerImpl;
 
-
-/**
- * This is the entry point of the model.
- *
- * @version 1.0
- *
- * @author Olivier Serve <tifauv@gmail.com>
- */
-public final class FileBackend implements Backend {
+public class BackendImpl implements Backend {
 
 	// CONSTANTS \\
 	/** The default configuration file. */
@@ -81,7 +71,7 @@ public final class FileBackend implements Backend {
 	private UserBase m_users;
 	
 	/** The persistence manager. */
-	private PersistenceManager m_persistence;
+	private StorageManager m_storage;
 	
 	/** The logger. */
 	private final Logger m_logger = Logger.getLogger(FileBackend.class);
@@ -91,6 +81,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the board's name.
 	 */
+	@Override
 	public String getName() {
 		return m_name;
 	}
@@ -99,6 +90,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the board's full name.
 	 */
+	@Override
 	public String getFullName() {
 		return m_fullName;
 	}
@@ -115,16 +107,17 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the persistence manager.
 	 */
-	private PersistenceManager getPersistenceManager() {
-		if (m_persistence == null)
-			m_persistence = new PersistenceManager();
-		return m_persistence;
+	private StorageManager getStorageManager() {
+		if (m_storage == null)
+			m_storage = new StorageManagerImpl();
+		return m_storage;
 	}
 	
 	
 	/**
 	 * Gives the board's URL.
 	 */
+	@Override
 	public String getURL() {
 		return getHistory().getURL();
 	}
@@ -133,6 +126,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the maximum number of messages of the history.
 	 */
+	@Override
 	public int getMaxSize() {
 		return getHistory().maxSize();
 	}
@@ -141,6 +135,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the user base.
 	 */
+	@Override
 	public UserBase getUserBase() {
 		return m_users;
 	}
@@ -152,6 +147,7 @@ public final class FileBackend implements Backend {
 	 * 
 	 * @see #addMessage(String, String, String)
 	 */
+	@Override
 	public int getMaxPostLength() {
 		return Post.getMaxLength();
 	}
@@ -160,6 +156,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the Last-Modified header value to send.
 	 */
+	@Override
 	public String getLastModified() {
 		return getHistory().getLastModified();
 	}
@@ -168,6 +165,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the backend text.
 	 */
+	@Override
 	public String getText() {
 		return getHistory().toString();
 	}
@@ -192,6 +190,7 @@ public final class FileBackend implements Backend {
 	/**
 	 * Gives the board's configuration for compliant coincoins.
 	 */
+	@Override
 	public String getBoardConfig() {
 		StringBuffer buffer = new StringBuffer(473
 				+ getName().length()
@@ -228,6 +227,7 @@ public final class FileBackend implements Backend {
 	 * 
 	 * @return
 	 */
+	@Override
 	public String getSettings(HttpServletRequest p_request) {
 		StringBuffer buffer = new StringBuffer(473
 				+ getName().length()
@@ -314,6 +314,7 @@ public final class FileBackend implements Backend {
 	 * @param p_contextDir
 	 *            the context directory
 	 */
+	@Override
 	public synchronized void loadConfig(String p_contextDir) {
 		String name = DEFAULT_NAME;
 		String fullName = DEFAULT_FULLNAME;
@@ -390,14 +391,14 @@ public final class FileBackend implements Backend {
 		}
 
 		/* Update the persistence */
-		getPersistenceManager().setDataDir(p_contextDir, dataDir);
-		getPersistenceManager().setTimeout(backupTimeout);
+		getStorageManager().setDataDir(p_contextDir, dataDir);
+		getStorageManager().setAutoSaveInterval(backupTimeout);
 		
 		/* Update the history */
 		if (getHistory() == null) {
 			setHistory(new History(url, size));
 			try {
-				getPersistenceManager().register(getHistory());
+				getStorageManager().attach(getHistory());
 			} catch (DeserializeException e) {
 				m_logger.error("Could not restore the history state : ", e);
 			}
@@ -411,7 +412,7 @@ public final class FileBackend implements Backend {
 		if (getUserBase() == null) {
 			setUserBase(new UserBase());
 			try {
-				getPersistenceManager().register(getUserBase());
+				getStorageManager().attach(getUserBase());
 			} catch (DeserializeException e) {
 				m_logger.error("Could not restore the user base : ", e);
 			}
@@ -423,7 +424,6 @@ public final class FileBackend implements Backend {
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
 		m_logger.info(" |- the board is hosted at '" + url + "'");
 		m_logger.info(" |- the backend keeps " + size + " posts");
-		m_logger.info(" |- the data are stored in '" + getPersistenceManager().getDataDir() + "'");
 		m_logger.info(" |- the backend will be saved every " + backupTimeout + " minute" + (backupTimeout < 2 ? "" : "s"));
 		m_logger.info(" `- the messages sent to '" + url + "/post' may have a length of '" + maxPostLength + "' caracters.");
 		
@@ -434,8 +434,9 @@ public final class FileBackend implements Backend {
 	/**
 	 * Starts the persistence manager backup job.
 	 */
+	@Override
 	public void init() {
-		getPersistenceManager().startBackupJob();
+		getStorageManager().init();
 	}
 	
 	
@@ -451,6 +452,7 @@ public final class FileBackend implements Backend {
 	 * 
 	 * @return the id of the new post
 	 */
+	@Override
 	public synchronized long addMessage(String p_info, String p_message, String p_login) {
 		return getHistory().addMessage(p_info, p_message, p_login);
 	}
@@ -459,7 +461,8 @@ public final class FileBackend implements Backend {
 	/**
 	 * Stops the persistence manager backup job.
 	 */
+	@Override
 	public void clean() {
-		getPersistenceManager().clean();
+		getStorageManager().clean();
 	}
 }
