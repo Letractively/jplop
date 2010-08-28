@@ -28,21 +28,9 @@ public class HistoryTest extends TestCase {
 		BasicConfigurator.configure();
 
 		// Check without url
-		History history = new History(null);
-		assertNull(history.getURL());
-		assertEquals(History.FILE_NAME, history.getFilename());
+		History history = new History();
 		assertNotNull(history.getLastModified());
 		assertEquals(0, history.size());
-		assertEquals(History.DEFAULT_SIZE, history.maxSize());
-		assertTrue(history.isEmpty());
-
-		// Check with an url
-		history = new History("http://www.example.com/app");
-		assertEquals("http://www.example.com/app", history.getURL());
-		assertEquals(History.FILE_NAME, history.getFilename());
-		assertNotNull(history.getLastModified());
-		assertEquals(0, history.size());
-		assertEquals(History.DEFAULT_SIZE, history.maxSize());
 		assertTrue(history.isEmpty());
 	}
 	
@@ -86,7 +74,7 @@ public class HistoryTest extends TestCase {
 	public void testAddMessage() {
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
-		History history = new History(null);
+		History history = new History();
 
 		// Empty
 		assertEquals(0, history.size());
@@ -102,7 +90,7 @@ public class HistoryTest extends TestCase {
 	public void testIsModifiedSince() {
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
-		History history = new History(null);
+		History history = new History();
 
 		// Empty
 		String lastModified = history.getLastModified();
@@ -127,11 +115,11 @@ public class HistoryTest extends TestCase {
 	public void testTruncate() {
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
-		History history = new History(null, 1);
+		History history = new History();
 
 		// Empty
 		assertEquals(0, history.size());
-		assertEquals(1, history.maxSize());
+		//assertEquals(1, history.maxSize());
 		String lastModified = history.getLastModified();
 		
 		// Sleep at least 1 second as it is the LastModified resolution
@@ -188,7 +176,7 @@ public class HistoryTest extends TestCase {
 		
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
-		History history = new History(null);
+		History history = new History();
 
 		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"null\" timezone=\"" + tz + "\">\n</board>", history.toString());
 	}

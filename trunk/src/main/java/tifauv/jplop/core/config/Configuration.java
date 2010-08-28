@@ -1,6 +1,6 @@
 package tifauv.jplop.core.config;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -13,7 +13,7 @@ public final class Configuration {
 	
 	// CONSTANTS \\
 	/** The default configuration file. */
-	private static final String CONFIG_PROPERTIES = "tifauv.jplop.config";
+	private static final String CONFIG_PROPERTIES = "/jplop.properties";
 	
 	/** The default name. */
 	public static final String DEFAULT_NAME = "JPlop";
@@ -112,7 +112,7 @@ public final class Configuration {
 	
 	// METHODS \\
 	/**
-	 * Loads teh configuration of the Backend.
+	 * Loads the configuration of the Backend.
 	 * 
 	 * @param p_contextDir
 	 *            the context directory
@@ -123,10 +123,15 @@ public final class Configuration {
 			m_config = new Properties();
 
 		// Try to load the file
-		try {
-			m_config.load(ClassLoader.getSystemResourceAsStream(CONFIG_PROPERTIES));
-		} catch (IOException e) {
+		InputStream configStream = getClass().getResourceAsStream(CONFIG_PROPERTIES);
+		if (configStream == null)
 			m_logger.error("The configuration file '" + CONFIG_PROPERTIES + "' is not in the CLASSPATH.");
+		else {
+			try {
+				m_config.load(configStream);
+			} catch (Exception e) {
+				m_logger.error("Failed to read the configuration file '" + CONFIG_PROPERTIES + "'", e);
+			}
 		}
 			
 		// Reset default values

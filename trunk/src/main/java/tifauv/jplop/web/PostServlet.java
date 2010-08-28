@@ -114,7 +114,7 @@ public final class PostServlet extends HttpServlet {
 		
 		// Add the message
 		if (addMessage) {
-			long id = Main.get().addMessage(userAgent, message, login);
+			long id = Main.get().getHistory().addMessage(userAgent, message, login);
 			p_response.addHeader(CommonConstants.POSTID_HDR, Long.toString(id));
 			p_response.setStatus(HttpServletResponse.SC_CREATED);
 		}

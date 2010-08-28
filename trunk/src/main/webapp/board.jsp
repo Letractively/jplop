@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title><jsp:getProperty name="backend" property="name"/>::Tribune</title>
+		<title>${backend.config.name}::Tribune</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Author"       content="Tifauv'" />
 		<link rel="stylesheet" type="text/css" href="styles/board.css" />
@@ -35,7 +35,7 @@
 				</div>
 				<div id="edition">
 					<input type="reset" value="" title="Efface le texte" />
-					<input type="text"  id="message" name="<%= CommonConstants.MESSAGE_PARAM %>" maxlength="512" accesskey="m" />
+					<input type="text"  id="message" name="<%= CommonConstants.MESSAGE_PARAM %>" maxlength="${backend.config.maxPostLength}" accesskey="m" />
 					<input type="submit" />
 					<input type="button" id="reloadBtn" onclick="javascript: reloadBackend();" value="Reload" accesskey="r" />
 					<img id="reloadIndicator" src="images/reloading.gif" alt="Reloading..."/>

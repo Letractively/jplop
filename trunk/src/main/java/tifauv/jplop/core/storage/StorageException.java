@@ -13,6 +13,12 @@ package tifauv.jplop.core.storage;
  */
 public final class StorageException extends Exception {
 
+	// FIELDS \\
+	/** The serialization id. */
+	private static final long serialVersionUID = 1L;
+
+	
+	// CONSTRUCTORS \\
 	/**
 	 * 
 	 */
@@ -25,24 +31,22 @@ public final class StorageException extends Exception {
 	 */
 	public StorageException(String p_message) {
 		super(p_message);
-		// TODO Auto-generated constructor stub
 	}
 
+	
 	/**
 	 * @param p_cause
 	 */
 	public StorageException(Throwable p_cause) {
 		super(p_cause);
-		// TODO Auto-generated constructor stub
 	}
 
+	
 	/**
 	 * @param p_message
 	 * @param p_cause
 	 */
 	public StorageException(String p_message, Throwable p_cause) {
 		super(p_message, p_cause);
-		// TODO Auto-generated constructor stub
 	}
-
 }

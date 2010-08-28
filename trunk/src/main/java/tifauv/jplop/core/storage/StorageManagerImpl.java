@@ -68,6 +68,8 @@ public final class StorageManagerImpl implements StorageManager {
 	// METHODS \\
 	@Override
 	public void init() {
+		loadAll();
+		
 		m_backupJob = new AbstractJob() {
 			@Override
 			protected void init() {
@@ -77,17 +79,10 @@ public final class StorageManagerImpl implements StorageManager {
 			
 			@Override
 			protected void doWork() {
-				synchronized (getDelegates()) {
-					for (StorageDelegate<?> delegate : getDelegates()) {
-						try {
-							delegate.save();
-						} catch (StorageException e) {
-							Logger.getLogger(StorageManagerImpl.class).error("Failed to save [" + delegate.getObject().getClass().getName() + "]", e);
-						}
-					}
-				}
+				saveAll();
 			}
 		};
+		m_backupJob.start();
 	}
 
 	
@@ -110,7 +105,20 @@ public final class StorageManagerImpl implements StorageManager {
 	}
 	
 	
-	public void saveAll() {
+	private void loadAll() {
+		synchronized (m_delegates) {
+			for (StorageDelegate<?> delegate : m_delegates) {
+				try {
+					delegate.load();
+				} catch (StorageException e) {
+					m_logger.error("Failed to load [" + delegate.getObject().getClass().getName() + "]", e);
+				}
+			}
+		}
+	}
+	
+	
+	void saveAll() {
 		synchronized (m_delegates) {
 			for (StorageDelegate<?> delegate : m_delegates) {
 				try {
