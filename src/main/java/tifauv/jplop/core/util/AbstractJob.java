@@ -102,7 +102,7 @@ public abstract class AbstractJob implements Runnable {
 	 */
 	public final void setFrequency(long p_frequency) {
 		m_frequency = p_frequency;
-		m_logger.info("The Job [" + getJobName() + "] will wake up every " + (m_frequency/60000) + " minutes .");
+		m_logger.debug("The Job [" + getJobName() + "] will wake up every " + (m_frequency/60000) + " minutes .");
 	}
 	
 	
@@ -121,9 +121,9 @@ public abstract class AbstractJob implements Runnable {
 		if (m_runner != null)
 			m_runner.setName(temp);
 		if (getJobName() == null)
-			m_logger.info("A new job known as [" + temp + "] has been created.");
+			m_logger.debug("A new job known as [" + temp + "] has been created.");
 		else
-			m_logger.info("The job [" + getJobName() + "] is now known as [" + temp + "].");
+			m_logger.debug("The job [" + getJobName() + "] is now known as [" + temp + "].");
 		m_jobName = temp;
 	}
 	

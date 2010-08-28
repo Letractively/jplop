@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.Main;
+import tifauv.jplop.core.config.export.BoardConfigExporter;
 
 /**
  * This servlet returns the board's configuration.
@@ -37,7 +38,9 @@ import tifauv.jplop.core.Main;
 	@Override
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	throws IOException {
-		String config = Main.get().getBoardConfig();
+		StringBuffer buffer = new StringBuffer();
+		new BoardConfigExporter().export(Main.get().getConfig(), buffer);
+		String config = buffer.toString();
 		
 		// Send the response
 		p_response.setStatus(HttpServletResponse.SC_OK);

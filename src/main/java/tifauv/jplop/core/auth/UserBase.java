@@ -1,26 +1,15 @@
 package tifauv.jplop.core.auth;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import tifauv.jplop.core.backend.file.persistence.DeserializeException;
-import tifauv.jplop.core.backend.file.persistence.Persistable;
-import tifauv.jplop.core.backend.file.persistence.SerializeException;
 
 /**
  * This is a list of users.
@@ -29,7 +18,7 @@ import tifauv.jplop.core.backend.file.persistence.SerializeException;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public final class UserBase implements Persistable {
+public final class UserBase {
 	
 	// CONSTANTS \\
 	/** The name of the default list file on disk. */
@@ -232,94 +221,6 @@ public final class UserBase implements Persistable {
 			}
 			else
 				m_logger.warn("A <" + USER_TAG + "> element exists but has no '" + USER_NAME_ATTR + "' attribute.");
-		}
-	}
-	
-	
-	/**
-	 * Loads the users base from the backup file. 
-	 */
-	@Override
-	public void loadFromFile(File p_file)
-	throws DeserializeException {
-		if (p_file != null && p_file.exists()) {
-			m_logger.info("Loading the user base from '" + p_file + "'...");
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setIgnoringComments(true);
-			factory.setNamespaceAware(true);
-			factory.setValidating(false);
-			
-			try {
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				load(builder.parse(p_file));
-				m_logger.info(size() + " users loaded.");
-			} catch (Exception e) {
-				throw new DeserializeException("Could not load the user base file", e);
-			}
-		}
-		else
-			m_logger.debug("The users base file does not exist.");
-	}
-	
-	
-	/**
-	 * Saves the users base to a file.
-	 */
-	public void saveToFile(File p_file)
-	throws SerializeException {
-		if (p_file == null)
-			return;
-
-		// Create the file if needed
-		if (!p_file.exists()) {
-			try {
-				p_file.createNewFile();
-				m_logger.info("The file '" + p_file + "' has been created (empty).");
-			} catch (IOException e) {
-				m_logger.error("The file '" + p_file + "' could not be created.");
-			}
-		}
-
-		// Check whether the file is writable
-		if (!p_file.canWrite()) {
-			m_logger.error("The users file '" + p_file + "' is not writable.");
-			return;
-		}
-		
-		// Prepare the text to be written
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<").append(USERS_TAG).append(">");
-		for (String role : m_roles)
-			buffer.append("<").append(ROLE_TAG).append(" ")
-				.append(ROLE_NAME_ATTR).append("=\"").append(role).append("\"/>");
-		for (User user : m_users.values()) {
-			buffer.append("<").append(USER_TAG).append(" ")
-				.append(USER_NAME_ATTR).append("=\"").append(user.getLogin()).append("\" ");
-			if (user.getNick() != null)
-				buffer.append(USER_NICK_ATTR).append("=\"").append(user.getNick()).append("\" ");
-			buffer.append(USER_EMAIL_ATTR).append("=\"").append(user.getEmail()).append("\" ")
-				.append(USER_PSW_ATTR).append("=\"").append(user.getPassword()).append("\" ")
-				.append(USER_ROLES_ATTR).append("=\"").append(user.getRoles()).append("\"/>");
-		}
-		buffer.append("</").append(USERS_TAG).append(">");
-		
-		FileOutputStream output = null;
-		try {
-			output = new FileOutputStream(p_file);
-			output.write(buffer.toString().getBytes("UTF-8"));
-			m_logger.info("User base saved to '" + p_file + "'.");
-		} catch (FileNotFoundException e) {
-			m_logger.error("The users file cannot be open or written.");
-		} catch (IOException e) {
-			m_logger.error("Cannot write the users file", e);
-		} finally {
-			if (output != null) {
-				try {	
-					output.close();
-				} catch (IOException e) {
-					m_logger.error("An error occured while closing the users file.");
-				}
-			}
 		}
 	}
 }

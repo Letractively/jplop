@@ -49,22 +49,22 @@ public final class BackendServlet extends HttpServlet {
 		m_logger.info("New GET backend request from [" + p_request.getRemoteAddr() + "].");
 		String ifModifiedSince = p_request.getHeader(CommonConstants.IF_MODIFIED_SINCE_HDR);
 		m_logger.debug("If-Modified-Since : " + ifModifiedSince);
-		m_logger.debug("Last-Modified : " + Main.get().getLastModified());
-		String text = Main.get().getText(ifModifiedSince);
+		m_logger.debug("Last-Modified : " + Main.get().getHistory().getLastModified());
+		String text = Main.get().getHistory().toString(ifModifiedSince);
 
 		p_response.setHeader(CommonConstants.PRAGMA_HDR, CommonConstants.NO_CACHE);
 		p_response.setHeader(CommonConstants.CACHE_CONTROL_HDR, CommonConstants.NO_CACHE);
 		
 		if (text == null) {
 			p_response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getHistory().getLastModified());
 			p_response.setContentLength(0);
 		}
 		else {
 			p_response.setStatus(HttpServletResponse.SC_OK);
 			p_response.setContentType("text/xml;charset=UTF-8");
 			p_response.setCharacterEncoding("UTF-8");
-			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getLastModified());
+			p_response.setHeader(CommonConstants.LAST_MODIFIED_HDR, Main.get().getHistory().getLastModified());
 			p_response.setContentLength(text.getBytes("UTF-8").length);
 			p_response.getWriter().write(text);
 		}

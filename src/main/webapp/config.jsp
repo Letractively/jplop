@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title><jsp:getProperty name="backend" property="name"/>::Configuration</title>
+		<title>${backend.config.name}::Configuration</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Author"       content="Tifauv'" />
 		<link rel="stylesheet" type="text/css" href="styles/config.css" />
@@ -20,10 +20,10 @@
 		<h2>Configuration des coincoins</h2>
 		<div class="config">
 			<h3>Coincoins compatibles <a href="http://tifauv.homeip.net/koinkoin/trac/wiki/BoardConfigSpec" title="La spec de config">BoardConfigSpec</a></h3>
-			<p>L'URL d'auto-configuration est <a href="<jsp:getProperty name="backend" property="URL"/>/discover"><jsp:getProperty name="backend" property="URL"/>/discover</a>.</p>
+			<p>L'URL d'auto-configuration est <a href="${backend.config.URL}/discover">${backend.config.URL}/discover</a>.</p>
 			<p>Si votre coincoin n'a pas de système d'auto-configuration, débrouillez-vous pour lui faire manger ça&nbsp;:</p>
 			<pre class="cc-config">
-&lt;site name="<jsp:getProperty name="backend" property="name"/>" title="<jsp:getProperty name="backend" property="fullName"/>" baseurl="<jsp:getProperty name="backend" property="URL"/>" version="1.1"&gt;
+&lt;site name="${backend.config.name}" title="${backend.config.fullName}" baseurl="${backend.config.URL}" version="1.1"&gt;
 	&lt;account&gt;
 		&lt;login method="post" path="/logon"&gt;
 			&lt;field name="<%= CommonConstants.LOGIN_PARAM %>"&gt;$l&lt;/field&gt;
@@ -33,7 +33,7 @@
 	&lt;/account&gt;
 	&lt;module name="board" title="Tribune" type="application/board+xml"&gt;
 		&lt;backend path="/backend" public="true" tags_encoded="false" refresh="60"/&gt;
-		&lt;post method="post" path="/post" anonymous="true" max_length="<jsp:getProperty name="backend" property="maxPostLength"/>"&gt;
+		&lt;post method="post" path="/post" anonymous="true" max_length="${backend.config.maxPostLength}"&gt;
 			&lt;field name="<%= CommonConstants.MESSAGE_PARAM %>"&gt;$m&lt;/field&gt;
 		&lt;/post&gt;
 	&lt;/module&gt;
@@ -46,25 +46,25 @@
 <c:choose>
 	<c:when test="${not empty sessionScope.subject}">
 			<pre class="cc-config">
-board_site:                "<jsp:getProperty name="backend" property="name"/>"
+board_site:                "${backend.config.name}"
 .backend_flavour:          2
-.palmipede.userlogin:      <jsp:getProperty name="subject" property="login" />
-.backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
-.post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
+.palmipede.userlogin:      ${subject.login}
+.backend.url:              ${backend.config.URL}/backend
+.post.url:                 ${backend.config.URL}/post
 .tribune.delay:            60
-.palmipede.msg_max_length: <jsp:getProperty name="backend" property="maxPostLength" /></pre>
+.palmipede.msg_max_length: ${backend.config.maxPostLength}</pre>
 			<p>Ajoutez également la ligne suivante dans le fichier <span class="file">.wmcoincoin/options.auth</span> de votre dossier personnel&nbsp;:</p>
 			<pre class="cc-config">
-"<jsp:getProperty name="backend" property="name"/>" cookie: "JSESSIONID=<%=request.getSession().getId() %>"</pre>
+"${backend.config.name}" cookie: "JSESSIONID=<%=request.getSession().getId() %>"</pre>
 	</c:when>
 	<c:otherwise>
 			<pre class="cc-config">
-board_site:                "<jsp:getProperty name="backend" property="name"/>"
+board_site:                "${backend.config.name}"
 .backend_flavour:          2
-.backend.url:              <jsp:getProperty name="backend" property="URL"/>/backend
-.post.url:                 <jsp:getProperty name="backend" property="URL"/>/post
+.backend.url:              ${backend.config.URL}/backend
+.post.url:                 ${backend.config.URL}/post
 .tribune.delay:            60
-.palmipede.msg_max_length: <jsp:getProperty name="backend" property="maxPostLength" /></pre>
+.palmipede.msg_max_length: ${backend.config.maxPostLength}</pre>
 	</c:otherwise>
 </c:choose>
 		</div>

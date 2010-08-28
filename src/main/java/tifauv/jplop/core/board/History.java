@@ -3,10 +3,6 @@
  */
 package tifauv.jplop.core.board;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,16 +12,12 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TimeZone;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import tifauv.jplop.core.backend.file.persistence.DeserializeException;
-import tifauv.jplop.core.backend.file.persistence.Persistable;
+import tifauv.jplop.core.Main;
 
 
 /**
@@ -35,14 +27,11 @@ import tifauv.jplop.core.backend.file.persistence.Persistable;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public final class History implements Persistable {
+public final class History {
 
 	// CONSTANTS \\
 	/** The default size of the history. */
 	public static final int DEFAULT_SIZE = 50;
-
-	/** The default cache file. */
-	public static final String FILE_NAME = "history.xml";
 
 	/** The root element of the backend. */
 	private static final String BOARD_TAGNAME = "board";
@@ -67,14 +56,8 @@ public final class History implements Persistable {
 	/** The list of posts. */
 	private LinkedList<Post> m_posts;
 	
-	/** The maximum size of the history. */
-	private int m_maxSize;	
-	
 	/** The counter of post identificers. */
 	private long m_idCounter;
-	
-	/** The URL of the backend file. */
-	private String m_url;
 	
 	/** The date of the last modification. */
 	private Date m_lastModified;
@@ -94,21 +77,11 @@ public final class History implements Persistable {
 	 * Initializes an History with the given url.
 	 * The size of the history is set to {@link #DEFAULT_SIZE}.
 	 */
-	public History(String p_url) {
-		this(p_url, DEFAULT_SIZE);
-	}
-	
-	
-	/**
-	 * Initializes an History with the given url and size.
-	 */
-	public History(String p_url, int p_size) {
+	public History() {
 		m_posts = new LinkedList<Post>();
 		m_mustRewriteCache = true;
-		setURL(p_url);
-		setMaxSize(p_size);
 		setModified();
-		m_logger.info("History ready.");
+		m_logger.debug("History ready.");
 	}
 	
 
@@ -118,22 +91,6 @@ public final class History implements Persistable {
 	 */
 	private synchronized long getNextId() {
 		return m_idCounter++;
-	}
-	
-	
-	/**
-	 * Gives the history's URL.
-	 */
-	public String getURL() {
-		return m_url;
-	}
-
-	
-	/**
-	 * Gives the file where the history is saved.
-	 */
-	public String getFilename() {
-		return FILE_NAME;
 	}
 	
 	
@@ -212,34 +169,6 @@ public final class History implements Persistable {
 	
 	
 	/**
-	 * Sets the history's URL.
-	 * 
-	 * @param p_url
-	 *            the history's URL
-	 */
-	public void setURL(String p_url) {
-		m_url = p_url;
-		setModified();
-	}
-	
-	
-	/**
-	 * Sets the history's max size. If the new size
-	 * is less that the current size, the oldest posts
-	 * are removed to apply the new capacity.
-	 * 
-	 * @param p_size
-	 *            the new size of the history
-	 * 
-	 * @see #truncate()
-	 */
-	public synchronized void setMaxSize(int p_size) {
-		m_maxSize = p_size;
-		truncate();
-	}
-	
-	
-	/**
 	 * Sets the GMT date of the last modification to now,
 	 * and toggles the rewrite cache flag.
 	 */
@@ -282,7 +211,7 @@ public final class History implements Persistable {
 	 */
 	public synchronized void addPost(Post p_post) {
 		m_posts.addFirst(p_post);
-		m_logger.info("Post #" + p_post.getId() + " added.");
+		m_logger.debug("Post #" + p_post.getId() + " added.");
 		setModified();
 		truncate();
 	}
@@ -292,21 +221,13 @@ public final class History implements Persistable {
 	 * Removes the old posts until the size of the history is at most the maximum size.
 	 */
 	private void truncate() {
-		if (size() > maxSize() && size() > 0) {
+		if (size() > Main.get().getConfig().getMaxSize() && size() > 0) {
 			m_logger.info("Truncating history :");
 			do {
 				Post removed = m_posts.removeLast();
 				m_logger.info("  - post #" + removed.getId() + " removed");
-			} while (size() > maxSize() && size() > 0);
+			} while (size() > Main.get().getConfig().getMaxSize() && size() > 0);
 		}
-	}
-
-	
-	/**
-	 * Gives the maximum size of the history.
-	 */
-	public int maxSize() {
-		return m_maxSize;
 	}
 	
 	
@@ -365,7 +286,7 @@ public final class History implements Persistable {
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n");
 			buffer.append("<").append(BOARD_TAGNAME).append(" ")
-				.append(BOARD_SITE_ATTRNAME).append("=\"").append(getURL()).append("\" ")
+				.append(BOARD_SITE_ATTRNAME).append("=\"").append(Main.get().getConfig().getURL()).append("\" ")
 				.append(BOARD_TZ_ATTRNAME).append("=\"").append(getTimezone()).append("\">\n");
 			for (Post post : m_posts)
 				buffer.append(post.toString());
@@ -390,71 +311,17 @@ public final class History implements Persistable {
 
 	
 	/**
-	 * Loads the backend from the cache file.
+	 * Gives the backend text if it has been modified since the given date.
+	 * Otherwise, just return <code>null</code>.
+	 * 
+	 * @param p_modifiedSince
+	 *            the Modified-Since value
+	 * 
+	 * @return the backend text or <code>null</code>
 	 */
-	public synchronized void loadFromFile(File p_file)
-	throws DeserializeException {
-		if (p_file != null && p_file.exists()) {
-			m_logger.info("Loading the history from '" + p_file + "'...");
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setIgnoringComments(true);
-			factory.setNamespaceAware(true);
-			factory.setValidating(false);
-			
-			try {
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				load(builder.parse(p_file));
-				m_logger.info(size() + " posts loaded.");
-			} catch (Exception e) {
-				throw new DeserializeException("Could not load the history file", e);
-			}
-		}
-		else
-			m_logger.debug("The history file does not exist.");
-	}
-	
-	
-	/**
-	 * Saves the history to a file.
-	 * Does nothing if the history is empty.
-	 */
-	public synchronized void saveToFile(File p_file) {
-		if (isEmpty() || p_file == null)
-			return;
-		
-		// Create the file if needed
-		if (!p_file.exists()) {
-			try {
-				p_file.createNewFile();
-				m_logger.info("The file '" + p_file + "' has been created (empty).");
-			} catch (IOException e) {
-				m_logger.error("The file '" + p_file + "' could not be created.");
-			}
-		}
-
-		// Check whether the file is writable
-		if (!p_file.canWrite()) {
-			m_logger.error("The history file '" + p_file + "' is not writable.");
-			return;
-		}
-		
-		FileOutputStream output = null;
-		try {
-			output = new FileOutputStream(p_file);
-			output.write(toString().getBytes("UTF-8"));
-			m_logger.info("History saved to '" + p_file + "'.");
-		} catch (FileNotFoundException e) {
-			m_logger.error("The history file does not exist.");
-		} catch (IOException e) {
-			m_logger.error("Cannot write the history file", e);
-		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException e) {
-					m_logger.error("An error occured while closing the history file.");
-				}
-			}
-		}
+	public synchronized String toString(String p_modifiedSince) {
+		if (isModifiedSince(p_modifiedSince))
+			return toString();
+		return null;
 	}
 }

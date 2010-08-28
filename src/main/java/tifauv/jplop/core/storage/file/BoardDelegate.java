@@ -61,7 +61,7 @@ public final class BoardDelegate extends FileStorage<History> {
 		File file = getFile();
 
 		if (file != null && file.exists()) {
-			m_logger.info("Loading the user base from '" + file + "'...");
+			m_logger.info("Loading the history from '" + file + "'...");
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
 			factory.setNamespaceAware(true);
@@ -70,13 +70,13 @@ public final class BoardDelegate extends FileStorage<History> {
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				load(builder.parse(file));
-				m_logger.info(getObject().size() + " users loaded.");
+				m_logger.info(getObject().size() + " posts loaded.");
 			} catch (Exception e) {
-				throw new StorageException("Could not load the user base file", e);
+				throw new StorageException("Could not load the history file", e);
 			}
 		}
 		else
-			m_logger.debug("The users base file does not exist.");
+			m_logger.debug("The history file does not exist.");
 	}
 	
 	

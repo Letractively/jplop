@@ -1,5 +1,5 @@
 		<div id="header">
-			<h1><jsp:getProperty name="backend" property="name"/> - <jsp:getProperty name="backend" property="fullName"/></h1>
+			<h1>${backend.config.name}- ${backend.config.fullName}</h1>
 			<div class="links">
 				<a href="board.jsp" title="Je veux ploper !">Tribune</a>
 				::

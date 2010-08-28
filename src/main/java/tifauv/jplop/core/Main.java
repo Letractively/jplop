@@ -1,6 +1,5 @@
 package tifauv.jplop.core;
 
-import tifauv.jplop.core.backend.file.FileBackend;
 
 /**
  * This is the singleton class that uses the Backend. 
@@ -35,9 +34,8 @@ public final class Main {
 	// METHODS \\
 	public static void create(String p_contextDir) {
 		if (s_backend == null) {
-			s_backend = new FileBackend();
-			s_backend.loadConfig(p_contextDir);
-			s_backend.init();
+			s_backend = new BackendImpl();
+			s_backend.init(p_contextDir);
 		}
 	}
 	
