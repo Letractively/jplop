@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JPlop">
+	<banner>
+		<name>JPlop</name>
+		<href>http://tifauv.homeip.net/~jplop/</href>
+	</banner>
+	<body>
+		<links>
+			<item name="GoogleCode project" href="http://jplop.googlecode.com"         />
+		</links>
+
+		<menu name="Overview">
+			<item name="Demo site" href="http://tifauv.homeip.net/jplop"/>
+		</menu>
+
+		<menu name="Get Jplop">
+			<item name="Releases"  href="http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop" />
+			<item name="Snapshots" href="http://tifauv.homeip.net/~jplop/repos/snapshots/tifauv/jplop"/>
+		</menu>
+
+		<menu ref="reports"/>
+	</body>
+</project>

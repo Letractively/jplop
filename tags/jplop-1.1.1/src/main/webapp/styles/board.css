@@ -1,0 +1,104 @@
+@import url('common.css');
+@import url('post.css');
+
+/***** The list of posts *****/
+#board-container {
+	border: 2px solid #0c3762;
+	background-color: #336698;
+	color: #ffffff;
+	margin: 1em;
+	margin-bottom: 0;
+	padding: 0;
+	height: 30em;
+}
+
+#board {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+
+/***** The message form *****/
+#postForm {
+	text-align: center;
+}
+
+#toolbar, #edition {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #0c3762;
+	border: 0;
+}
+
+#toolbar INPUT, #edition INPUT {
+	background-color: #b2cfed;
+	color: #0c3762;
+	border: 0;
+}
+
+#edition #message {
+	background-color: #ffffff;
+	border: 1px solid #b2cfed;
+}
+
+#toolbar #bold {
+	font-weight: bold;
+}
+
+#toolbar #italic {
+	font-style: italic;
+}
+
+#toolbar #underline {
+	text-decoration: underline;
+}
+
+#toolbar #strike {
+	text-decoration: striked;
+}
+
+#toolbar #teletype {
+	font-family: monospace;
+}
+
+#toolbar {
+	padding-top: 0.2em;
+	margin-bottom: 0;
+	padding-bottom: 0.1em;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+#edition {
+	margin-top: 0;
+	padding-top: 0.1em;
+	padding-bottom: 0.2em;
+	border-top: 0;
+	-moz-border-radius: 0 0 1em 1em;
+}
+
+#message {
+	width: 70%;
+}
+
+#reloadIndicator {
+	visibility: hidden;
+	height: 16px;
+	width: 16px;
+}
+
+
+/**** The settings box ****/
+#paramsBox {
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+#params {
+	text-align: left;
+	display: none;
+}
