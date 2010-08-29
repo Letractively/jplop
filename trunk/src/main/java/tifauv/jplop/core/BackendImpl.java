@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import tifauv.jplop.core.auth.UserBase;
 import tifauv.jplop.core.board.History;
 import tifauv.jplop.core.config.Configuration;
+import tifauv.jplop.core.config.PropertiesConfiguration;
 import tifauv.jplop.core.storage.StorageException;
 import tifauv.jplop.core.storage.StorageManager;
 import tifauv.jplop.core.storage.StorageManagerImpl;
@@ -27,7 +28,7 @@ public class BackendImpl implements Backend {
 
 	// CONSTRUCTORS \\
 	public BackendImpl() {
-		m_config = new Configuration();
+		m_config = new PropertiesConfiguration();
 		m_history = new History();
 		m_users = new UserBase();
 		m_storage = new StorageManagerImpl();
