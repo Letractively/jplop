@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tifauv.jplop.core.Backend;
 import tifauv.jplop.core.Main;
 import tifauv.jplop.core.config.export.BoardConfigExporter;
 
