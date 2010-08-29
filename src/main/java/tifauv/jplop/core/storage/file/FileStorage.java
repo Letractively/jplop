@@ -7,6 +7,7 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
+import tifauv.jplop.core.Main;
 import tifauv.jplop.core.storage.StorageDelegate;
 
 /**
@@ -45,6 +46,11 @@ public abstract class FileStorage<T> implements StorageDelegate<T> {
 	 */
 	public FileStorage(T p_object) {
 		m_object = p_object;
+		
+		String dataDir = Main.get().getConfig().getString(KEY_DATADIR);
+		if (dataDir == null)
+			dataDir = DEFAULT_DATADIR;
+		setDataDir(dataDir);
 	}
 	
 	
@@ -77,16 +83,16 @@ public abstract class FileStorage<T> implements StorageDelegate<T> {
 	 * Sets the file. If the given file path is not absolute,
 	 * it will be prefixed with the context directory.
 	 * 
-	 * @param p_contextDir 
-	 *            the current context (webapp) directory
 	 * @param p_path
 	 *            the given file path
 	 */
-	public final void setDataDir(String p_contextDir, String p_path) {
+	private final void setDataDir(String p_path) {
 		if (p_path == null) {
 			m_dataDir = null;
 			return;
 		}
+		
+		String contextDir = Main.get().getConfig().getContextDir();
 		
 		String path = p_path;
 		String home = System.getProperty("catalina.home");
@@ -97,10 +103,10 @@ public abstract class FileStorage<T> implements StorageDelegate<T> {
 			path = path.replaceAll("\\$\\{catalina.base\\}", base);
 		
 		File file = new File(path);
-		if (file.isAbsolute() || p_contextDir == null || p_contextDir.length() == 0)
+		if (file.isAbsolute() || contextDir == null || contextDir.length() == 0)
 			m_dataDir = file;
 		else
-			m_dataDir = new File(p_contextDir + File.separator + "WEB-INF", path);
+			m_dataDir = new File(contextDir + File.separator + "WEB-INF", path);
 		
 		if (!m_dataDir.exists()) {
 			if (m_dataDir.mkdir())
@@ -108,5 +114,7 @@ public abstract class FileStorage<T> implements StorageDelegate<T> {
 			else
 				m_logger.error("The data directory '" + m_dataDir + "' is needed but could not be created.");
 		}
+		else
+			m_logger.info("The data directory '" + m_dataDir + "' has been found.");
 	}
 }

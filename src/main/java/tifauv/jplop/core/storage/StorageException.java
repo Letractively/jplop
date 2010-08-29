@@ -20,13 +20,6 @@ public final class StorageException extends Exception {
 	
 	// CONSTRUCTORS \\
 	/**
-	 * 
-	 */
-	public StorageException() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
 	 * @param p_message
 	 */
 	public StorageException(String p_message) {

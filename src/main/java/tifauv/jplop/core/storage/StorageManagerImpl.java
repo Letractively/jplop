@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import tifauv.jplop.core.Main;
 import tifauv.jplop.core.util.AbstractJob;
 
 /**
@@ -19,7 +20,7 @@ import tifauv.jplop.core.util.AbstractJob;
 public final class StorageManagerImpl implements StorageManager {
 	
 	// CONSTANTS \\
-	/** The nma of the backup job. */
+	/** The name of the backup job. */
 	private static final String BACKUP_JOB_NAME = "Backup";
 	
 	
@@ -56,24 +57,25 @@ public final class StorageManagerImpl implements StorageManager {
 	}
 	
 	
-	/**
-	 * Sets the factory used to build the delegates.
-	 */
-	@Override
-	public void setStorageFactory(StorageFactory p_factory) {
-		m_factory = p_factory;
-	}
-
-	
 	// METHODS \\
 	@Override
-	public void init() {
-		loadAll();
+	public void init()
+	throws StorageException {
+		String factoryName = Main.get().getConfig().getStorageFactoryName();
+		try {
+			m_factory = createFactory(factoryName);
+		} catch (NoClassDefFoundError e) {
+			throw new StorageException("The storage factory class '" + factoryName + "' defined in the configuration could not be found.", e);
+		} catch (ClassCastException e) {
+			throw new StorageException("The storage factory class '" + factoryName + "' defined in the configuration does not implement '" + StorageFactory.class.getName() + "'.", e);
+		} catch (Exception e) {
+			throw new StorageException("The storage factory class '" + factoryName + "' defined in the configuration could not be instanciated.", e);
+		}
 		
-		m_backupJob = new AbstractJob() {
+		// Set the backup job
+		m_backupJob = new AbstractJob(BACKUP_JOB_NAME) {
 			@Override
 			protected void init() {
-				setJobName(BACKUP_JOB_NAME);
 				setFrequency(DEFAULT_AUTOSAVE_INTERVAL * 1000);
 			}
 			
@@ -82,6 +84,12 @@ public final class StorageManagerImpl implements StorageManager {
 				saveAll();
 			}
 		};
+	}
+	
+	
+	@Override
+	public void ready() {
+		loadAll();
 		m_backupJob.start();
 	}
 
@@ -102,6 +110,18 @@ public final class StorageManagerImpl implements StorageManager {
 		synchronized (m_delegates) {
 			m_delegates.add(delegate);
 		}
+	}
+	
+	
+	private StorageFactory createFactory(String p_className)
+	throws ClassNotFoundException,
+	ClassCastException,
+	InstantiationException,
+	IllegalAccessException {
+		if (p_className == null)
+			return null;
+		
+		return Class.forName(p_className).asSubclass(StorageFactory.class).newInstance();
 	}
 	
 	

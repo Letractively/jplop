@@ -1,7 +1,16 @@
 package tifauv.jplop.core.storage;
 
 /**
- * This is...
+ * This is the interface to the storage layer.
+ * <p>This is how you should use it at initialization :
+ * <pre>
+ * StorageManager storage = new ...();
+ * ... load the configuration ...
+ * storage.init();
+ * storage.attach(persistent_object); // Add as many times as you have objects to persist
+ * storage.ready();
+ * </pre></p>
+ * <p>Don't forget to call <code>storage.clean()</code> when you want to quit.</p>
  *
  *
  * @author Olivier Serve <tifauv@gmail.com>
@@ -21,12 +30,6 @@ public interface StorageManager {
 	 */
 	void setAutoSaveInterval(long m_seconds);
 	
-	
-	/**
-	 * Sets the factory used to build the delegates.
-	 */
-	void setStorageFactory(StorageFactory p_factory);
-	
 
 	// METHODS \\
 	/**
@@ -43,8 +46,18 @@ public interface StorageManager {
 	
 	/**
 	 * Runs any initializations needed.
+	 * 
+	 * @throws StorageException
+	 *            if the factory could not be created
 	 */
-	void init();
+	void init()
+	throws StorageException;
+	
+	
+	/**
+	 * Loads all the attached delegates and starts the backup thread.
+	 */
+	void ready();
 	
 	
 	/**
