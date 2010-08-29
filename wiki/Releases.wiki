@@ -6,6 +6,16 @@ Ces versions sont censées être stables. Vous pouvez les récupérer rapidement
 
 Si vous voulez vous aventurer dans le bizarre, vous pouvez essayer les [http://tifauv.homeip.net/~jplop/repos/snapshots/tifauv/jplop toutes dernières versions]. C'est en développement, à vos risques et périls. C'est vous qui voyez !
 
+== JPlop 1.1 ==
+Fritures:
+ * Réécriture de la couche de stockage pour permettre un backend en base (pour la 1.2)
+
+== JPlop 1.0 ==
+Fritures:
+ * Support du /nick
+ * Affichage des paramètres (login, UA)
+ * Modification du style du bloc de message
+
 == JPlop 0.9 ==
 Fritures:
  * Suppression de la page d'accueil, la navigation revient directement sur la tribune
