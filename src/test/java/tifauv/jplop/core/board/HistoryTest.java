@@ -10,6 +10,11 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.BasicConfigurator;
 
+import tifauv.jplop.core.Backend;
+import tifauv.jplop.core.BackendMock;
+import tifauv.jplop.core.Main;
+import tifauv.jplop.core.config.ConfigurationMock;
+
 
 /**
  * .
@@ -19,6 +24,14 @@ import org.apache.log4j.BasicConfigurator;
  * @author Olivier Serve <tifauv@gmail.com>
  */
 public class HistoryTest extends TestCase {
+	
+	@Override
+	public void setUp() {
+		Backend backend = new BackendMock();
+		((ConfigurationMock)backend.getConfig()).setStorageFactoryName(null);
+		Main.set(backend);
+	}
+	
 	
 	/**
 	 * Test method for {@link tifauv.jplop.core.board.History#History(java.lang.String)}.
@@ -116,10 +129,12 @@ public class HistoryTest extends TestCase {
 		System.setProperty("log4j.defaultInitOverride", "true");
 		BasicConfigurator.configure();
 		History history = new History();
+		
+		((ConfigurationMock)Main.get().getConfig()).setMaxSize(1);
 
 		// Empty
 		assertEquals(0, history.size());
-		//assertEquals(1, history.maxSize());
+		assertEquals(1, Main.get().getConfig().getMaxSize());
 		String lastModified = history.getLastModified();
 		
 		// Sleep at least 1 second as it is the LastModified resolution
@@ -178,6 +193,6 @@ public class HistoryTest extends TestCase {
 		BasicConfigurator.configure();
 		History history = new History();
 
-		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"null\" timezone=\"" + tz + "\">\n</board>", history.toString());
+		assertEquals("<?xml-stylesheet type=\"text/xsl\" href=\"web.xslt\"?>\n<board site=\"http://localhost:8080/jplop\" timezone=\"" + tz + "\">\n</board>", history.toString());
 	}
 }
