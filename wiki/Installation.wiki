@@ -4,7 +4,7 @@
 = Pré-requis =
 Vous devez avoir [http://code.google.com/p/jplop/downloads/list téléchargé] une archive web. Utilisez de préférence la dernière version.
 
-Vous devez également avoir une JVM (1.6 mini) et un Tomcat (5.0 mini) installés et fonctionnels.
+Vous devez également avoir une JVM (1.6 mini) et un Tomcat (5.5 mini) installés et fonctionnels.
 
 
 = Introduction =
