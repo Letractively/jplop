@@ -17,12 +17,12 @@
 		<%@ include file="header.inc.jsp" %>
 		
 		<h2>Version</h2>
-		<div id="version">JPlop version 1.0</div>
+		<div id="version">JPlop version 1.1</div>
 		
 		<h2>Crédits</h2>
 		<div id="credits">
 			<p>
-				Copyright &copy; 2007-2009 Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
+				Copyright &copy; 2007-2010 Olivier Serve aka <a href="http://tifauv.homeip.net">Tifauv'</a>.
 				Pour essayer la bête ou insulter l'auteur, c'est <a href="http://code.google.com/p/jplop/">par là</a>.
 			</p>
 		
