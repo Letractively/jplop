@@ -9,12 +9,22 @@ Si vous voulez vous aventurer dans le bizarre, vous pouvez essayer les [http://t
 == JPlop 1.1 ==
 Fritures:
  * Réécriture de la couche de stockage pour permettre un backend en base (pour la 1.2)
+Dépôt : http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.1
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.1/jplop-1.1.war Archive Web]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.1/jplop-1.1.pom Descripteur du projet]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.1/jplop-1.1-sources.jar Sources]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.1/jplop-1.1-javadoc.jar Javadoc]
 
 == JPlop 1.0 ==
 Fritures:
  * Support du /nick
  * Affichage des paramètres (login, UA)
  * Modification du style du bloc de message
+Dépôt : http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0.war Archive Web]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0.pom Descripteur du projet]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0-sources.jar Sources]
+ * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0-javadoc.jar Javadoc]
 
 == JPlop 0.9 ==
 Fritures:
