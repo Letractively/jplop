@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * This is a list of users.
@@ -179,48 +176,5 @@ public final class UserBase {
 	 */
 	public User get(String p_username) {
 		return m_users.get(p_username);
-	}
-	
-	
-	/**
-	 * Loads a user base from a DOM Document.
-	 * 
-	 * @param p_users
-	 *            the DOM document
-	 */
-	public synchronized void load(Document p_users) {
-		// Load the roles
-		clearRoles();
-		NodeList roles = p_users.getElementsByTagName(ROLE_TAG);
-		for (int i=0; i<roles.getLength(); ++i) {
-			Element role = (Element)roles.item(i);
-			if (role.hasAttribute(ROLE_NAME_ATTR))
-				addRole(role.getAttribute(ROLE_NAME_ATTR));
-			else
-				m_logger.warn("A <" + ROLE_TAG + "> element exists but has no '" + ROLE_NAME_ATTR + "' attribute.");
-		}
-
-		// Load the users
-		clearUsers();
-		NodeList users = p_users.getElementsByTagName(USER_TAG);
-		for (int i=0; i<users.getLength(); ++i) {
-			Element userEl = (Element)users.item(i);
-			if (userEl.hasAttribute(USER_NAME_ATTR)) {
-				try {
-					User user = new User();
-					user.setLogin(userEl.getAttribute(USER_NAME_ATTR));
-					if (userEl.hasAttribute(USER_NICK_ATTR))
-						user.setNick(userEl.getAttribute(USER_NICK_ATTR));
-					user.setPassword(userEl.getAttribute(USER_PSW_ATTR));
-					user.setEmail(userEl.getAttribute(USER_EMAIL_ATTR));
-					user.setRoles(userEl.getAttribute(USER_ROLES_ATTR));
-					addUser(user);
-				} catch (Exception e) {
-					m_logger.error("Could not load a user", e);
-				}
-			}
-			else
-				m_logger.warn("A <" + USER_TAG + "> element exists but has no '" + USER_NAME_ATTR + "' attribute.");
-		}
 	}
 }
