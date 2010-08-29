@@ -1,6 +1,11 @@
 #summary JPlop live in action !
 #labels Featured
 
+= JPlop 1.1 =
+La tribune :
+
+http://jplop.googlecode.com/svn/images/1.1/jplop-board-1.1.png
+
 = JPlop 0.8.2 =
 La tribune :
 
