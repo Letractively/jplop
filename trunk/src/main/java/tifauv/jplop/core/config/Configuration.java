@@ -24,6 +24,12 @@ public final class Configuration {
 	/** The default URL. */
 	public static final String DEFAULT_URL = "http://localhost:8080/jplop";
 	
+	/** The default storage factory. */
+	public static final String DEFAULT_STORAGE_FACTORY = "tifauv.jplop.core.storage.file.FileStorageFactory";
+	
+	/** The configuration key of the context directory. */
+	private static final String KEY_CONTEXT_DIR = "jplop.contextDir";
+	
 	/** The configuration key of the name. */
 	private static final String KEY_NAME = "jplop.name";
 	
@@ -41,6 +47,9 @@ public final class Configuration {
 
 	/** The configuration key of the backup frequency of the backend. */
 	private static final String KEY_BACKUP_FREQ = "jplop.backupEvery";
+
+	/** The configuration key of the storage factory. */
+	private static final String KEY_STORAGE_FACTORY = "storage.factory";
 	
 	
 	// FIELDS \\
@@ -52,6 +61,14 @@ public final class Configuration {
 	
 
 	// GETTERS \\
+	/**
+	 * Gives the webapp's context directory.
+	 */
+	public String getContextDir() {
+		return getString(KEY_CONTEXT_DIR);
+	}
+
+	
 	/**
 	 * Gives the board's name.
 	 */
@@ -98,6 +115,14 @@ public final class Configuration {
 	public int getMaxPostLength() {
 		return getInt(KEY_POST_LENGTH);
 	}
+	
+	
+	/**
+	 * Gives the name of the storage factory to use.
+	 */
+	public String getStorageFactoryName() {
+		return getString(KEY_STORAGE_FACTORY);
+	}
 
 	
 	public String getString(String p_key) {
@@ -121,6 +146,9 @@ public final class Configuration {
 		// Build a new Properties if needed
 		if (m_config == null)
 			m_config = new Properties();
+		
+		// Set the context directory as a property
+		m_config.put(KEY_CONTEXT_DIR, p_contextDir);
 
 		// Try to load the file
 		InputStream configStream = getClass().getResourceAsStream(CONFIG_PROPERTIES);
@@ -141,6 +169,7 @@ public final class Configuration {
 		setDefaultIfAbsent(m_config, KEY_HISTORY_SIZE, History.DEFAULT_SIZE);
 		setDefaultIfAbsent(m_config, KEY_BACKUP_FREQ,  StorageManager.DEFAULT_AUTOSAVE_INTERVAL);
 		setDefaultIfAbsent(m_config, KEY_POST_LENGTH,  Post.DEFAULT_MAX_POST_LENGTH);
+		setDefaultIfAbsent(m_config, KEY_STORAGE_FACTORY, DEFAULT_STORAGE_FACTORY);
 		
 		m_logger.info("Board '" + getName() + " - " + getFullName() + "' reloaded.");
 	}

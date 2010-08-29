@@ -8,7 +8,6 @@ import tifauv.jplop.core.config.Configuration;
 import tifauv.jplop.core.storage.StorageException;
 import tifauv.jplop.core.storage.StorageManager;
 import tifauv.jplop.core.storage.StorageManagerImpl;
-import tifauv.jplop.core.storage.file.FileStorageFactory;
 
 public class BackendImpl implements Backend {
 
@@ -96,14 +95,14 @@ public class BackendImpl implements Backend {
 	@Override
 	public void init(String p_contextDir) {
 		m_config.load(p_contextDir);
-		m_storage.setStorageFactory(new FileStorageFactory());
 		try {
+			m_storage.init();
 			m_storage.attach(m_history);
 			m_storage.attach(m_users);
+			m_storage.ready();
 		} catch (StorageException e) {
 			Logger.getLogger(BackendImpl.class).error("Could not load from storage", e);
 		}
-		m_storage.init();
 	}
 	
 	

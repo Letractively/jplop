@@ -6,6 +6,8 @@ package tifauv.jplop.core.auth;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
+
 /**
  * The description of a user.
  * A user has a login, email, password and roles.
@@ -145,8 +147,7 @@ public final class User {
 		try {
 			return m_password.check(p_otherPassword);
 		} catch (PasswordException e) {
-			// XXX We should log the error here, but isn't building a logger
-			// just for that exception a bit overkill ?
+			Logger.getLogger(User.class).warn(e.getMessage());
 			return false;
 		}
 	}

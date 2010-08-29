@@ -22,10 +22,8 @@ public final class WMCCExporter implements ConfigExporter {
 	public void export(Configuration p_config, StringBuffer p_buffer) {
 		p_buffer.append("board_site:                ").append(p_config.getName()).append("\n")
 		.append(".backend_flavour:          2\n");
-		if (false) {
-			// Find a way to get the current user
-			//p_buffer.append(".palmipede.userlogin:      ").append(login).append("\n");
-		}
+		// TODO Find a way to get the current user
+		//p_buffer.append(".palmipede.userlogin:      ").append(login).append("\n");
 		p_buffer.append(".backend.url:              ").append(p_config.getURL()).append("/backend\n")
 		.append(".post.url:                 ").append(p_config.getURL()).append("/post\n")
 		.append(".tribune.delay:            60\n")
