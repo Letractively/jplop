@@ -23,8 +23,6 @@ Fritures:
 Dépôt : http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0
  * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0.war Archive Web]
  * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0.pom Descripteur du projet]
- * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0-sources.jar Sources]
- * [http://tifauv.homeip.net/~jplop/repos/releases/tifauv/jplop/1.0/jplop-1.0-javadoc.jar Javadoc]
 
 == JPlop 0.9 ==
 Fritures:
