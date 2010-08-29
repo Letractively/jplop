@@ -49,6 +49,9 @@
     <developerConnection>scm:svn:https://jplop.googlecode.com/svn/trunk</developerConnection>
     <url>http://jplop.googlecode.com/svn/trunk</url>
   </scm>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <build>
     <plugins>
       <plugin>
