@@ -10,20 +10,21 @@ Si vous préférez un déploiement direct, vous devez avoir déjà [Installation
 = Détails =
 
 JPlop dispose de 2 fichiers de configuration situés dans le `CLASSPATH` :
-  # `tifauv.jplop.config` : configuration de la tribune ;
-  # `log4` : configuration des logs.
+  # `jplop.properties` : configuration de la tribune ;
+  # `log4.properties` : configuration des logs.
 Ces deux fichiers sont des fichiers `properties` classiques en Java. Chaque ligne peut être soit vide, soit un commentaire, soit une déclaration de type _clé = valeur_.
 
 == Configuration de la tribune ==
 
 La configuration de la tribune se fait dans le fichier `WEB-INF/classes/tifauv/jplop/config.properties`. Les clés de configuration reconnues sont listées ci-dessous. Toute autre ligne est ignorée.
-|| `jplop.name`              || Le nom _court_ de la tribune                          ||
-|| `jplop.fullName`          || Un nom plus descriptif                                ||
-|| `jplop.url`               || L'URL complète de l'installation                      ||
-|| `jplop.history.size`      || La taille maximale de l'historique                    ||
-|| `jplop.history.saveEvery` || La fréquence de sauvegarde de l'historique            ||
-|| `jplop.post.maxLength`    || La longueur maximale d'un post                        ||
-|| `jplop.datadir`           || Le répertoire des données (historique & utilisateurs) ||
+|| `jplop.name`              || Le nom _court_ de la tribune                            ||
+|| `jplop.fullName`          || Un nom plus descriptif                                  ||
+|| `jplop.url`               || L'URL complète de l'installation                        ||
+|| `jplop.history.size`      || La taille maximale de l'historique                      ||
+|| `jplop.backupEvery`       || La fréquence de sauvegarde des données                  ||
+|| `jplop.post.maxLength`    || La longueur maximale d'un post                          ||
+|| `storage.factory`         || le nom de la factory définissant le backend de stockage ||
+|| `storage.datadir`         || Le répertoire des données (historique & utilisateurs)   ||
 
 
 === `jplop.name` ===
@@ -50,8 +51,8 @@ La taille maximale de l'historique. Une fois cette taille atteinte, les posts le
 _Valeur par défaut_ : 100
 
 
-=== `jplop.history.saveEvery` ===
-La fréquence de sauvegarde du cache du backend.
+=== `jplop.backupEvery` ===
+La fréquence de sauvegarde de l'historique des messages et de la liste des utilisateurs.
 
 _Valeur par défaut_ : 5
 
@@ -62,7 +63,13 @@ La longueur maximale d'un post. Tout message reçu sera tronqué à cette longue
 _Valeur par défaut_ : 512
 
 
-=== `jplop.datadir` ===
+=== `storage.factory` ===
+Le nom de la StorageFactory à utiliser. Une StorageFactory va définir comment seront enregistrées les données. Actuellement, il n'y a que le portage de l'ancien système reposant sur des fichiers.
+
+_Valeur par défaut_ : tifauv.jplop.core.storage.file.FileStorageFactory
+
+
+=== `storage.datadir` ===
 Le répertoire où sont enregistrées les données. Cela concerne l'historique ainsi que
 la base d'utilisateurs. Le répertoire est créé au besoin. Si vous utilisez le Tomcat
 Manager pour mettre à jour vos webapps, il faut que ce répertoire soit en-dehors du
