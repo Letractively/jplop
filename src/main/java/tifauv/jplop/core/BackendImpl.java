@@ -10,7 +10,7 @@ import tifauv.jplop.core.storage.StorageException;
 import tifauv.jplop.core.storage.StorageManager;
 import tifauv.jplop.core.storage.StorageManagerImpl;
 
-public class BackendImpl implements Backend {
+public final class BackendImpl implements Backend {
 
 	// FIELDS \\
 	/** The board's configuration. */

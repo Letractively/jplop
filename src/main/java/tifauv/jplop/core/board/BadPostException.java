@@ -11,7 +11,7 @@ package tifauv.jplop.core.board;
  * 
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class BadPostException extends Exception {
+public final class BadPostException extends Exception {
 	
 	// CONSTANTS \\
 	/** The serialization id. */
