@@ -90,7 +90,7 @@ public interface Configuration {
 	
 	// METHODS \\
 	/**
-	 * Loads the configuration of the Backend.
+	 * Loads the configuration.
 	 * 
 	 * @param p_contextDir
 	 *            the context directory

@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Olivier Serve <tifauv@gmail.com>
  */
-public class Post {
+public final class Post {
 
 	// CONSTANTS \\
 	/** The format of a time attribute. */

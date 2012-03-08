@@ -178,6 +178,7 @@ public abstract class AbstractJob implements Runnable {
 	 * @see #doWork()
 	 * @see #cleanup()
 	 */
+	@Override
 	public final void run() {
 		m_logger.info("Job [" + getJobName() + "] started.");
 		init();

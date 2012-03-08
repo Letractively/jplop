@@ -72,6 +72,7 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the webapp's context directory.
 	 */
+	@Override
 	public String getContextDir() {
 		return getString(KEY_CONTEXT_DIR);
 	}
@@ -80,6 +81,7 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the board's name.
 	 */
+	@Override
 	public String getName() {
 		return getString(KEY_NAME);
 	}
@@ -88,6 +90,7 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the board's full name.
 	 */
+	@Override
 	public String getFullName() {
 		return getString(KEY_FULLNAME);
 	}
@@ -96,6 +99,7 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the board's URL.
 	 */
+	@Override
 	public String getURL() {
 		return getString(KEY_URL);
 	}
@@ -104,11 +108,13 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the maximum number of messages of the history.
 	 */
+	@Override
 	public int getMaxSize() {
 		return getInt(KEY_HISTORY_SIZE);
 	}
 	
 	
+	@Override
 	public int getAutoSaveInterval() {
 		return getInt(KEY_BACKUP_FREQ);
 	}
@@ -120,6 +126,7 @@ public final class PropertiesConfiguration implements Configuration {
 	 * 
 	 * @see #addMessage(String, String, String)
 	 */
+	@Override
 	public int getMaxPostLength() {
 		return getInt(KEY_POST_LENGTH);
 	}
@@ -128,16 +135,19 @@ public final class PropertiesConfiguration implements Configuration {
 	/**
 	 * Gives the name of the storage factory to use.
 	 */
+	@Override
 	public String getStorageFactoryName() {
 		return getString(KEY_STORAGE_FACTORY);
 	}
 
 	
+	@Override
 	public String getString(String p_key) {
 		return m_config.getProperty(p_key);
 	}
 	
 	
+	@Override
 	public int getInt(String p_key) {
 		return Integer.parseInt(m_config.getProperty(p_key));
 	}
@@ -150,6 +160,7 @@ public final class PropertiesConfiguration implements Configuration {
 	 * @param p_contextDir
 	 *            the context directory
 	 */
+	@Override
 	public synchronized void load(String p_contextDir) {
 		// Build a new Properties if needed
 		if (m_config == null)

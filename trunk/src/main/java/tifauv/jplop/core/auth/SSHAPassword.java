@@ -48,6 +48,7 @@ public final class SSHAPassword implements Password {
 	 * @return the string representation of the password,
 	 *         or <code>null</code> if no password has been set yet
 	 */
+	@Override
 	public String getPassword() {
 		if (m_hash != null && m_salt != null) {
 			byte[] password = Arrays.copyOf(m_hash, m_hash.length + m_salt.length);
@@ -66,6 +67,7 @@ public final class SSHAPassword implements Password {
 	 * @throws PasswordException
 	 *            if the given parameter is not a Salted SHA
 	 */
+	@Override
 	public void setPassword(String p_password)
 	throws PasswordException {
 		if (p_password == null || p_password.length() == 0) {
@@ -147,6 +149,7 @@ public final class SSHAPassword implements Password {
 	/**
 	 * Checks the given password matches this user's one.
 	 */
+	@Override
 	public boolean check(String p_password)
 	throws PasswordException {
 		if (p_password == null)
